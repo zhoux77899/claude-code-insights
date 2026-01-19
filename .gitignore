@@ -1,0 +1,21 @@
+# Generated files
+node_modules/
+out/
+*.vsix
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Claude specific
+.claude/plans/
+.claude/settings.local.json
+tmpclaude-*-cwd
