@@ -32,6 +32,8 @@ jobs:
             "https://api.github.com/search/repositories?q=topic:claude-code+OR+topic:claude-code-plugin+OR+topic:claude-skills+stars:>30&sort=stars&order=desc&per_page=100" \
             > /tmp/repos.json
 
+          cat /tmp/repos.json
+
           DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
           TOTAL=$(jq '.total_count' /tmp/repos.json)
 
