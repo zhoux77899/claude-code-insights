@@ -54,7 +54,7 @@ Structured JSON data for programmatic access:
 
 ## How It Works
 
-1. **GitHub Actions Workflow** runs daily at 01:00 UTC
+1. **GitHub Actions Workflow** runs daily at 00:00 UTC
 2. **Searches GitHub** for repositories with topics: `claude-code`, `claude-code-plugin`, or `claude-skills`
 3. **Generates Reports** with top repositories and recent activity
 4. **Commits Changes** automatically to this repository
@@ -63,7 +63,7 @@ Structured JSON data for programmatic access:
 
 | Event | Time (UTC) |
 |-------|------------|
-| Scheduled Run | Daily 01:00 |
+| Scheduled Run | Daily 00:00 |
 | Manual Trigger | On demand |
 
 ## Usage
