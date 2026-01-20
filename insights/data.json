@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-01-20T01:31:58Z",
+  "generated_at": "2026-01-20T03:00:09Z",
   "total_count": 153,
   "repos": [
     {
@@ -7,9 +7,9 @@
       "full_name": "wshobson/agents",
       "url": "https://github.com/wshobson/agents",
       "description": "Intelligent automation and multi-agent orchestration for Claude Code",
-      "stars": 26010,
-      "forks": 2862,
-      "watchers": 26010,
+      "stars": 26015,
+      "forks": 2863,
+      "watchers": 26015,
       "open_issues": 12,
       "language": "C#",
       "topics": [
@@ -35,7 +35,7 @@
         "workflows"
       ],
       "created_at": "2025-07-24T23:28:14Z",
-      "updated_at": "2026-01-20T01:23:06Z",
+      "updated_at": "2026-01-20T02:44:14Z",
       "pushed_at": "2026-01-19T22:08:28Z"
     },
     {
@@ -43,9 +43,9 @@
       "full_name": "thedotmack/claude-mem",
       "url": "https://github.com/thedotmack/claude-mem",
       "description": "A Claude Code plugin that automatically captures everything Claude does during your coding sessions, compresses it with AI (using Claude's agent-sdk), and injects relevant context back into future sessions.",
-      "stars": 14563,
-      "forks": 979,
-      "watchers": 14563,
+      "stars": 14571,
+      "forks": 980,
+      "watchers": 14571,
       "open_issues": 113,
       "language": "TypeScript",
       "topics": [
@@ -71,7 +71,7 @@
         "supermemory"
       ],
       "created_at": "2025-08-31T20:50:03Z",
-      "updated_at": "2026-01-20T01:11:17Z",
+      "updated_at": "2026-01-20T02:44:52Z",
       "pushed_at": "2026-01-18T22:17:11Z"
     },
     {
@@ -111,9 +111,9 @@
       "full_name": "kenryu42/claude-code-safety-net",
       "url": "https://github.com/kenryu42/claude-code-safety-net",
       "description": "A Claude Code plugin that acts as a safety net, catching destructive git and filesystem commands before they execute.",
-      "stars": 879,
+      "stars": 882,
       "forks": 34,
-      "watchers": 879,
+      "watchers": 882,
       "open_issues": 1,
       "language": "TypeScript",
       "topics": [
@@ -124,7 +124,7 @@
         "security"
       ],
       "created_at": "2025-12-25T17:52:57Z",
-      "updated_at": "2026-01-20T01:03:30Z",
+      "updated_at": "2026-01-20T02:46:00Z",
       "pushed_at": "2026-01-19T17:01:48Z"
     },
     {
@@ -271,9 +271,9 @@
       "full_name": "keskinonur/claude-code-ios-dev-guide",
       "url": "https://github.com/keskinonur/claude-code-ios-dev-guide",
       "description": "A comprehensive guide for setting up Claude Code CLI with PRD-driven workflows, extended thinking (ultrathink), and planning modes optimized for Swift/SwiftUI iOS development.",
-      "stars": 185,
+      "stars": 186,
       "forks": 19,
-      "watchers": 185,
+      "watchers": 186,
       "open_issues": 0,
       "language": null,
       "topics": [
@@ -289,7 +289,7 @@
         "swiftui"
       ],
       "created_at": "2026-01-04T10:37:31Z",
-      "updated_at": "2026-01-19T20:42:43Z",
+      "updated_at": "2026-01-20T01:37:13Z",
       "pushed_at": "2026-01-04T10:40:13Z"
     },
     {
@@ -322,33 +322,13 @@
       "pushed_at": "2026-01-08T17:26:00Z"
     },
     {
-      "name": "the-startup",
-      "full_name": "rsmdt/the-startup",
-      "url": "https://github.com/rsmdt/the-startup",
-      "description": "The Agentic Startup - A collection of Claude Code commands, skills, and agents.",
-      "stars": 160,
-      "forks": 18,
-      "watchers": 160,
-      "open_issues": 0,
-      "language": "Shell",
-      "topics": [
-        "claude-code",
-        "claude-code-plugin",
-        "claude-marketplace",
-        "claude-plugin"
-      ],
-      "created_at": "2025-08-12T10:54:59Z",
-      "updated_at": "2026-01-19T00:42:55Z",
-      "pushed_at": "2026-01-10T19:37:37Z"
-    },
-    {
       "name": "awesome-slash",
       "full_name": "avifenesh/awesome-slash",
       "url": "https://github.com/avifenesh/awesome-slash",
       "description": "Professional-grade slash commands for Claude Code that work across any project",
-      "stars": 158,
+      "stars": 162,
       "forks": 17,
-      "watchers": 158,
+      "watchers": 162,
       "open_issues": 1,
       "language": "JavaScript",
       "topics": [
@@ -374,8 +354,28 @@
         "zero-configuration"
       ],
       "created_at": "2026-01-15T09:33:05Z",
-      "updated_at": "2026-01-20T01:09:39Z",
+      "updated_at": "2026-01-20T02:53:42Z",
       "pushed_at": "2026-01-19T15:26:02Z"
+    },
+    {
+      "name": "the-startup",
+      "full_name": "rsmdt/the-startup",
+      "url": "https://github.com/rsmdt/the-startup",
+      "description": "The Agentic Startup - A collection of Claude Code commands, skills, and agents.",
+      "stars": 160,
+      "forks": 18,
+      "watchers": 160,
+      "open_issues": 0,
+      "language": "Shell",
+      "topics": [
+        "claude-code",
+        "claude-code-plugin",
+        "claude-marketplace",
+        "claude-plugin"
+      ],
+      "created_at": "2025-08-12T10:54:59Z",
+      "updated_at": "2026-01-19T00:42:55Z",
+      "pushed_at": "2026-01-10T19:37:37Z"
     },
     {
       "name": "claude-code-workflows",
@@ -471,9 +471,9 @@
       "full_name": "conorluddy/xclaude-plugin",
       "url": "https://github.com/conorluddy/xclaude-plugin",
       "description": "iOS development ClaudeCode plugin for mindful token and context usage. Contains modular MCPs that group various Xcode/IDB tools based on your current workflow.",
-      "stars": 63,
+      "stars": 64,
       "forks": 9,
-      "watchers": 63,
+      "watchers": 64,
       "open_issues": 3,
       "language": "TypeScript",
       "topics": [
@@ -498,7 +498,7 @@
         "xcodebuild"
       ],
       "created_at": "2025-11-06T19:02:07Z",
-      "updated_at": "2026-01-19T18:15:32Z",
+      "updated_at": "2026-01-20T02:28:45Z",
       "pushed_at": "2026-01-09T13:45:51Z"
     },
     {
@@ -674,9 +674,9 @@
       "full_name": "GantisStorm/essentials-claude-code",
       "url": "https://github.com/GantisStorm/essentials-claude-code",
       "description": "Claude Code plugin with verification-driven loops - implements until tests pass, with Ralph TUI   dashboard and Beads persistence support",
-      "stars": 42,
+      "stars": 43,
       "forks": 5,
-      "watchers": 42,
+      "watchers": 43,
       "open_issues": 2,
       "language": "Shell",
       "topics": [
@@ -689,7 +689,7 @@
         "llm"
       ],
       "created_at": "2025-12-24T11:19:17Z",
-      "updated_at": "2026-01-20T01:19:02Z",
+      "updated_at": "2026-01-20T02:34:06Z",
       "pushed_at": "2026-01-20T01:18:58Z"
     },
     {
@@ -1257,26 +1257,6 @@
       "pushed_at": "2026-01-19T07:10:06Z"
     },
     {
-      "name": "claude-code-buddy",
-      "full_name": "PCIRCLE-AI/claude-code-buddy",
-      "url": "https://github.com/PCIRCLE-AI/claude-code-buddy",
-      "description": "MCP server that adds intelligence, memory, and task routing to Claude Code - turning it into a project-aware AI teammate",
-      "stars": 8,
-      "forks": 1,
-      "watchers": 8,
-      "open_issues": 0,
-      "language": "TypeScript",
-      "topics": [
-        "claude-code",
-        "claude-code-memory",
-        "claude-code-plugin",
-        "claude-code-plugins"
-      ],
-      "created_at": "2025-12-25T12:44:23Z",
-      "updated_at": "2026-01-19T17:31:48Z",
-      "pushed_at": "2026-01-19T17:31:44Z"
-    },
-    {
       "name": "catalyst",
       "full_name": "coalesce-labs/catalyst",
       "url": "https://github.com/coalesce-labs/catalyst",
@@ -1301,6 +1281,26 @@
       "created_at": "2025-10-04T11:10:26Z",
       "updated_at": "2026-01-18T18:48:14Z",
       "pushed_at": "2026-01-12T04:14:24Z"
+    },
+    {
+      "name": "claude-code-buddy",
+      "full_name": "PCIRCLE-AI/claude-code-buddy",
+      "url": "https://github.com/PCIRCLE-AI/claude-code-buddy",
+      "description": "MCP server that adds intelligence, memory, and task routing to Claude Code - turning it into a project-aware AI teammate",
+      "stars": 8,
+      "forks": 1,
+      "watchers": 8,
+      "open_issues": 0,
+      "language": "TypeScript",
+      "topics": [
+        "claude-code",
+        "claude-code-memory",
+        "claude-code-plugin",
+        "claude-code-plugins"
+      ],
+      "created_at": "2025-12-25T12:44:23Z",
+      "updated_at": "2026-01-19T17:31:48Z",
+      "pushed_at": "2026-01-19T17:31:44Z"
     },
     {
       "name": "claude-code-plan-critique",
@@ -1436,29 +1436,6 @@
       "pushed_at": "2026-01-19T23:19:52Z"
     },
     {
-      "name": "agent-inspector",
-      "full_name": "cylestio/agent-inspector",
-      "url": "https://github.com/cylestio/agent-inspector",
-      "description": "Local open-source dev tool to debug, secure, and evaluate LLM agents. Provides static analysis, dynamic security checks, and runtime monitoring - integrates with Cursor and Claude Code.",
-      "stars": 7,
-      "forks": 1,
-      "watchers": 7,
-      "open_issues": 0,
-      "language": "Python",
-      "topics": [
-        "agent-debugging",
-        "agent-security",
-        "agent-trace",
-        "ai-security-tool",
-        "behavior-analysis",
-        "claude-code-plugin",
-        "cursor-integration"
-      ],
-      "created_at": "2025-10-28T19:32:59Z",
-      "updated_at": "2026-01-16T14:32:59Z",
-      "pushed_at": "2026-01-15T10:11:12Z"
-    },
-    {
       "name": "Claude-Patent-Creator",
       "full_name": "RobThePCGuy/Claude-Patent-Creator",
       "url": "https://github.com/RobThePCGuy/Claude-Patent-Creator",
@@ -1484,6 +1461,29 @@
       "created_at": "2025-11-15T08:34:42Z",
       "updated_at": "2026-01-16T15:50:36Z",
       "pushed_at": "2025-12-02T06:36:20Z"
+    },
+    {
+      "name": "agent-inspector",
+      "full_name": "cylestio/agent-inspector",
+      "url": "https://github.com/cylestio/agent-inspector",
+      "description": "Local open-source dev tool to debug, secure, and evaluate LLM agents. Provides static analysis, dynamic security checks, and runtime monitoring - integrates with Cursor and Claude Code.",
+      "stars": 7,
+      "forks": 1,
+      "watchers": 7,
+      "open_issues": 0,
+      "language": "Python",
+      "topics": [
+        "agent-debugging",
+        "agent-security",
+        "agent-trace",
+        "ai-security-tool",
+        "behavior-analysis",
+        "claude-code-plugin",
+        "cursor-integration"
+      ],
+      "created_at": "2025-10-28T19:32:59Z",
+      "updated_at": "2026-01-16T14:32:59Z",
+      "pushed_at": "2026-01-15T10:11:12Z"
     },
     {
       "name": "Reflexive-Claude-Code",
@@ -1762,26 +1762,37 @@
       "pushed_at": "2026-01-18T23:28:34Z"
     },
     {
-      "name": "gen-alpha-output-style",
-      "full_name": "sjnims/gen-alpha-output-style",
-      "url": "https://github.com/sjnims/gen-alpha-output-style",
-      "description": "Claude Code plugin that transforms responses into Gen Alpha/brainrot internet slang. No cap, it hits different fr fr.",
+      "name": "hardstop",
+      "full_name": "frmoretto/hardstop",
+      "url": "https://github.com/frmoretto/hardstop",
+      "description": "Don't let AI destroy your hard work! HardStop is a rock-solid protection for AI-generated commands. Pre-execution safety validation for Claude Code, Claude Cowork. Catches dangerous commands before they run: whether from AI mistakes, hallucinations, prompt injection, or misunderstood instructions. Seatbelts for the agentic AI era.",
       "stars": 5,
-      "forks": 1,
+      "forks": 0,
       "watchers": 5,
-      "open_issues": 2,
-      "language": "Shell",
+      "open_issues": 0,
+      "language": "Python",
       "topics": [
-        "brainrot",
+        "agentic-ai",
+        "ai-safety",
+        "claude",
+        "claude-ai",
         "claude-code",
+        "claude-code-hooks",
         "claude-code-plugin",
-        "gen-alpha",
-        "meme",
-        "slang"
+        "claude-code-plugin-marketplace",
+        "claude-code-plugins",
+        "claude-code-plugins-marketplace",
+        "claude-cowork",
+        "cowork",
+        "developer-tools",
+        "llm",
+        "pre-commit-hook",
+        "prompt-injection",
+        "security"
       ],
-      "created_at": "2025-11-25T02:06:50Z",
-      "updated_at": "2026-01-12T22:39:13Z",
-      "pushed_at": "2026-01-12T22:39:09Z"
+      "created_at": "2026-01-17T05:48:41Z",
+      "updated_at": "2026-01-19T10:14:09Z",
+      "pushed_at": "2026-01-19T10:14:03Z"
     },
     {
       "name": "somepulp-agents",
@@ -1818,37 +1829,73 @@
       "pushed_at": "2026-01-19T05:15:10Z"
     },
     {
-      "name": "hardstop",
-      "full_name": "frmoretto/hardstop",
-      "url": "https://github.com/frmoretto/hardstop",
-      "description": "Don't let AI destroy your hard work! HardStop is a rock-solid protection for AI-generated commands. Pre-execution safety validation for Claude Code, Claude Cowork. Catches dangerous commands before they run: whether from AI mistakes, hallucinations, prompt injection, or misunderstood instructions. Seatbelts for the agentic AI era.",
+      "name": "gen-alpha-output-style",
+      "full_name": "sjnims/gen-alpha-output-style",
+      "url": "https://github.com/sjnims/gen-alpha-output-style",
+      "description": "Claude Code plugin that transforms responses into Gen Alpha/brainrot internet slang. No cap, it hits different fr fr.",
+      "stars": 5,
+      "forks": 1,
+      "watchers": 5,
+      "open_issues": 2,
+      "language": "Shell",
+      "topics": [
+        "brainrot",
+        "claude-code",
+        "claude-code-plugin",
+        "gen-alpha",
+        "meme",
+        "slang"
+      ],
+      "created_at": "2025-11-25T02:06:50Z",
+      "updated_at": "2026-01-12T22:39:13Z",
+      "pushed_at": "2026-01-12T22:39:09Z"
+    },
+    {
+      "name": "dialectic",
+      "full_name": "urav06/dialectic",
+      "url": "https://github.com/urav06/dialectic",
+      "description": "A Rebuttal Engine for Computational Argumentation in Claude Code CLI",
       "stars": 5,
       "forks": 0,
       "watchers": 5,
       "open_issues": 0,
       "language": "Python",
       "topics": [
-        "agentic-ai",
-        "ai-safety",
-        "claude",
-        "claude-ai",
+        "agentic",
         "claude-code",
-        "claude-code-hooks",
         "claude-code-plugin",
-        "claude-code-plugin-marketplace",
-        "claude-code-plugins",
-        "claude-code-plugins-marketplace",
-        "claude-cowork",
-        "cowork",
-        "developer-tools",
+        "debate",
         "llm",
-        "pre-commit-hook",
-        "prompt-injection",
-        "security"
+        "philosophy",
+        "subagents"
       ],
-      "created_at": "2026-01-17T05:48:41Z",
-      "updated_at": "2026-01-19T10:14:09Z",
-      "pushed_at": "2026-01-19T10:14:03Z"
+      "created_at": "2025-10-13T12:04:43Z",
+      "updated_at": "2025-12-21T19:47:19Z",
+      "pushed_at": "2025-12-08T01:05:22Z"
+    },
+    {
+      "name": "AI-Prompt-Guide-MCP",
+      "full_name": "Blakeem/AI-Prompt-Guide-MCP",
+      "url": "https://github.com/Blakeem/AI-Prompt-Guide-MCP",
+      "description": "MCP server and Claude Code plugin with task driven agent orchestration workflows, guides, markdown knowledge graphs, with intelligent context injection.",
+      "stars": 5,
+      "forks": 0,
+      "watchers": 5,
+      "open_issues": 0,
+      "language": "TypeScript",
+      "topics": [
+        "agent-orchestration",
+        "claude-code-plugin",
+        "claude-code-plugins",
+        "knowledge-graph",
+        "markdown",
+        "mcp",
+        "mcp-server",
+        "typescript"
+      ],
+      "created_at": "2025-09-05T21:01:05Z",
+      "updated_at": "2026-01-20T01:37:21Z",
+      "pushed_at": "2025-11-27T19:23:22Z"
     },
     {
       "name": "ccs",
@@ -1873,29 +1920,6 @@
       "created_at": "2025-11-28T09:32:24Z",
       "updated_at": "2025-12-28T03:42:47Z",
       "pushed_at": "2025-12-01T09:27:54Z"
-    },
-    {
-      "name": "dialectic",
-      "full_name": "urav06/dialectic",
-      "url": "https://github.com/urav06/dialectic",
-      "description": "A Rebuttal Engine for Computational Argumentation in Claude Code CLI",
-      "stars": 5,
-      "forks": 0,
-      "watchers": 5,
-      "open_issues": 0,
-      "language": "Python",
-      "topics": [
-        "agentic",
-        "claude-code",
-        "claude-code-plugin",
-        "debate",
-        "llm",
-        "philosophy",
-        "subagents"
-      ],
-      "created_at": "2025-10-13T12:04:43Z",
-      "updated_at": "2025-12-21T19:47:19Z",
-      "pushed_at": "2025-12-08T01:05:22Z"
     },
     {
       "name": "claude",
@@ -1934,6 +1958,26 @@
       "created_at": "2026-01-02T18:22:27Z",
       "updated_at": "2026-01-18T09:48:11Z",
       "pushed_at": "2026-01-03T15:48:32Z"
+    },
+    {
+      "name": "claude-d2-diagrams",
+      "full_name": "heathdutton/claude-d2-diagrams",
+      "url": "https://github.com/heathdutton/claude-d2-diagrams",
+      "description": "A Claude Code plugin that generates infrastructure and architecture diagrams (and documentation) from your codebase using D2",
+      "stars": 5,
+      "forks": 0,
+      "watchers": 5,
+      "open_issues": 0,
+      "language": "Shell",
+      "topics": [
+        "claude-code",
+        "claude-code-plugin",
+        "claude-code-plugins-marketplace",
+        "d2"
+      ],
+      "created_at": "2026-01-10T03:54:43Z",
+      "updated_at": "2026-01-20T02:31:22Z",
+      "pushed_at": "2026-01-13T20:46:15Z"
     },
     {
       "name": "claude-code-builder",
@@ -1984,6 +2028,26 @@
       "pushed_at": "2025-11-12T06:05:58Z"
     },
     {
+      "name": "toonify-mcp",
+      "full_name": "PCIRCLE-AI/toonify-mcp",
+      "url": "https://github.com/PCIRCLE-AI/toonify-mcp",
+      "description": "MCP server that reduces Claude API token usage by 60%+ using TOON format optimization",
+      "stars": 4,
+      "forks": 1,
+      "watchers": 4,
+      "open_issues": 0,
+      "language": "TypeScript",
+      "topics": [
+        "claude-code-hooks",
+        "claude-code-mcp",
+        "claude-code-plugin",
+        "toon-format"
+      ],
+      "created_at": "2025-12-24T11:47:09Z",
+      "updated_at": "2026-01-09T09:38:10Z",
+      "pushed_at": "2026-01-05T00:00:49Z"
+    },
+    {
       "name": "imaginepro-claude-plugin",
       "full_name": "imaginpro/imaginepro-claude-plugin",
       "url": "https://github.com/imaginpro/imaginepro-claude-plugin",
@@ -2028,75 +2092,6 @@
       "pushed_at": "2026-01-11T16:47:45Z"
     },
     {
-      "name": "toonify-mcp",
-      "full_name": "PCIRCLE-AI/toonify-mcp",
-      "url": "https://github.com/PCIRCLE-AI/toonify-mcp",
-      "description": "MCP server that reduces Claude API token usage by 60%+ using TOON format optimization",
-      "stars": 4,
-      "forks": 1,
-      "watchers": 4,
-      "open_issues": 0,
-      "language": "TypeScript",
-      "topics": [
-        "claude-code-hooks",
-        "claude-code-mcp",
-        "claude-code-plugin",
-        "toon-format"
-      ],
-      "created_at": "2025-12-24T11:47:09Z",
-      "updated_at": "2026-01-09T09:38:10Z",
-      "pushed_at": "2026-01-05T00:00:49Z"
-    },
-    {
-      "name": "AI-Prompt-Guide-MCP",
-      "full_name": "Blakeem/AI-Prompt-Guide-MCP",
-      "url": "https://github.com/Blakeem/AI-Prompt-Guide-MCP",
-      "description": "MCP server and Claude Code plugin with task driven agent orchestration workflows, guides, markdown knowledge graphs, with intelligent context injection.",
-      "stars": 4,
-      "forks": 0,
-      "watchers": 4,
-      "open_issues": 0,
-      "language": "TypeScript",
-      "topics": [
-        "agent-orchestration",
-        "claude-code-plugin",
-        "claude-code-plugins",
-        "knowledge-graph",
-        "markdown",
-        "mcp",
-        "mcp-server",
-        "typescript"
-      ],
-      "created_at": "2025-09-05T21:01:05Z",
-      "updated_at": "2025-11-29T21:35:28Z",
-      "pushed_at": "2025-11-27T19:23:22Z"
-    },
-    {
-      "name": "claudikins-automatic-context-manager",
-      "full_name": "elb-pr/claudikins-automatic-context-manager",
-      "url": "https://github.com/elb-pr/claudikins-automatic-context-manager",
-      "description": "Claudikins Automatic Context Manager - seamless context handoff for Claude Code",
-      "stars": 4,
-      "forks": 0,
-      "watchers": 4,
-      "open_issues": 0,
-      "language": "Shell",
-      "topics": [
-        "automation-scripts",
-        "claude",
-        "claude-ai",
-        "claude-code",
-        "claude-code-plugin",
-        "claude-skills",
-        "claudecode",
-        "cli-tool",
-        "context-engineering"
-      ],
-      "created_at": "2026-01-12T21:22:29Z",
-      "updated_at": "2026-01-19T21:51:57Z",
-      "pushed_at": "2026-01-19T15:16:50Z"
-    },
-    {
       "name": "claude-plugin-prd-workflow",
       "full_name": "Yassinello/claude-plugin-prd-workflow",
       "url": "https://github.com/Yassinello/claude-plugin-prd-workflow",
@@ -2125,6 +2120,31 @@
       "pushed_at": "2025-11-14T16:21:55Z"
     },
     {
+      "name": "claudikins-automatic-context-manager",
+      "full_name": "elb-pr/claudikins-automatic-context-manager",
+      "url": "https://github.com/elb-pr/claudikins-automatic-context-manager",
+      "description": "Claudikins Automatic Context Manager - seamless context handoff for Claude Code",
+      "stars": 4,
+      "forks": 0,
+      "watchers": 4,
+      "open_issues": 0,
+      "language": "Shell",
+      "topics": [
+        "automation-scripts",
+        "claude",
+        "claude-ai",
+        "claude-code",
+        "claude-code-plugin",
+        "claude-skills",
+        "claudecode",
+        "cli-tool",
+        "context-engineering"
+      ],
+      "created_at": "2026-01-12T21:22:29Z",
+      "updated_at": "2026-01-19T21:51:57Z",
+      "pushed_at": "2026-01-19T15:16:50Z"
+    },
+    {
       "name": "stratarts",
       "full_name": "maigentic/stratarts",
       "url": "https://github.com/maigentic/stratarts",
@@ -2149,26 +2169,6 @@
       "created_at": "2025-12-17T22:49:34Z",
       "updated_at": "2026-01-05T01:23:42Z",
       "pushed_at": "2025-12-19T07:49:06Z"
-    },
-    {
-      "name": "claude-d2-diagrams",
-      "full_name": "heathdutton/claude-d2-diagrams",
-      "url": "https://github.com/heathdutton/claude-d2-diagrams",
-      "description": "A Claude Code plugin that generates infrastructure and architecture diagrams (and documentation) from your codebase using D2",
-      "stars": 4,
-      "forks": 0,
-      "watchers": 4,
-      "open_issues": 0,
-      "language": "Shell",
-      "topics": [
-        "claude-code",
-        "claude-code-plugin",
-        "claude-code-plugins-marketplace",
-        "d2"
-      ],
-      "created_at": "2026-01-10T03:54:43Z",
-      "updated_at": "2026-01-20T00:14:48Z",
-      "pushed_at": "2026-01-13T20:46:15Z"
     },
     {
       "name": "brainstorm-plan",
@@ -2285,6 +2285,26 @@
       "pushed_at": "2026-01-09T01:52:46Z"
     },
     {
+      "name": "claude-code-multi-agent-dev-system",
+      "full_name": "michael-harris/claude-code-multi-agent-dev-system",
+      "url": "https://github.com/michael-harris/claude-code-multi-agent-dev-system",
+      "description": "A multi-agent Claude Code development workflow for planning executing sprints in a fully automated fashion.",
+      "stars": 3,
+      "forks": 0,
+      "watchers": 3,
+      "open_issues": 0,
+      "language": "Shell",
+      "topics": [
+        "claude",
+        "claude-code",
+        "claude-code-agents",
+        "claude-code-plugin"
+      ],
+      "created_at": "2025-10-30T17:50:50Z",
+      "updated_at": "2025-12-18T14:53:41Z",
+      "pushed_at": "2025-12-07T01:31:02Z"
+    },
+    {
       "name": "community-agent-plugin",
       "full_name": "lycfyi/community-agent-plugin",
       "url": "https://github.com/lycfyi/community-agent-plugin",
@@ -2305,26 +2325,6 @@
       "created_at": "2026-01-03T20:26:00Z",
       "updated_at": "2026-01-14T17:14:40Z",
       "pushed_at": "2026-01-14T17:15:16Z"
-    },
-    {
-      "name": "claude-code-multi-agent-dev-system",
-      "full_name": "michael-harris/claude-code-multi-agent-dev-system",
-      "url": "https://github.com/michael-harris/claude-code-multi-agent-dev-system",
-      "description": "A multi-agent Claude Code development workflow for planning executing sprints in a fully automated fashion.",
-      "stars": 3,
-      "forks": 0,
-      "watchers": 3,
-      "open_issues": 0,
-      "language": "Shell",
-      "topics": [
-        "claude",
-        "claude-code",
-        "claude-code-agents",
-        "claude-code-plugin"
-      ],
-      "created_at": "2025-10-30T17:50:50Z",
-      "updated_at": "2025-12-18T14:53:41Z",
-      "pushed_at": "2025-12-07T01:31:02Z"
     },
     {
       "name": "cc-swiss-knife",
@@ -2429,64 +2429,6 @@
       "pushed_at": "2026-01-18T00:16:21Z"
     },
     {
-      "name": "specWeaver",
-      "full_name": "RoniLeor/specWeaver",
-      "url": "https://github.com/RoniLeor/specWeaver",
-      "description": "Professional Claude Code plugin for AI-powered spec-driven development with automated code review and  multi-agent collaboration",
-      "stars": 2,
-      "forks": 0,
-      "watchers": 2,
-      "open_issues": 0,
-      "language": null,
-      "topics": [
-        "anthropic",
-        "claude-ai",
-        "claude-code",
-        "claude-code-plugin",
-        "claude-code-plugins",
-        "claude-code-plugins-marketplace",
-        "multi-agent",
-        "sonnet-4-5",
-        "spec-driven-development"
-      ],
-      "created_at": "2025-10-26T11:58:27Z",
-      "updated_at": "2025-12-05T08:56:01Z",
-      "pushed_at": "2025-10-27T08:56:37Z"
-    },
-    {
-      "name": "Sherpa-Action",
-      "full_name": "sherpa-sh/Sherpa-Action",
-      "url": "https://github.com/sherpa-sh/Sherpa-Action",
-      "description": "AI that ships your code. Deploy to any cloud with plain English.",
-      "stars": 2,
-      "forks": 0,
-      "watchers": 2,
-      "open_issues": 0,
-      "language": null,
-      "topics": [
-        "ai",
-        "ai-developer-tools",
-        "ai-ops",
-        "aws",
-        "ci-cd",
-        "claude-code",
-        "claude-code-plugin",
-        "claude-code-plugins",
-        "cloudflare",
-        "continuous-deployment",
-        "deployment",
-        "devops",
-        "github-action",
-        "github-actions",
-        "infrastructure-as-code",
-        "nextjs",
-        "sherpa-sh"
-      ],
-      "created_at": "2026-01-10T21:35:02Z",
-      "updated_at": "2026-01-16T15:58:14Z",
-      "pushed_at": "2026-01-16T15:32:39Z"
-    },
-    {
       "name": "claude-plugins",
       "full_name": "jontsai/claude-plugins",
       "url": "https://github.com/jontsai/claude-plugins",
@@ -2510,33 +2452,81 @@
       "pushed_at": "2025-12-13T01:12:04Z"
     },
     {
-      "name": "larouex-fullstack-plugin",
-      "full_name": "Ashikparvez89/larouex-fullstack-plugin",
-      "url": "https://github.com/Ashikparvez89/larouex-fullstack-plugin",
-      "description": "🌐 Build modern full-stack web applications easily with the Claude Code plugin, featuring 81 commands and 12 AI agents for efficient development.",
+      "name": "codeforges-claude-plugin",
+      "full_name": "rubenCodeforges/codeforges-claude-plugin",
+      "url": "https://github.com/rubenCodeforges/codeforges-claude-plugin",
+      "description": "Production-ready Claude Code plugin with specialized agents for deep code analysis, performance auditing, and debugging",
+      "stars": 2,
+      "forks": 0,
+      "watchers": 2,
+      "open_issues": 0,
+      "language": "Shell",
+      "topics": [
+        "ai-agents",
+        "ai-code-review",
+        "ai-developer-tools",
+        "ai-development",
+        "claude-agents",
+        "claude-ai",
+        "claude-code",
+        "claude-code-plugin",
+        "code-analysis",
+        "code-review",
+        "debugging-tools",
+        "developer-tools",
+        "lighthouse",
+        "performance-optimization",
+        "static-analysis",
+        "web-performance"
+      ],
+      "created_at": "2025-11-12T08:54:09Z",
+      "updated_at": "2025-12-02T07:40:52Z",
+      "pushed_at": "2025-12-02T07:40:49Z"
+    },
+    {
+      "name": "claude-plugins",
+      "full_name": "markphelps/claude-plugins",
+      "url": "https://github.com/markphelps/claude-plugins",
+      "description": "My Claude Code Plugins",
+      "stars": 2,
+      "forks": 0,
+      "watchers": 2,
+      "open_issues": 0,
+      "language": "JavaScript",
+      "topics": [
+        "claude",
+        "claude-code",
+        "claude-code-plugin",
+        "claude-code-plugins"
+      ],
+      "created_at": "2026-01-05T01:04:13Z",
+      "updated_at": "2026-01-05T16:18:44Z",
+      "pushed_at": "2026-01-05T16:18:40Z"
+    },
+    {
+      "name": "specWeaver",
+      "full_name": "RoniLeor/specWeaver",
+      "url": "https://github.com/RoniLeor/specWeaver",
+      "description": "Professional Claude Code plugin for AI-powered spec-driven development with automated code review and  multi-agent collaboration",
       "stars": 2,
       "forks": 0,
       "watchers": 2,
       "open_issues": 0,
       "language": null,
       "topics": [
-        "azure",
-        "bootstrap",
+        "anthropic",
+        "claude-ai",
         "claude-code",
         "claude-code-plugin",
-        "devops",
-        "fullstack",
-        "nextjs",
-        "railway",
-        "react",
-        "scaffolding",
-        "serverless",
-        "typescript",
-        "web-development"
+        "claude-code-plugins",
+        "claude-code-plugins-marketplace",
+        "multi-agent",
+        "sonnet-4-5",
+        "spec-driven-development"
       ],
-      "created_at": "2023-12-11T17:35:10Z",
-      "updated_at": "2026-01-20T01:00:32Z",
-      "pushed_at": "2026-01-20T01:00:28Z"
+      "created_at": "2025-10-26T11:58:27Z",
+      "updated_at": "2025-12-05T08:56:01Z",
+      "pushed_at": "2025-10-27T08:56:37Z"
     }
   ]
 }
