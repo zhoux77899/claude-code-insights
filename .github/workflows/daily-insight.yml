@@ -35,6 +35,7 @@ jobs:
           python scripts/dedupe_repos.py --input /tmp/response.jsonl --output /tmp/repos.json
           cp /tmp/repos.json insights/repos.json
 
+          TOTAL=$(jq '.total_count' /tmp/repos.json)
           DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
 
           # Create markdown header
