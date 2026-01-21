@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-01-21T09:43:13Z",
-  "total_count": 100,
+  "generated_at": "2026-01-21T09:52:39Z",
+  "total_count": 998,
   "repos": [
     {
       "name": "marketplace.json",
@@ -305,7 +305,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/popup-studio-ai/bkit-claude-code/blob/3b3bca7deac15ea718318f65f4a53ed605088b71/.claude-plugin/marketplace.json",
+      "url": "https://github.com/trabian/fluxwing-skills/blob/f507c1e431eab9fe04579cf951a679fc36f73fe5/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -320,7 +320,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/JosiahSiegel/claude-plugin-marketplace/blob/267a5ab3c3c26547401b0e62aa7ea13e05427362/.claude-plugin/marketplace.json",
+      "url": "https://github.com/stared/gemini-claude-skills/blob/0a31cfed79be24a73c451dd220f3ee5a06c49f0f/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -350,7 +350,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/testcontainers/claude-skills/blob/3b6503281a5608be356be7088ce2dc965f81fcea/.claude-plugin/marketplace.json",
+      "url": "https://github.com/jingnanzhou/fellow/blob/c1b929d815a4b4c03ebedacb07536a4318897f32/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -365,7 +365,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/cameronfreer/lean4-skills/blob/5d6bd03a024d63c02225bd9814c981275e1c9ee5/.claude-plugin/marketplace.json",
+      "url": "https://github.com/ursisterbtw/ccprompts/blob/55b7af9cb8b9c2cfb0573d3720618d11fe559915/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -380,7 +380,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/njerschow/textme/blob/abe21a3b943dfdadd7ba64de64c62a18ce28ed5b/.claude-plugin/marketplace.json",
+      "url": "https://github.com/ooiyeefei/ccc/blob/24decef76f74929bbc5d164f3bcbc8f2e7360d88/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -410,7 +410,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/neill-k/cc-skills/blob/7e24176e66e08ae4212c9cf73029159276b6071d/.claude-plugin/marketplace.json",
+      "url": "https://github.com/vanman2024/low-code-marketplace/blob/e6b92a5013b08af026684a7620747121bf894e02/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -425,7 +425,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/slgoodrich/agents/blob/acccb31e83a9092598219638986baa22adf99057/.claude-plugin/marketplace.json",
+      "url": "https://github.com/karashiiro/claude-marketplace/blob/2251b351accb392dcbe848544a7b66caf43cfefc/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -440,7 +440,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/slamb2k/devsolo/blob/9d8bdc98658299706e162ce790b476a432a02841/.claude-plugin/marketplace.json",
+      "url": "https://github.com/mprpic/claude-gitlab-tools/blob/b5460b87ad899254796d6e84f90bef871ed21297/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -455,7 +455,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/CodeGlide/codeglide-agents/blob/da2f60200980c82f518232a90ce65628729e74cc/.claude-plugin/marketplace.json",
+      "url": "https://github.com/ZephyrDeng/cc-plugins/blob/8f34fd060e6ffd3a94ce4a8446ab3807e6dda9a7/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -470,7 +470,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/jschulte/stackshift/blob/d3eeb7b1016f5e00d05a42261595f5fee5e114a2/.claude-plugin/marketplace.json",
+      "url": "https://github.com/MacroMan5/claude-code-workflow-plugins/blob/8a44746de9bafca84302dd99f17b4614c5ee056f/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -485,22 +485,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/hyperskill/claude-code-marketplace/blob/556437f6f0ed6afc9e6764f1c6cac017c34c38f7/.claude-plugin/marketplace.json",
-      "description": null,
-      "stars": null,
-      "forks": null,
-      "watchers": null,
-      "open_issues": null,
-      "language": null,
-      "topics": null,
-      "created_at": null,
-      "updated_at": null,
-      "pushed_at": null
-    },
-    {
-      "name": "marketplace.json",
-      "full_name": null,
-      "url": "https://github.com/Dieshen/claude_marketplace/blob/eca5227d74759fcc6bb3f11f25d4bd62071e1361/.claude-plugin/marketplace.json",
+      "url": "https://github.com/s2005/markdown-linter-fixer-skill/blob/36c1ab3014691435e96becd1a3dcaf3ee37de3d6/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -530,7 +515,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/lackeyjb/playwright-skill/blob/bb7e920d376022958214e349ef25498a2644e189/.claude-plugin/marketplace.json",
+      "url": "https://github.com/croffasia/cc-blueprint-toolkit/blob/cebf2f3526629aaf0c6c044682dec1c36cb53085/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -545,7 +530,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/claudekit/frontend-design-pro-demo/blob/756b8d99618b2c4e8a90c89a99f678009468aae3/.claude-plugin/marketplace.json",
+      "url": "https://github.com/jmagly/ai-writing-guide/blob/e7c9196732f65fab4de545bfce09216738eca7a4/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -560,7 +545,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/jwplatta/prompt-library/blob/3e01f16de73320293b1e4645ca04440e2a270f9d/.claude-plugin/marketplace.json",
+      "url": "https://github.com/classmethod/tsumiki/blob/d4951bf17dbe08bcd795071bd172e57419764196/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -575,7 +560,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/krzemienski/shannon-framework/blob/b5a775da423555fc197586fcade3446409c9bb4a/.claude-plugin/marketplace.json",
+      "url": "https://github.com/akkomar/mozdata-claude-plugin/blob/7d650ae074b6a27830221329e860a5d8d29ab354/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -590,7 +575,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/denkhaus/knot/blob/b229fdd7c176d0df81811dc79ab499161b0c9410/.claude-plugin/marketplace.json",
+      "url": "https://github.com/johnclyde/clydehub/blob/c06b1ba46371a8906c486caa5f5134191e511a21/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -605,7 +590,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/contextgraph/claude-code-plugin/blob/0f45ba0a9938fd52cd9c0fc4919dd1564ddb9ada/.claude-plugin/marketplace.json",
+      "url": "https://github.com/albertgstoehl/gstoehl-marketplace/blob/38b1d5a701604384333651f4b65fe1f166922f7e/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -620,7 +605,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/vuer-ai/vuer-skill-marketplace/blob/6b69f7f149e3b6f2a7afa0c60bd45cac7b536efe/.claude-plugin/marketplace.json",
+      "url": "https://github.com/QuyDatSadBoy/Agent-skill/blob/1cd8a9fdf3305c464b54c1efa86a20aa8dcda009/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -650,7 +635,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/Zate/cc-godot/blob/d9796f75c3f5626d8b66dc31a9095f9d735c2327/.claude-plugin/marketplace.json",
+      "url": "https://github.com/Nice-Wolf-Studio/wolf-skills-marketplace/blob/2cb2515bd86ec177d1b5588a568c1652b898d976/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -665,7 +650,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/panguin6010/daisy-mode-plugin/blob/ba78c6defde73fdd043c45421ccdc57bdf290d4e/.claude-plugin/marketplace.json",
+      "url": "https://github.com/Zal4DW/claude-plugin-marketplace/blob/bb29e1f2f5da7ba96228d8dcbc2fb557b4d585e7/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -680,7 +665,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/alvis/.claude/blob/b7cfb84d0864103d492ca706c6788314b0625c66/.claude-plugin/marketplace.json",
+      "url": "https://github.com/codethread/claude-code-plugins/blob/aecab4ff5b36503ecdb61efa7dfec17cf3999933/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -695,7 +680,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/KazukiYunoue/claude-code-ia-writer-annotations/blob/f4cb9c67349d6e74d2c4aa8be28ab811be18fde9/.claude-plugin/marketplace.json",
+      "url": "https://github.com/MonIKaMR25/awesome-claude-skills/blob/7f5469fc6f0b55fa147132f0270ebfc0044f9447/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -710,7 +695,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/huangmingxia/test-generation-assistant/blob/d23ee76425e7c267428b6ce1650d1cf80ad51fc5/.claude-plugin/marketplace.json",
+      "url": "https://github.com/gekko68/my-first-plugin/blob/ecad84c33a57f807dca70257eeecfc15962e8bdd/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -725,7 +710,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/androidyue/claude_code_plugin_example/blob/c49791a8f7bbd64c209a91941dc2f02d81003661/.claude-plugin/marketplace.json",
+      "url": "https://github.com/lightsoft-dev/claude-plugin-for-dev/blob/bba6026ade78a5f9c3b3c5073c1e5d58f3e36f66/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -740,7 +725,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/usmanali4073/stylemate-plugins/blob/7a7130700ab7e047c563a4ee6adf07b0ce943899/.claude-plugin/marketplace.json",
+      "url": "https://github.com/elsif-dev/claude/blob/e2c7abb3af87a7a7bc17555855966857afd8529a/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -755,7 +740,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/AvdLee/Swift-Concurrency-Agent-Skill/blob/5c73a6b4c60eb98add2e5098b767fd101297f11f/.claude-plugin/marketplace.json",
+      "url": "https://github.com/longkeyy/claude-discover/blob/6969ad5726005550dd998b7edf06948bb487e95d/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -770,7 +755,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/nicknisi/claude-plugins/blob/bb3f0bb52827d7462d173551534cb0b6398a31e8/.claude-plugin/marketplace.json",
+      "url": "https://github.com/zscole/adversarial-spec/blob/5caff640004be4a29e0d3f3533b2651679f11e78/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -785,7 +770,22 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/serkan-ozal/browser-devtools-mcp/blob/de0bfd32b2a6d15058d71ba1bdf35eceedce70e3/.claude-plugin/marketplace.json",
+      "url": "https://github.com/eli0shin/cli-lsp-client/blob/6e3935dd2af1ffbcbbd59011e56626275b61dbad/.claude-plugin/marketplace.json",
+      "description": null,
+      "stars": null,
+      "forks": null,
+      "watchers": null,
+      "open_issues": null,
+      "language": null,
+      "topics": null,
+      "created_at": null,
+      "updated_at": null,
+      "pushed_at": null
+    },
+    {
+      "name": "marketplace.json",
+      "full_name": null,
+      "url": "https://github.com/oikon48/cc-frontend-skills/blob/12989e392a9b2d83efd12767abff886a4da58f5c/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -815,7 +815,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/bennypowers/cem/blob/e153d01507531aac22dea140a9252b39e5793df9/.claude-plugin/marketplace.json",
+      "url": "https://github.com/frmoretto/stream-coding/blob/757c24081024aa87ddf1ec653f7278631408d45b/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -830,22 +830,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/laravel/claude-code/blob/baad020e8514cf05c55ff57baa5cdb1fe5e6e8be/.claude-plugin/marketplace.json",
-      "description": null,
-      "stars": null,
-      "forks": null,
-      "watchers": null,
-      "open_issues": null,
-      "language": null,
-      "topics": null,
-      "created_at": null,
-      "updated_at": null,
-      "pushed_at": null
-    },
-    {
-      "name": "marketplace.json",
-      "full_name": null,
-      "url": "https://github.com/cocoindex-io/cocoindex-claude/blob/d1e42b36361a590ecfc6e74e62ee21a4587b23d8/.claude-plugin/marketplace.json",
+      "url": "https://github.com/ed3dai/ed3d-plugins/blob/237af25c9486f93caf541ee58ce4f3d9151803db/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -875,7 +860,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/ccplugins/awesome-claude-code-plugins/blob/e5856f987d0f4e05078b1ba433b3995393119818/.claude-plugin/marketplace.json",
+      "url": "https://github.com/blacktop/ipsw-skill/blob/b68ae995ca0414d33cb944e055b8110ec83672ec/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -890,7 +875,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/Rika-Labs/sgrep/blob/f49afc1bfdb35ccfa0dcab6e54d1af75278bc42c/.claude-plugin/marketplace.json",
+      "url": "https://github.com/chanwit/tdg/blob/c2c6805a432e329a39ec8ec01799afde03bde0a8/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -920,7 +905,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/Lucklyric/cc-dev-tools/blob/325bfb969fc008e2b623523cd306b6cefad96a6d/.claude-plugin/marketplace.json",
+      "url": "https://github.com/Wirasm/PRPs-agentic-eng/blob/481b134395261bd59fef904f724905b9acdfd4a4/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -935,7 +920,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/TechDufus/oh-my-claude/blob/5a5a0705de696100b56f8e735e7db39f51ff5316/.claude-plugin/marketplace.json",
+      "url": "https://github.com/AlexGladkov/claude-code-agents/blob/44cbc936fec7caf84c3caf7e3d421254ea58a285/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -950,7 +935,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/project-codeguard/rules/blob/bdd060e7409c7b91af64fb3bea2f033c1b315c1f/.claude-plugin/marketplace.json",
+      "url": "https://github.com/dvdsgl/claude-canvas/blob/2a88ac56bc38e5ab37c5619952686f757935ab80/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -965,7 +950,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/anthropics/life-sciences/blob/4cb96c4f11c522fd349fc7eba532752e149a4af2/.claude-plugin/marketplace.json",
+      "url": "https://github.com/kalil0321/reverse-api-engineer/blob/2d772cea32ea092789ca68237779235127191766/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -995,7 +980,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/Equilateral-AI/equilateral-agents-open-core/blob/fb005b955979ac04b5e84b0aaa6a8ba53aae2e95/.claude-plugin/marketplace.json",
+      "url": "https://github.com/wildcard/caro/blob/2e9ce3cedb5a37e4813c593be6d75869fa0c9340/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1010,7 +995,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/InsForge/InsForge/blob/e6ad3f8881ebd990996e54b0ca619220d7edab1f/.claude-plugin/marketplace.json",
+      "url": "https://github.com/jordanburke/functype/blob/965d518afccfa61cb6a66282069d7b9a4814a0e2/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1025,7 +1010,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/jamesrochabrun/skills/blob/2482c176372299c92af01f8414a67172f324e8db/.claude-plugin/marketplace.json",
+      "url": "https://github.com/jleechanorg/claude-commands/blob/df5a83ccde0319680ccabc448fdaf5e9ab16e2e1/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1040,7 +1025,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/cliftonc/drizzle-cube/blob/7bfbda595a0cf0db323070c96a564b2310748da6/.claude-plugin/marketplace.json",
+      "url": "https://github.com/lis186/SourceAtlas/blob/caaa14694f749590f90b90523c887b5e97413e06/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1070,7 +1055,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/alexhholmes/skills/blob/b8cecef1e46204c2db5b51ae00a37f2c11215a9a/.claude-plugin/marketplace.json",
+      "url": "https://github.com/bartolli/codanna-cc-plugin/blob/b4d0e7ecdc8f73f8933999c807f15f307156fae5/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1085,7 +1070,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/him0/freee-mcp/blob/67bd4d334665cc7372c7f4760e9d18332f948fbc/.claude-plugin/marketplace.json",
+      "url": "https://github.com/amondnet/claude-plugins/blob/ad86423bad9bb28aad3909ccb38e5a1e462fbb7f/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1130,7 +1115,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/forsonny/The-Crucible-Writing-System-For-Claude/blob/0d82e733536d70358259f93d66cc40708077898e/.claude-plugin/marketplace.json",
+      "url": "https://github.com/Pimzino/spec-workflow-mcp/blob/f63205ac7833647641d7fe6ba218294b56aca5f2/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1145,7 +1130,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/hiroro-work/claude-plugins/blob/d44443260d26ab9129aafadb5f15719cab89cbe5/.claude-plugin/marketplace.json",
+      "url": "https://github.com/jeanluciano/quaestor/blob/f239b7efde2c1eeddeb91a988dbd81d3ce744d8c/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1160,7 +1145,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/RightCapitalHQ/chinese-style-guide/blob/962023e5309d34ce8e3c3f4c704208bc23d14659/.claude-plugin/marketplace.json",
+      "url": "https://github.com/ykdojo/claude-code-tips/blob/903e6aa8a1e6deb6e4d332b0649a41819211a2d8/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1175,7 +1160,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/kazuph/reviw/blob/c28f4089a23e6cf75ed5ae7e263cfe3dd54756b0/.claude-plugin/marketplace.json",
+      "url": "https://github.com/verygoodplugins/mcp-automem/blob/663d5988b42d93398fdedde0d43dbcee8fd14e3a/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1190,7 +1175,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/sirmews/claude-hook-advisor/blob/235801cf6f8ec709332783c99c6563d9f74e7e10/.claude-plugin/marketplace.json",
+      "url": "https://github.com/willibrandon/pixel-plugin/blob/dee350645b705916655c013f208bf5580ecb9317/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1250,7 +1235,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/Hurblat/claude-constructor/blob/a92f053590b58787c8bb4d8bb482bbf2e04d4a19/.claude-plugin/marketplace.json",
+      "url": "https://github.com/sirsjg/flux/blob/8f514e03affde542101bea98ed69bff2f2dc5b95/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1265,7 +1250,22 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/LerianStudio/ring/blob/ba0983d4370fffc030260df22c7e53ff4333dc08/.claude-plugin/marketplace.json",
+      "url": "https://github.com/Clouditera/AI-Vuln-Reproduce/blob/4a052378c050bbda85471e999635786c939fe377/.claude-plugin/marketplace.json",
+      "description": null,
+      "stars": null,
+      "forks": null,
+      "watchers": null,
+      "open_issues": null,
+      "language": null,
+      "topics": null,
+      "created_at": null,
+      "updated_at": null,
+      "pushed_at": null
+    },
+    {
+      "name": "marketplace.json",
+      "full_name": null,
+      "url": "https://github.com/koriym/xdebug-mcp/blob/7db4c9ec03f3333d534b6e6599dcdf320c22611b/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1295,7 +1295,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/mixedbread-ai/mgrep/blob/e2eeefab952bcdf86873686d41039064748f2365/.claude-plugin/marketplace.json",
+      "url": "https://github.com/mintlify/docs/blob/99787833a7381e62b0f3bfe0c293e66b00f34d3e/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1310,22 +1310,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/bradleygolden/claude-marketplace-elixir/blob/624d46be6c7a73ffb4e0def9a6455001ad0426df/.claude-plugin/marketplace.json",
-      "description": null,
-      "stars": null,
-      "forks": null,
-      "watchers": null,
-      "open_issues": null,
-      "language": null,
-      "topics": null,
-      "created_at": null,
-      "updated_at": null,
-      "pushed_at": null
-    },
-    {
-      "name": "marketplace.json",
-      "full_name": null,
-      "url": "https://github.com/obra/superpowers-chrome/blob/3ee24c155204a873466fba5127b7737f0ace34d6/.claude-plugin/marketplace.json",
+      "url": "https://github.com/koriym/Koriym.SqlQuality/blob/543ea0db3cd9cdc956036f5c9d8ad6c143a567c4/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1355,7 +1340,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/seedspirit/python-type-hint-reviewer/blob/4c389e2f27beb3d56a0e2ed7e6e045d9eb894943/.claude-plugin/marketplace.json",
+      "url": "https://github.com/reqvire-org/reqvire/blob/0dbabae466b1e24e04e53b8d594d27ff84cd006c/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1371,21 +1356,6 @@
       "name": "marketplace.json",
       "full_name": null,
       "url": "https://github.com/setouchi-h/cc-marketplace/blob/ce9ece720720059d5ad3647d1e549c1a7f2d4f95/.claude-plugin/marketplace.json",
-      "description": null,
-      "stars": null,
-      "forks": null,
-      "watchers": null,
-      "open_issues": null,
-      "language": null,
-      "topics": null,
-      "created_at": null,
-      "updated_at": null,
-      "pushed_at": null
-    },
-    {
-      "name": "marketplace.json",
-      "full_name": null,
-      "url": "https://github.com/mckinsey/agents-at-scale-ark/blob/99e86327425e3d7bce8b4cac17fbbcb15ea74918/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1430,7 +1400,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/BrainBlend-AI/atomic-agents/blob/9487597c41ceb41ed6f7fde413c4640d404c666c/.claude-plugin/marketplace.json",
+      "url": "https://github.com/adrianpuiu/specification-document-generator/blob/8f4a252e50251f3e553f04c64abdcdfab9b8ed45/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1445,7 +1415,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/e2e-test-quest/uuv/blob/c9ff4ac5d60ffaef34d713922b2a9d16c2b16cfc/.claude-plugin/marketplace.json",
+      "url": "https://github.com/richtabor/agent-skills/blob/f398e130361043e701140a764fbf10bdefaaf083/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1475,7 +1445,7 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/amitpatole/claude-genkit-plugin/blob/8b91691f2b606e8c528f1023196534b99409662b/.claude-plugin/marketplace.json",
+      "url": "https://github.com/jezweb/claude-skills/blob/75f67bc67104958dc162fbb82a3dfe813523daaa/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,
@@ -1490,7 +1460,37 @@
     {
       "name": "marketplace.json",
       "full_name": null,
-      "url": "https://github.com/saadshahd/moo.md/blob/ef318aac549c0866b4fb675876c43cb1c9b31d2a/.claude-plugin/marketplace.json",
+      "url": "https://github.com/melodic-software/claude-code-plugins/blob/62f306a7e025ca9706e9e2b4f64848d8293e7201/.claude-plugin/marketplace.json",
+      "description": null,
+      "stars": null,
+      "forks": null,
+      "watchers": null,
+      "open_issues": null,
+      "language": null,
+      "topics": null,
+      "created_at": null,
+      "updated_at": null,
+      "pushed_at": null
+    },
+    {
+      "name": "marketplace.json",
+      "full_name": null,
+      "url": "https://github.com/religa/multi_mcp/blob/61bcfbadae43f1723651df76561919bca421771b/.claude-plugin/marketplace.json",
+      "description": null,
+      "stars": null,
+      "forks": null,
+      "watchers": null,
+      "open_issues": null,
+      "language": null,
+      "topics": null,
+      "created_at": null,
+      "updated_at": null,
+      "pushed_at": null
+    },
+    {
+      "name": "marketplace.json",
+      "full_name": null,
+      "url": "https://github.com/desplega-ai/qa-use/blob/c59db929f8bd719f0d14add3efc00da46723a9fd/.claude-plugin/marketplace.json",
       "description": null,
       "stars": null,
       "forks": null,

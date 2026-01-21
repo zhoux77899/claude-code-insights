@@ -1,6 +1,6 @@
 # Claude Code Ecosystem Daily Insight
 
-> Generated at: 2026-01-21 09:43:13 UTC
+> Generated at: 2026-01-21 09:52:39 UTC
 > Indexed repositories: 
 
 ---
@@ -29,16 +29,16 @@
 | 18 | [marketplace.json](https://github.com/maxim-ist/elixir-architect/blob/d66942e889db32ec2dbda9f6ccd82a9cc95fe737/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
 | 19 | [marketplace.json](https://github.com/kepano/obsidian-skills/blob/4540df83fc68a68bef27e83ae79bc4f1b4d2ea7c/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
 | 20 | [marketplace.json](https://github.com/cloudshipai/station/blob/231f4ce832a3ae2e88a9e98e0bf340da2fcc0e7f/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
-| 21 | [marketplace.json](https://github.com/popup-studio-ai/bkit-claude-code/blob/3b3bca7deac15ea718318f65f4a53ed605088b71/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
-| 22 | [marketplace.json](https://github.com/JosiahSiegel/claude-plugin-marketplace/blob/267a5ab3c3c26547401b0e62aa7ea13e05427362/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
+| 21 | [marketplace.json](https://github.com/trabian/fluxwing-skills/blob/f507c1e431eab9fe04579cf951a679fc36f73fe5/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
+| 22 | [marketplace.json](https://github.com/stared/gemini-claude-skills/blob/0a31cfed79be24a73c451dd220f3ee5a06c49f0f/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
 | 23 | [marketplace.json](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/1820f2b7b678d5fd1eda5be5c8c9a1f7ac12137a/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
-| 24 | [marketplace.json](https://github.com/testcontainers/claude-skills/blob/3b6503281a5608be356be7088ce2dc965f81fcea/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
-| 25 | [marketplace.json](https://github.com/cameronfreer/lean4-skills/blob/5d6bd03a024d63c02225bd9814c981275e1c9ee5/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
-| 26 | [marketplace.json](https://github.com/njerschow/textme/blob/abe21a3b943dfdadd7ba64de64c62a18ce28ed5b/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
+| 24 | [marketplace.json](https://github.com/jingnanzhou/fellow/blob/c1b929d815a4b4c03ebedacb07536a4318897f32/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
+| 25 | [marketplace.json](https://github.com/ursisterbtw/ccprompts/blob/55b7af9cb8b9c2cfb0573d3720618d11fe559915/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
+| 26 | [marketplace.json](https://github.com/ooiyeefei/ccc/blob/24decef76f74929bbc5d164f3bcbc8f2e7360d88/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
 | 27 | [marketplace.json](https://github.com/JimLiu/baoyu-skills/blob/0d677ea171ce03261165ca8f34343e967ed8f1e5/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
-| 28 | [marketplace.json](https://github.com/neill-k/cc-skills/blob/7e24176e66e08ae4212c9cf73029159276b6071d/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
-| 29 | [marketplace.json](https://github.com/slgoodrich/agents/blob/acccb31e83a9092598219638986baa22adf99057/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
-| 30 | [marketplace.json](https://github.com/slamb2k/devsolo/blob/9d8bdc98658299706e162ce790b476a432a02841/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
+| 28 | [marketplace.json](https://github.com/vanman2024/low-code-marketplace/blob/e6b92a5013b08af026684a7620747121bf894e02/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
+| 29 | [marketplace.json](https://github.com/karashiiro/claude-marketplace/blob/2251b351accb392dcbe848544a7b66caf43cfefc/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
+| 30 | [marketplace.json](https://github.com/mprpic/claude-gitlab-tools/blob/b5460b87ad899254796d6e84f90bef871ed21297/.claude-plugin/marketplace.json) | ⭐null | 🍴null | null | No description |
 
 ## Active Repositories (Last 7 Days)
 
