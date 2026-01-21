@@ -38,7 +38,7 @@ jobs:
 
           rm -f /tmp/repos.json
 
-          for page in $(seq 1 $PAGES); do
+          for ((page=1; page<=$PAGES; page++)); do
             echo "Fetching page $page/$PAGES..."
             curl -s \
               -H "Authorization: token $GITHUB_TOKEN" \
