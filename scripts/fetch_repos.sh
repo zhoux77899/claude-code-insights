@@ -7,6 +7,8 @@ curl -s \
 "https://api.github.com/search/code?q=filename:marketplace.json+path:.claude-plugin&sort=stars&order=desc&per_page=100&page=1" \
 >> /tmp/repos.json
 
+cat /tmp/repos.json
+
 TOTAL=$(jq '.total_count' /tmp/repos.json)
 PAGES=$(( ($TOTAL + 99) / 100 ))
 

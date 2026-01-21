@@ -27,7 +27,7 @@ jobs:
 
           echo "Fetching Claude Code repositories..."
           bash scripts/fetch_repos.sh
-          cp /tmp/repos.json > insights/repos.json
+          cp /tmp/repos.json insights/repos.json
 
           DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
 
