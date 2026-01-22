@@ -27,6 +27,12 @@ def parse_args():
         default="insights/sorted_repos.json",
         help="Path to output sorted_repos.json file (default: insights/sorted_repos.json)",
     )
+    parser.add_argument(
+        "--cached-repos-list",
+        type=str,
+        default=None,
+        help="Path to cached repos list file (default: None)",
+    )
     return parser.parse_args()
 
 
@@ -53,7 +59,7 @@ def fetch_repo_info(
         return dict()
 
 
-def sort_repos_by_stars(input_file: str, output_file: str) -> None:
+def sort_repos_by_stars(input_file: str, output_file: str, cached_repos_list_file: str | None = None) -> None:
     # Check if input file exists
     if not Path(input_file).exists():
         raise ValueError(f"Error: Input file not found: {input_file}")
@@ -61,8 +67,16 @@ def sort_repos_by_stars(input_file: str, output_file: str) -> None:
     # Read input
     with open(input_file, "r", encoding="utf-8") as f:
         data = json.load(f)
+    searched_repos = [item.get("repository", {}).get("full_name") for item in data.get("items", [])]
 
-    repos = data.get("items", [])
+    # Check if cached repo list is provided
+    if cached_repos_list_file and Path(cached_repos_list_file).exists():
+        with open(cached_repos_list_file, "r", encoding="utf-8") as f:
+            cached_repos = [line.strip("\n") for line in f.readlines()]
+    else:
+        cached_repos = []
+
+    repos = set(searched_repos).union(set(cached_repos))
     total = len(repos)
 
     print(f"Fetching star counts for {total} repositories...")
@@ -74,8 +88,8 @@ def sort_repos_by_stars(input_file: str, output_file: str) -> None:
 
     # Fetch repo info
     results = []
-    for i, item in enumerate(repos):
-        if full_name:=item.get("repository", {}).get("full_name"):
+    for i, full_name in enumerate(repos):
+        if full_name:
             repo_info = fetch_repo_info(full_name, session, token, verify=verify_ssl)
             # Progress update
             if (i + 1) % 50 == 0:
@@ -102,7 +116,16 @@ def sort_repos_by_stars(input_file: str, output_file: str) -> None:
 
     print(f"Generated {output_file} with {len(sorted_repos)} repositories")
 
+    # Write cached repo list
+    if cached_repos_list_file:
+        with open(cached_repos_list_file, "w", encoding="utf-8") as f:
+            for repo in repos:
+                if repo:
+                    f.write(f"{repo}\n")
+
+        print(f"Generated {cached_repos_list_file} with {len(sorted_repos)} repositories")
+
 
 if __name__ == "__main__":
     args = parse_args()
-    sort_repos_by_stars(args.input, args.output)
+    sort_repos_by_stars(args.input, args.output, args.cached_repos_list)
