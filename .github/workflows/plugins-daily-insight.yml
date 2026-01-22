@@ -1,4 +1,4 @@
-name: Claude Code Daily Insight
+name: Claude Code Plugins Daily Insight
 
 on:
   schedule:
@@ -27,9 +27,9 @@ jobs:
       - name: Install System Dependencies
         run: |
           python -m pip install --upgrade pip && \
-          pip install requests
+          pip install -r requirements.txt
 
-      - name: Generate Daily Insight
+      - name: Generate Plugins Daily Insight
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -55,7 +55,7 @@ jobs:
           echo "============================================================"
           echo "Sorting Claude Code repositories..."
           python scripts/sort_repos.py --input /tmp/repos.json --output /tmp/sorted_repos.json
-          cp /tmp/sorted_repos.json insights/repos.json
+          cp /tmp/sorted_repos.json plugins/repos.json
           echo -e "\n"
           head -n 10 /tmp/sorted_repos.json
           echo "============================================================"
@@ -64,58 +64,37 @@ jobs:
           DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
 
           # Create markdown header
-          echo "# Claude Code Ecosystem Daily Insight" > insights/daily-insight.md
-          echo "" >> insights/daily-insight.md
-          echo "> Generated at: $DATE" >> insights/daily-insight.md
-          echo "> Indexed repositories: $TOTAL" >> insights/daily-insight.md
-          echo "" >> insights/daily-insight.md
-          echo "---" >> insights/daily-insight.md
-          echo "" >> insights/daily-insight.md
-          echo "## Top 30 High-Scoring Repositories" >> insights/daily-insight.md
-          echo "" >> insights/daily-insight.md
-          echo "| # | Repository | Stars | Forks | Last Updated | Description |" >> insights/daily-insight.md
-          echo "|---|------------|-------|-------|--------------|-------------|" >> insights/daily-insight.md
+          echo "# Claude Code Plugins Daily Insight" > plugins/plugins-daily-insight.md
+          echo "" >> plugins/plugins-daily-insight.md
+          echo "> Generated at: $DATE" >> plugins/plugins-daily-insight.md
+          echo "> Indexed repositories: $TOTAL" >> plugins/plugins-daily-insight.md
+          echo "" >> plugins/plugins-daily-insight.md
+          echo "---" >> plugins/plugins-daily-insight.md
+          echo "" >> plugins/plugins-daily-insight.md
+          echo "## Top 30 High-Scoring Repositories" >> plugins/plugins-daily-insight.md
+          echo "" >> plugins/plugins-daily-insight.md
+          echo "| # | Repository | Stars | Forks | Last Updated | Description |" >> plugins/plugins-daily-insight.md
+          echo "|---|------------|-------|-------|--------------|-------------|" >> plugins/plugins-daily-insight.md
 
           # Generate table rows
-          jq -r '.items[:30] | to_entries | .[] | "| \(.key + 1) | [\(.value.name)](\(.value.html_url)) | ⭐\(.value.stargazers_count) | 🍴\(.value.forks_count) | \(.value.pushed_at[:10]) | \(.value.description // "No description" | .[0:60]) |"' /tmp/sorted_repos.json >> insights/daily-insight.md
+          jq -r '.items[:30] | to_entries | .[] | "| \(.key + 1) | [\(.value.name)](\(.value.html_url)) | ⭐\(.value.stargazers_count) | 🍴\(.value.forks_count) | \(.value.pushed_at[:10]) | \(.value.description // "No description" | .[0:60]) |"' /tmp/sorted_repos.json >> plugins/plugins-daily-insight.md
 
           # Add active repositories section
-          echo "" >> insights/daily-insight.md
-          echo "## Active Repositories (Last 7 Days)" >> insights/daily-insight.md
-          echo "" >> insights/daily-insight.md
+          echo "" >> plugins/plugins-daily-insight.md
+          echo "## Active Repositories (Last 7 Days)" >> plugins/plugins-daily-insight.md
+          echo "" >> plugins/plugins-daily-insight.md
 
           WEEK_AGO=$(date -d '7 days ago' +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -v-7d +%Y-%m-%dT%H:%M:%SZ)
-          jq -r --arg date "$WEEK_AGO" '.items | map(select(.pushed_at > $date)) | .[:15] | .[] | "- [\(.name)](\(.html_url)) - ⭐\(.stargazers_count) - \(.description // "No description" | .[0:80])"' /tmp/sorted_repos.json >> insights/daily-insight.md
+          jq -r --arg date "$WEEK_AGO" '.items | map(select(.pushed_at > $date)) | .[:15] | .[] | "- [\(.name)](\(.html_url)) - ⭐\(.stargazers_count) - \(.description // "No description" | .[0:80])"' /tmp/sorted_repos.json >> plugins/plugins-daily-insight.md
 
-          # Generate JSON data file
-          jq '{
-            generated_at: now | todate,
-            total_count: .total_count,
-            repos: [.items[:100][] | {
-              name: .name,
-              full_name: .full_name,
-              url: .html_url,
-              description: .description,
-              stars: .stargazers_count,
-              forks: .forks_count,
-              watchers: .watchers_count,
-              open_issues: .open_issues_count,
-              language: .language,
-              topics: .topics,
-              created_at: .created_at,
-              updated_at: .updated_at,
-              pushed_at: .pushed_at
-            }]
-          }' /tmp/sorted_repos.json > insights/data.json
-
-          echo "Generated insights/daily-insight.md"
+          echo "Generated plugins/plugins-daily-insight.md"
           echo "Total repositories indexed: $TOTAL"
 
       - name: Commit and Push
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add insights/
+          git add plugins/
           git diff --quiet && git diff --staged --quiet || git commit -m "Daily Insight $(date +%Y-%m-%d)"
           git push
         env:
