@@ -16,13 +16,13 @@ def parse_args():
         "--input",
         type=str,
         default="insights/response.jsonl",
-        help="Path to input repos.jsonl file (default: insights/repos.jsonl)",
+        help="Path to input response.jsonl file (default: insights/response.jsonl)",
     )
     parser.add_argument(
         "--output",
         type=str,
         default="insights/repos.json",
-        help="Path to output deduplicated repos.json file (default: insights/repos_deduped.json)",
+        help="Path to output deduplicated repos.json file (default: insights/repos.json)",
     )
     return parser.parse_args()
 

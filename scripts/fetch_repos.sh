@@ -1,6 +1,4 @@
-rm -f /tmp/response.jsonl
-
-echo "Fetching page 1..."
+echo "  Fetching page 1..."
 curl -s \
 -H "Authorization: token $GITHUB_TOKEN" \
 -H "Accept: application/vnd.github.v3+json" \
@@ -12,10 +10,10 @@ PAGES=$(( ($TOTAL + 99) / 100 ))
 
 for ((page=2; page<=$PAGES; page++)); do
   if [ $(( ($page - 1) % 5 )) -eq 0 ]; then
-    echo "Paused for 1 minute to avoid rate limiting..."
+    echo "  Paused for 1 minute to avoid rate limiting..."
     sleep 60
   fi
-  echo "Fetching page $page/$PAGES..."
+  echo "  Fetching page $page/$PAGES..."
   curl -s \
     -H "Authorization: token $GITHUB_TOKEN" \
     -H "Accept: application/vnd.github.v3+json" \

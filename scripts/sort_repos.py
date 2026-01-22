@@ -25,7 +25,7 @@ def parse_args():
         "--output",
         type=str,
         default="insights/sorted_repos.json",
-        help="Path to output sorted repos.json file (default: insights/sorted_repos.json)",
+        help="Path to output sorted_repos.json file (default: insights/sorted_repos.json)",
     )
     return parser.parse_args()
 
@@ -104,9 +104,13 @@ def sort_repos_by_stars(input_file: str, output_file: str) -> None:
         reverse=True
     )
 
-    # Write output
+    # Write output as single JSON block with total_count
+    output_data = {
+        "total_count": len(sorted_repos),
+        "items": sorted_repos
+    }
     with open(output_file, "w", encoding="utf-8") as f:
-        json.dump(sorted_repos, f, indent=2, ensure_ascii=False)
+        json.dump(output_data, f, indent=2, ensure_ascii=False)
 
     print(f"Generated {output_file} with {len(sorted_repos)} repositories")
 

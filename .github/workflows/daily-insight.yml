@@ -34,12 +34,31 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p insights
+          rm -f /tmp/response.jsonl
+          rm -f /tmp/repos.json
+          rm -f /tmp/sorted_repos.json
 
+          echo "============================================================"
           echo "Fetching Claude Code repositories..."
           bash scripts/fetch_repos.sh
+          echo -e "\n"
+          head -n 10 /tmp/response.jsonl
+          echo "============================================================"
+
+          echo "============================================================"
+          echo "Deduplicating Claude Code repositories..."
           python scripts/dedupe_repos.py --input /tmp/response.jsonl --output /tmp/repos.json
+          echo -e "\n"
+          head -n 10 /tmp/repos.json
+          echo "============================================================"
+
+          echo "============================================================"
+          echo "Sorting Claude Code repositories..."
           python scripts/sort_repos.py --input /tmp/repos.json --output /tmp/sorted_repos.json
           cp /tmp/sorted_repos.json insights/repos.json
+          echo -e "\n"
+          head -n 10 /tmp/sorted_repos.json
+          echo "============================================================"
 
           TOTAL=$(jq '.total_count' /tmp/sorted_repos.json)
           DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
