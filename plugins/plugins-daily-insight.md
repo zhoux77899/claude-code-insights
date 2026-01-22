@@ -1,4 +1,4 @@
-# Claude Code Ecosystem Daily Insight
+# Claude Code Plugins Daily Insight
 
 > Generated at: 2026-01-22 06:31:15 UTC
 > Indexed repositories: 898
