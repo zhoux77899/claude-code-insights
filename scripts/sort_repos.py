@@ -5,9 +5,10 @@ Sort repositories by star count (fetched from GitHub API)
 import argparse
 import json
 import os
-import requests
 import time
 from pathlib import Path
+
+import requests
 
 
 def parse_args():
