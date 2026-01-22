@@ -77,7 +77,7 @@ jobs:
           echo "|---|------------|-------|-------|--------------|-------------|" >> insights/daily-insight.md
 
           # Generate table rows
-          jq -r '.items[:30] | to_entries | .[] | "| \(.key + 1) | [\(.value.name)](\(.value.html_url)) | ⭐\(.value.stargazers_count) | 🍴\(.value.forks_count) | \(.value.pushed_at[:10]) | \(.value.description // "No description" | .[0:60]) |"' /tmp/repos.json >> insights/daily-insight.md
+          jq -r '.items[:30] | to_entries | .[] | "| \(.key + 1) | [\(.value.name)](\(.value.html_url)) | ⭐\(.value.stargazers_count) | 🍴\(.value.forks_count) | \(.value.pushed_at[:10]) | \(.value.description // "No description" | .[0:60]) |"' /tmp/sorted_repos.json >> insights/daily-insight.md
 
           # Add active repositories section
           echo "" >> insights/daily-insight.md
@@ -85,7 +85,7 @@ jobs:
           echo "" >> insights/daily-insight.md
 
           WEEK_AGO=$(date -d '7 days ago' +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -v-7d +%Y-%m-%dT%H:%M:%SZ)
-          jq -r --arg date "$WEEK_AGO" '.items | map(select(.pushed_at > $date)) | .[:15] | .[] | "- [\(.name)](\(.html_url)) - ⭐\(.stargazers_count) - \(.description // "No description" | .[0:80])"' /tmp/repos.json >> insights/daily-insight.md
+          jq -r --arg date "$WEEK_AGO" '.items | map(select(.pushed_at > $date)) | .[:15] | .[] | "- [\(.name)](\(.html_url)) - ⭐\(.stargazers_count) - \(.description // "No description" | .[0:80])"' /tmp/sorted_repos.json >> insights/daily-insight.md
 
           # Generate JSON data file
           jq '{
@@ -106,10 +106,9 @@ jobs:
               updated_at: .updated_at,
               pushed_at: .pushed_at
             }]
-          }' /tmp/repos.json > insights/data.json
+          }' /tmp/sorted_repos.json > insights/data.json
 
           echo "Generated insights/daily-insight.md"
-          echo "Generated insights/data.json"
           echo "Total repositories indexed: $TOTAL"
 
       - name: Commit and Push
