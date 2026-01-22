@@ -30,12 +30,12 @@ def parse_args():
     return parser.parse_args()
 
 
-def fetch_star_count(
+def fetch_repo_info(
     repo_full_name: str,
     session: requests.Session,
     token: str | None = None,
     verify: bool = True
-) -> int:
+) -> dict:
     """Fetch star count for a single repository from GitHub API"""
     url = f"https://api.github.com/repos/{repo_full_name}"
     headers = {"Accept": "application/vnd.github.v3+json"}
@@ -45,16 +45,12 @@ def fetch_star_count(
     try:
         resp = session.get(url, headers=headers, timeout=10, verify=verify)
         if resp.status_code == 200:
-            data = resp.json()
-            return data.get("stargazers_count", 0)
-        elif resp.status_code == 404:
-            return 0
-        else:
-            print(f"  Warning: {resp.status_code} for {repo_full_name}")
-            return 0
+            return resp.json()
+        print(f"  Warning: {resp.status_code} for {repo_full_name}")
+        return dict()
     except Exception as e:
         print(f"  Error fetching {repo_full_name}: {e}")
-        return 0
+        return dict()
 
 
 def sort_repos_by_stars(input_file: str, output_file: str) -> None:
@@ -76,31 +72,23 @@ def sort_repos_by_stars(input_file: str, output_file: str) -> None:
     token = os.environ.get("GITHUB_TOKEN")
     verify_ssl = os.environ.get("GITHUB_SSL_VERIFY", "true").lower() != "false"
 
-    # Fetch star counts
+    # Fetch repo info
     results = []
     for i, item in enumerate(repos):
-        repo_info = item.get("repository", {})
-        full_name = repo_info.get("full_name")
-
-        if full_name:
-            stars = fetch_star_count(full_name, session, token, verify=verify_ssl)
-            repo_info["stargazers_count"] = stars
-            item["repository"] = repo_info
-
+        if full_name:=item.get("repository", {}).get("full_name"):
+            repo_info = fetch_repo_info(full_name, session, token, verify=verify_ssl)
             # Progress update
             if (i + 1) % 50 == 0:
                 print(f"  Processed {i + 1}/{total}...")
-
             # Rate limit handling for unauthenticated requests
             if not token and (i + 1) % 10 == 0:
                 time.sleep(1)  # Stay under 60 requests/minute
-
-        results.append(item)
+        results.append(repo_info)
 
     # Sort by star count (descending)
     sorted_repos = sorted(
         results,
-        key=lambda x: x.get("repository", {}).get("stargazers_count", 0),
+        key=lambda x: x.get("stargazers_count", 0),
         reverse=True
     )
 
