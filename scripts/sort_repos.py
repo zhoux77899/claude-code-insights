@@ -83,7 +83,7 @@ def sort_repos_by_stars(input_file: str, output_file: str) -> None:
             # Rate limit handling for unauthenticated requests
             if not token and (i + 1) % 10 == 0:
                 time.sleep(1)  # Stay under 60 requests/minute
-        results.append(repo_info)
+            results.append(repo_info)
 
     # Sort by star count (descending)
     sorted_repos = sorted(
