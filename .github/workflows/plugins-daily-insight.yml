@@ -54,7 +54,7 @@ jobs:
 
           echo "============================================================"
           echo "Sorting Claude Code repositories..."
-          python scripts/sort_repos.py --input /tmp/repos.json --output /tmp/sorted_repos.json
+          python scripts/sort_repos.py --input /tmp/repos.json --output /tmp/sorted_repos.json --cached-repos-list plugins/cached-repos.txt
           cp /tmp/sorted_repos.json plugins/repos.json
           echo -e "\n"
           head -n 10 /tmp/sorted_repos.json
