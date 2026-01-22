@@ -77,8 +77,9 @@ def sort_repos_by_stars(input_file: str, output_file: str, cached_repos_list_fil
         cached_repos = []
 
     repos = set(searched_repos).union(set(cached_repos))
+    total = len(repos)
 
-    print(f"Fetching star counts for {repos} repositories...")
+    print(f"Fetching star counts for {total} repositories...")
 
     # Setup session
     session = requests.Session()
