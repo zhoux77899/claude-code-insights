@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Card } from "@heroui/react";
 import { Star, GitFork } from "@phosphor-icons/react";
 import type { FormattedRepo } from "../../types/github";
 import { formatNumber } from "../../utils/formatters";
@@ -13,6 +12,7 @@ interface RepoCardProps {
 
 export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [rotation, setRotation] = useState({ rotateX: 0, rotateY: 0 });
   const cardRef = useRef<HTMLDivElement>(null);
   const { isVisible, setRef } = useLazyLoad({ threshold: 0.1 });
   const [isDark, setIsDark] = useState(true);
@@ -39,14 +39,23 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
+    
     const rect = cardRef.current.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = ((y - centerY) / centerY) * -10;
+    const rotateY = ((x - centerX) / centerX) * 10;
+    
+    setRotation({ rotateX, rotateY });
+    setMousePosition({ x, y });
   };
 
   const handleMouseLeave = () => {
+    setRotation({ rotateX: 0, rotateY: 0 });
     setMousePosition({ x: 0, y: 0 });
   };
 
@@ -65,7 +74,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
   }
 
   return (
-    <Card
+    <div
       ref={(el) => {
         (cardRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
         setRef(el);
@@ -73,26 +82,27 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "w-[360px] h-[220px] overflow-hidden rounded-2xl",
+        "w-[360px] h-[220px] rounded-2xl",
         "bg-card-light dark:bg-card-dark",
         "border border-black/10 dark:border-white/10",
-        "transition-all duration-300 ease-out",
+        "transition-all duration-100 ease-out",
         "hover:shadow-xl hover:shadow-accent/10",
         "group relative cursor-pointer",
+        "transform-style-3d preserve-3d",
         className
       )}
-      disableAnimation
-      isPressable
-      onPress={() => window.open(repo.url, "_blank", "noopener,noreferrer")}
+      style={{
+        transform: `perspective(1000px) rotateX(${rotation.rotateX}deg) rotateY(${rotation.rotateY}deg)`,
+      }}
     >
       <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl"
         style={{
           background: `radial-gradient(200px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(203, 124, 91, 0.15), transparent 70%)`,
         }}
       />
 
-      <div className="p-4 h-full flex flex-col">
+      <div className="relative z-10 p-4 h-full flex flex-col">
         <div className="flex items-start gap-3 mb-2">
           <img
             src={repo.ownerAvatar}
@@ -159,6 +169,6 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
           )}
         </div>
       </div>
-    </Card>
+    </div>
   );
 };

@@ -23,3 +23,8 @@ export const storeTheme = (theme: "dark" | "light"): void => {
   if (!isBrowser) return;
   localStorage.setItem("theme", theme);
 };
+
+export const getCurrentTheme = (): "dark" | "light" => {
+  if (!isBrowser) return "light";
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
+};
