@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Card } from "@heroui/react";
 import { Star, GitFork } from "@phosphor-icons/react";
 import type { FormattedRepo } from "../../types/github";
@@ -15,6 +15,27 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const cardRef = useRef<HTMLDivElement>(null);
   const { isVisible, setRef } = useLazyLoad({ threshold: 0.1 });
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    const checkTheme = () => {
+      const isDarkMode = document.documentElement.classList.contains("dark");
+      setIsDark(isDarkMode);
+    };
+    
+    checkTheme();
+    
+    const observer = new MutationObserver(() => {
+      checkTheme();
+    });
+    
+    observer.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ["class"] 
+    });
+    
+    return () => observer.disconnect();
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -54,7 +75,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
       className={cn(
         "w-[360px] h-[220px] overflow-hidden rounded-2xl",
         "bg-card-light dark:bg-card-dark",
-        "border border-white/20 dark:border-white/10",
+        "border border-black/10 dark:border-white/10",
         "transition-all duration-300 ease-out",
         "hover:shadow-xl hover:shadow-accent/10",
         "group relative cursor-pointer",
@@ -81,17 +102,17 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
           />
           <div className="flex-1 min-w-0">
             <h3
-              className="font-bold text-lg text-foreground truncate transition-colors duration-300 group-hover:text-accent"
+              className="font-bold text-lg text-left text-foreground truncate transition-colors duration-300 group-hover:text-accent"
               title={repo.name}
             >
               {repo.name}
             </h3>
-            <p className="text-sm text-default-500 truncate">{repo.ownerName}</p>
+            <p className="text-sm text-left text-default-500 truncate">{repo.ownerName}</p>
           </div>
         </div>
 
         <p
-          className="text-sm text-default-600 dark:text-default-400 line-clamp-3 mb-3 flex-shrink-0"
+          className="text-sm text-left text-default-600 dark:text-default-400 line-clamp-3 mb-3 flex-shrink-0"
           title={repo.description}
         >
           {repo.description}
@@ -100,11 +121,19 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
         <div className="mt-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5 text-default-600 dark:text-default-400">
-              <Star className="text-accent" size={16} weight={repo.stars > 0 ? "fill" : "regular"} />
+              <Star
+                className="text-accent"
+                size={16}
+                weight={isDark ? "regular" : (repo.stars > 0 ? "fill" : "regular")}
+              />
               <span className="text-sm font-medium">{formatNumber(repo.stars)}</span>
             </div>
             <div className="flex items-center gap-1.5 text-default-600 dark:text-default-400">
-              <GitFork className="text-accent" size={16} weight={repo.forks > 0 ? "fill" : "regular"} />
+              <GitFork
+                className="text-accent"
+                size={16}
+                weight={isDark ? "regular" : (repo.forks > 0 ? "fill" : "regular")}
+              />
               <span className="text-sm font-medium">{formatNumber(repo.forks)}</span>
             </div>
           </div>
@@ -113,8 +142,14 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
             <div className="flex items-center gap-1.5">
               {repo.languageColor && (
                 <span
-                  className="w-3 h-3 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: repo.languageColor }}
+                  className={cn(
+                    "w-3 h-3 rounded-full flex-shrink-0",
+                    isDark ? "border-1.5" : undefined
+                  )}
+                  style={{
+                    backgroundColor: isDark ? 'transparent' : repo.languageColor,
+                    borderColor: isDark ? repo.languageColor : undefined
+                  }}
                 />
               )}
               <span className="text-sm text-default-600 dark:text-default-400 truncate max-w-[100px]">

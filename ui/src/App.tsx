@@ -80,7 +80,7 @@ const App: React.FC = () => {
           <>
             <div
               className={cn(
-                "flex flex-wrap justify-center gap-x-6 gap-y-6",
+                "flex flex-wrap justify-center gap-x-4 gap-y-4",
                 "w-full mx-auto max-w-[1920px]"
               )}
             >
