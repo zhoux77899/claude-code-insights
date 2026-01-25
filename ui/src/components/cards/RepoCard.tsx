@@ -4,6 +4,7 @@ import type { FormattedRepo } from "../../types/github";
 import { formatNumber } from "../../utils/formatters";
 import { cn } from "../../utils/cn";
 import { useLazyLoad } from "../../hooks/useLazyLoad";
+import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 
 interface RepoCardProps {
   repo: FormattedRepo;
@@ -11,7 +12,7 @@ interface RepoCardProps {
 }
 
 export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [, setMousePosition] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState({ rotateX: 0, rotateY: 0 });
   const cardRef = useRef<HTMLDivElement>(null);
   const { isVisible, setRef } = useLazyLoad({ threshold: 0.1 });
@@ -95,12 +96,22 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
         transform: `perspective(1000px) rotateX(${rotation.rotateX}deg) rotateY(${rotation.rotateY}deg)`,
       }}
     >
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl"
-        style={{
-          background: `radial-gradient(200px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(203, 124, 91, 0.15), transparent 70%)`,
-        }}
-      />
+      <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+        <div className={cn(
+          "absolute inset-0 transition-opacity duration-300",
+          "group-hover:opacity-50",
+          "opacity-0"
+        )}>
+          <CanvasRevealEffect
+            animationSpeed={3}
+            opacities={[0.3, 0.3, 0.3, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 1]}
+            colors={[[203, 124, 91]]}
+            dotSize={3}
+            showGradient={false}
+            containerClassName="h-full w-full bg-card-light dark:bg-card-dark"
+          />
+        </div>
+      </div>
 
       <div className="relative z-10 p-4 h-full flex flex-col">
         <div className="flex items-start gap-3 mb-2">
@@ -122,7 +133,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
         </div>
 
         <p
-          className="text-sm text-left text-default-600 dark:text-default-400 line-clamp-3 mb-3 flex-shrink-0"
+          className="text-sm text-left text-default-600 dark:text-default-600 line-clamp-3 mb-3 flex-shrink-0"
           title={repo.description}
         >
           {repo.description}
@@ -130,7 +141,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
 
         <div className="mt-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5 text-default-600 dark:text-default-400">
+            <div className="flex items-center gap-1.5 text-default-600 dark:text-default-600">
               <Star
                 className="text-accent"
                 size={16}
@@ -138,7 +149,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
               />
               <span className="text-sm font-medium">{formatNumber(repo.stars)}</span>
             </div>
-            <div className="flex items-center gap-1.5 text-default-600 dark:text-default-400">
+            <div className="flex items-center gap-1.5 text-default-600 dark:text-default-600">
               <GitFork
                 className="text-accent"
                 size={16}
@@ -162,7 +173,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
                   }}
                 />
               )}
-              <span className="text-sm text-default-600 dark:text-default-400 truncate max-w-[100px]">
+              <span className="text-sm text-default-600 dark:text-default-600 truncate max-w-[100px]">
                 {repo.language}
               </span>
             </div>

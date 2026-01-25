@@ -30,5 +30,5 @@ export default {
       },
     },
   },
-  plugins: [heroui()],
+  plugins: [heroui(), require("tailwindcss-animate")],
 }
