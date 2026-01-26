@@ -60,6 +60,13 @@ jobs:
           head -n 10 /tmp/sorted_repos.json
           echo "============================================================"
 
+          echo "============================================================"
+          echo "Chronicling Claude Code repositories..."
+          python scripts/chronicle_repos.py --input /tmp/sorted_repos.json --output plugins/history.json
+          echo -e "\n"
+          head -n 10 plugins/history.json
+          echo "============================================================"
+
           TOTAL=$(jq '.total_count' /tmp/sorted_repos.json)
           DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
 
