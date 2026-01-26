@@ -6,6 +6,7 @@ import argparse
 import json
 import os
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
@@ -90,14 +91,14 @@ def sort_repos_by_stars(input_file: str, output_file: str, cached_repos_list_fil
     results = []
     for i, full_name in enumerate(repos):
         if full_name:
-            repo_info = fetch_repo_info(full_name, session, token, verify=verify_ssl)
+            if repo_info := fetch_repo_info(full_name, session, token, verify=verify_ssl):
+                results.append(repo_info)                
             # Progress update
             if (i + 1) % 50 == 0:
                 print(f"  Processed {i + 1}/{total}...")
             # Rate limit handling for unauthenticated requests
             if not token and (i + 1) % 10 == 0:
                 time.sleep(1)  # Stay under 60 requests/minute
-            results.append(repo_info)
 
     # Sort by star count (descending)
     sorted_repos = sorted(
@@ -109,6 +110,7 @@ def sort_repos_by_stars(input_file: str, output_file: str, cached_repos_list_fil
     # Write output as single JSON block with total_count
     output_data = {
         "total_count": len(sorted_repos),
+        "last_updated_time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
         "items": sorted_repos
     }
     with open(output_file, "w", encoding="utf-8") as f:
