@@ -110,7 +110,7 @@ def sort_repos_by_stars(input_file: str, output_file: str, cached_repos_list_fil
     # Write output as single JSON block with total_count
     output_data = {
         "total_count": len(sorted_repos),
-        "last_updated_time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+        "last_updated_time": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
         "items": sorted_repos
     }
     with open(output_file, "w", encoding="utf-8") as f:
