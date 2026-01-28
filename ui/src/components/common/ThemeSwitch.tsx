@@ -12,7 +12,7 @@ export const ThemeSwitch: React.FC = () => {
       variant="flat"
       size="md"
       onPress={toggleTheme}
-      className="rounded-lg border-1.5 border-accent bg-white/40 dark:bg-black/40 hover:bg-accent/10 text-foreground"
+      className="rounded-lg border-1.5 border-accent bg-white/40 dark:bg-black/40 hover:bg-accent/10 text-foreground flex items-center justify-center"
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
     >
       {theme === "dark" ? (

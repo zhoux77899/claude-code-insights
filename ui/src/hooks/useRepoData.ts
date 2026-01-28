@@ -45,17 +45,26 @@ export function useRepoData({
 
       const data: RepositoriesResponse = await response.json();
 
-      const validRepos: FormattedRepo[] = [];
+      const reposMap = new Map<number, FormattedRepo>();
+      const seenIds = new Set<number>();
       let skipped = 0;
 
       for (const item of data.items) {
+        if (seenIds.has(item.id)) {
+          skipped++;
+          continue;
+        }
+
         const formatted = safeFormatRepository(item);
         if (formatted !== null) {
-          validRepos.push(formatted);
+          reposMap.set(item.id, formatted);
+          seenIds.add(item.id);
         } else {
           skipped++;
         }
       }
+
+      const validRepos = Array.from(reposMap.values());
 
       setSkippedCount(skipped);
       setAllValidRepos(validRepos);

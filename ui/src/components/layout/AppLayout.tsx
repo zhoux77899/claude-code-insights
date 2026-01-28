@@ -15,11 +15,12 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
 }) => {
   return (
     <div className="min-h-screen bg-page-light dark:bg-page-dark transition-colors duration-300">
-      <Navbar
-        maxWidth="xl"
-        position="sticky"
-        className="bg-card-light/40 dark:bg-card-dark/40 backdrop-blur-md border-b border-black/10 dark:border-white/10 h-16"
-      >
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <Navbar
+          maxWidth="xl"
+          position="static"
+          className="bg-card-light/40 dark:bg-card-dark/40 backdrop-blur-md border-b border-black/10 dark:border-white/10 h-16"
+        >
         <NavbarBrand className="gap-3 pl-4">
           <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0">
             <svg
@@ -41,9 +42,10 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
             <ThemeSwitch />
           </NavbarItem>
         </NavbarContent>
-      </Navbar>
+        </Navbar>
+      </div>
 
-      <main className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24">
         {children}
       </main>
 
