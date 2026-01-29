@@ -146,12 +146,11 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
       </div>
 
       <Card
-        isFooterBlurred={true}
         classNames={{
           base: "w-full h-full border-0 shadow-none bg-transparent",
           header: "border-0 shadow-none bg-transparent",
           body: "border-0 shadow-none bg-transparent py-2 pb-24",
-          footer: "before:bg-accent/10 border-accent/20 border-1 overflow-hidden before:rounded-lg rounded-lg shadow-sm ml-2 bg-white/40 dark:bg-black/40",
+          footer: "border-0 shadow-none bg-transparent",
         }}
       >
         <CardHeader className="relative z-10 p-4 pb-2 flex gap-3 items-start">
@@ -185,8 +184,8 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
           src="https://heroui.com/images/card-example-5.jpeg"
         />
 
-        <CardFooter className="absolute bottom-2 p-2 w-[calc(100%_-_16px)] h-8 z-20 flex items-center justify-between backdrop-blur-sm">
-          <div className="flex grow items-center gap-4">
+        <CardFooter className="absolute bottom-2 h-8 p-4 z-20 flex items-center justify-between">
+          <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5 text-default-600 dark:text-default-600">
               <Star
                 className="text-accent"
