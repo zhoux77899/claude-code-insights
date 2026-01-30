@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Star, GitFork } from "@phosphor-icons/react";
+import { Star, GitFork, FileMagnifyingGlass } from "@phosphor-icons/react";
 import type { FormattedRepo } from "../../types/github";
 import { formatNumber } from "../../utils/formatters";
 import { cn } from "../../utils/cn";
 import { CanvasRevealEffect } from "@/components/ui/canvasRevealEffect";
-import { Card, CardHeader, CardBody, CardFooter, Image } from "@heroui/react";
+import { Button, Card, CardHeader, CardBody, CardFooter, Image } from "@heroui/react";
+import { RepoDetailModal } from "./RepoDetailModal";
+import { useModal } from "../../contexts/ModalContext";
 
 interface RepoCardProps {
   repo: FormattedRepo;
@@ -12,6 +14,7 @@ interface RepoCardProps {
 }
 
 export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
+  const { isAnyModalOpen, openModal, closeModal } = useModal();
   const [, setMousePosition] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState({ rotateX: 0, rotateY: 0 });
   const cardRef = useRef<HTMLDivElement>(null);
@@ -19,6 +22,9 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
   const [isInViewport, setIsInViewport] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const [isDark, setIsDark] = useState(true);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+
+  const isModalOpen = isAnyModalOpen && isDetailModalOpen;
 
   const setRef = useCallback((element: HTMLElement | null) => {
     if (observerRef.current) {
@@ -61,6 +67,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
+    if (isDetailModalOpen) return;
     
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -77,6 +84,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
   };
 
   const handleMouseLeave = () => {
+    if (isDetailModalOpen) return;
     setRotation({ rotateX: 0, rotateY: 0 });
     setMousePosition({ x: 0, y: 0 });
   };
@@ -204,27 +212,47 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
             </div>
           </div>
 
-          {repo.language && (
-            <div className="flex items-center gap-1.5">
-              {repo.languageColor && (
-                <span
-                  className={cn(
-                    "w-3 h-3 rounded-full flex-shrink-0",
-                    isDark ? "border-1.5" : undefined
-                  )}
-                  style={{
-                    backgroundColor: isDark ? 'transparent' : repo.languageColor,
-                    borderColor: isDark ? repo.languageColor : undefined
-                  }}
-                />
-              )}
-              <span className="text-sm text-default-600 dark:text-default-600 truncate max-w-[100px]">
-                {repo.language}
-              </span>
-            </div>
-          )}
+          <Button
+            onPress={(e) => {
+              if (e && 'stopPropagation' in e && typeof e.stopPropagation === 'function') {
+                e.stopPropagation();
+              }
+              openModal();
+              setIsDetailModalOpen(true);
+            }}
+            disabled={isAnyModalOpen && !isDetailModalOpen}
+            className={cn(
+              "flex h-6 items-center justify-center",
+              "translate-x-0.5",
+              "rounded-full",
+              "text-xs font-medium text-accent",
+              "border border-1.5 border-accent bg-transparent backdrop-blur-xs",
+              "transition-all duration-200",
+              isAnyModalOpen && !isDetailModalOpen && "opacity-50 cursor-not-allowed"
+            )}
+            aria-label={`View details for ${repo.name}`}
+            aria-disabled={isAnyModalOpen && !isDetailModalOpen}
+            size="sm"
+          >
+            <FileMagnifyingGlass
+              className="text-accent"
+              size={12}
+              weight={isDark ? "regular" : "fill"}
+            />
+            Details
+          </Button>
         </CardFooter>
       </Card>
+
+      <RepoDetailModal
+        repo={repo}
+        isOpen={isDetailModalOpen}
+        onClose={() => {
+          setRotation({ rotateX: 0, rotateY: 0 });
+          closeModal();
+          setIsDetailModalOpen(false);
+        }}
+      />
     </div>
   );
 };
