@@ -185,13 +185,6 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
           </p>
         </CardBody>
 
-        <Image
-          removeWrapper
-          alt="Relaxing app background"
-          className="z-100 w-full h-full"
-          src="https://heroui.com/images/card-example-5.jpeg"
-        />
-
         <CardFooter className="absolute bottom-2 h-8 p-4 z-20 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5 text-default-600 dark:text-default-600">

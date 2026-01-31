@@ -44,13 +44,13 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
 
   const modalContent = (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in pointer-events-auto"
+        className="absolute inset-0 bg-transparent backdrop-blur-md animate-fade-in pointer-events-auto"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -60,9 +60,8 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
           classNames={{
             base: cn(
               "w-full rounded-2xl",
-              "bg-card-light dark:bg-card-dark",
+              "bg-card-light/50 dark:bg-card-dark/50",
               "border border-black/10 dark:border-white/10",
-              "shadow-2xl shadow-black/40",
               "animate-slide-up"
             ),
             header: "border-0 shadow-none bg-transparent pb-0",
