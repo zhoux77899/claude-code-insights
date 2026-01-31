@@ -93,7 +93,7 @@ def sort_repos_by_stars(input_file: str, output_file: str, cached_repos_list_fil
 
     # Fetch repo info
     for i, full_name in enumerate(repos):
-        if full_name and full_name not in seen_full_names:
+        if full_name and full_name not in seen_repos:
             if repo_info := fetch_repo_info(full_name, session, token, verify=verify_ssl):
                 unique_records.append(repo_info)
                 seen_repos.add(full_name)
