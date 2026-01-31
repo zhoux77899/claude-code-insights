@@ -87,12 +87,16 @@ def sort_repos_by_stars(input_file: str, output_file: str, cached_repos_list_fil
     token = os.environ.get("GITHUB_TOKEN")
     verify_ssl = os.environ.get("GITHUB_SSL_VERIFY", "true").lower() != "false"
 
+    # Track seen seen_repos and unique records
+    seen_repos = set()
+    unique_records = []
+
     # Fetch repo info
-    results = []
     for i, full_name in enumerate(repos):
-        if full_name:
+        if full_name and full_name not in seen_full_names:
             if repo_info := fetch_repo_info(full_name, session, token, verify=verify_ssl):
-                results.append(repo_info)                
+                unique_records.append(repo_info)
+                seen_repos.add(full_name)
             # Progress update
             if (i + 1) % 50 == 0:
                 print(f"  Processed {i + 1}/{total}...")
@@ -102,7 +106,7 @@ def sort_repos_by_stars(input_file: str, output_file: str, cached_repos_list_fil
 
     # Sort by star count (descending)
     sorted_repos = sorted(
-        results,
+        unique_records,
         key=lambda x: x.get("stargazers_count", 0),
         reverse=True
     )
@@ -121,11 +125,11 @@ def sort_repos_by_stars(input_file: str, output_file: str, cached_repos_list_fil
     # Write cached repo list
     if cached_repos_list_file:
         with open(cached_repos_list_file, "w", encoding="utf-8") as f:
-            for repo in repos:
+            for repo in seen_repos:
                 if repo:
                     f.write(f"{repo}\n")
 
-        print(f"Generated {cached_repos_list_file} with {len(sorted_repos)} repositories")
+        print(f"Generated {cached_repos_list_file} with {len(seen_repos)} repositories")
 
 
 if __name__ == "__main__":
