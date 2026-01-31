@@ -1,6 +1,20 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
-import { Star, GitFork, Link as LinkIcon, Calendar, Scales } from "@phosphor-icons/react";
+import {
+  Star,
+  GitFork,
+  Eye,
+  GithubLogo,
+  Globe,
+  CodeSimple,
+  Scales,
+  HardDrives,
+  GitCommit,
+  GitMerge,
+  GitPullRequest
+} from "@phosphor-icons/react";
+import { IssueOpenedIcon } from '@primer/octicons-react'
+import { Claude } from '@lobehub/icons';
 import type { FormattedRepo } from "../../types/github";
 import { formatNumber, formatDate } from "../../utils/formatters";
 import { cn } from "../../utils/cn";
@@ -17,6 +31,28 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    const checkTheme = () => {
+      const isDarkMode = document.documentElement.classList.contains("dark");
+      setIsDark(isDarkMode);
+    };
+    
+    checkTheme();
+    
+    const observer = new MutationObserver(() => {
+      checkTheme();
+    });
+    
+    observer.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ["class"] 
+    });
+    
+    return () => observer.disconnect();
+  }, []);
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -55,7 +91,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto animate-scale-in pointer-events-auto">
+      <div className="relative w-[960px] max-h-[80vh] rounded-2xl shadow-sm overflow-y-auto animate-scale-in pointer-events-auto">
         <Card
           classNames={{
             base: cn(
@@ -73,7 +109,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
             <img
               src={repo.ownerAvatar}
               alt={repo.ownerName}
-              className="w-16 h-16 rounded-full border-2 border-accent/30 object-cover flex-shrink-0"
+              className="w-16 h-16 rounded-full border-2 border-accent object-cover flex-shrink-0"
               loading="lazy"
             />
             <div className="flex-1 min-w-0">
@@ -84,8 +120,34 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
                 {repo.name}
               </h2>
               <p className="text-sm text-left text-default-500 truncate">
-                {repo.ownerName}
+                @{repo.ownerName}
               </p>
+              <a
+                href={repo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "flex items-center gap-1",
+                  "text-sm text-accent hover:text-accent/80",
+                  "transition-colors duration-200",
+                )}
+              >
+                <GithubLogo size={16} weight={isDark ? "regular" : "fill"} />
+                <span>View on GitHub</span>
+              </a>
+              <a
+                href={repo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "flex items-center gap-1",
+                  "text-sm text-accent hover:text-accent/80",
+                  "transition-colors duration-200",
+                )}
+              >
+                <Globe size={16} weight={isDark ? "regular" : "fill"} />
+                <span>Homepage</span>
+              </a>
             </div>
             <button
               onClick={onClose}
@@ -121,76 +183,111 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
               {repo.description}
             </p>
 
-            <div className="flex flex-wrap gap-2 mb-4">
-              {repo.language && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-default-100 dark:bg-white/10">
-                  {repo.languageColor && (
-                    <span
-                      className="w-3 h-3 rounded-full"
-                      style={{ backgroundColor: repo.languageColor }}
-                    />
-                  )}
-                  <span className="text-sm text-foreground">
-                    {repo.language}
-                  </span>
-                </div>
-              )}
-              {repo.license && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-default-100 dark:bg-white/10">
-                  <Scales className="w-4 h-4 text-accent" />
-                  <span className="text-sm text-foreground">
-                    {repo.license}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 p-4 rounded-xl bg-default-50 dark:bg-white/5">
+            <div className="flex flex-wrap gap-8 mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
-                  <Star className="w-5 h-5 text-accent" />
+                  <Star size={20} weight={isDark ? "regular" : "fill"} className="text-accent" />
                 </div>
                 <div>
                   <p className="text-sm text-default-500">Stars</p>
                   <p className="font-semibold text-foreground">
-                    {formatNumber(repo.stars)}
+                    {repo.stars}
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
-                  <GitFork className="w-5 h-5 text-accent" />
+                  <GitFork size={20} weight={isDark ? "regular" : "fill"} className="text-accent" />
                 </div>
                 <div>
                   <p className="text-sm text-default-500">Forks</p>
                   <p className="font-semibold text-foreground">
-                    {formatNumber(repo.forks)}
+                    {repo.forks}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
+                  <Eye size={20} weight={isDark ? "regular" : "fill"} className="text-accent" />
+                </div>
+                <div>
+                  <p className="text-sm text-default-500">Watchers</p>
+                  <p className="font-semibold text-foreground">
+                    watchers
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
+                  <IssueOpenedIcon size={20} className="text-accent" />
+                </div>
+                <div>
+                  <p className="text-sm text-default-500">Opening Issues</p>
+                  <p className="font-semibold text-foreground">
+                    issues
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
+                  <Claude size={20} className="text-accent" />
+                </div>
+                <div>
+                  <p className="text-sm text-default-500">Plugins</p>
+                  <p className="font-semibold text-foreground">
+                    plugins
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-4 space-y-2">
-              <div className="flex items-center gap-2 text-sm text-default-500">
-                <Calendar className="w-4 h-4 flex-shrink-0" />
-                <span>Updated {formatDate(repo.updatedAt)}</span>
+            <div className="grid grid-cols-3 gap-4 p-4">
+              <div className="flex items-center gap-1.5 px-3 py-1.5">
+                <CodeSimple size={16} weight={isDark ? "regular" : "bold"} className="text-default-500" />
+                <p className="text-sm text-default-500">Language</p>
+                <span
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: repo.languageColor || "transparent" }}
+                />
+                <span className="text-sm text-foreground">
+                  {repo.language ? repo.language : "Unknown"}
+                </span>
               </div>
-              <a
-                href={repo.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(
-                  "flex items-center gap-2",
-                  "text-sm text-accent hover:text-accent/80",
-                  "transition-colors duration-200",
-                  "focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2",
-                  "focus:ring-offset-card-light dark:focus:ring-offset-card-dark",
-                  "rounded-md"
-                )}
-              >
-                <LinkIcon className="w-4 h-4 flex-shrink-0" />
-                <span>View on GitHub</span>
-              </a>
+              <div className="flex items-center gap-1.5 px-3 py-1.5">
+                <Scales size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
+                <p className="text-sm text-default-500">License</p>
+                <span className="text-sm text-foreground">
+                  {repo.license ? repo.license : "Unknown"}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1.5">
+                <HardDrives size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
+                <p className="text-sm text-default-500">Size</p>
+                <span className="text-sm text-foreground">
+                  {repo.license ? repo.license : "Unknown"}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1.5">
+                <GitCommit size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
+                <p className="text-sm text-default-500">Created At</p>
+                <span className="text-sm text-foreground">
+                  {formatDate(repo.updatedAt)}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1.5">
+                <GitMerge size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
+                <p className="text-sm text-default-500">Last Updated</p>
+                <span className="text-sm text-foreground">
+                  {formatDate(repo.updatedAt)}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1.5">
+                <GitPullRequest size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
+                <p className="text-sm text-default-500">Last Pushed</p>
+                <span className="text-sm text-foreground">
+                  {formatDate(repo.updatedAt)}
+                </span>
+              </div>
             </div>
           </CardBody>
         </Card>

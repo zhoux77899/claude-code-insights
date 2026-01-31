@@ -4,7 +4,7 @@ import type { FormattedRepo } from "../../types/github";
 import { formatNumber } from "../../utils/formatters";
 import { cn } from "../../utils/cn";
 import { CanvasRevealEffect } from "@/components/ui/canvasRevealEffect";
-import { Button, Card, CardHeader, CardBody, CardFooter, Image } from "@heroui/react";
+import { Button, Card, CardHeader, CardBody, CardFooter } from "@heroui/react";
 import { RepoDetailModal } from "./RepoDetailModal";
 import { useModal } from "../../contexts/ModalContext";
 
@@ -23,8 +23,6 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const [isDark, setIsDark] = useState(true);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-
-  const isModalOpen = isAnyModalOpen && isDetailModalOpen;
 
   const setRef = useCallback((element: HTMLElement | null) => {
     if (observerRef.current) {
@@ -119,7 +117,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
       }}
       className={cn(
         "w-[360px] h-[220px] rounded-2xl",
-        "bg-card-light dark:bg-card-dark",
+        "bg-card-light dark:bg-card-dark shadow-sm",
         "border border-black/10 dark:border-white/10",
         "transition-all duration-100 ease-out",
         "hover:shadow-xl hover:shadow-accent/10",
@@ -172,7 +170,9 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
             <p className="font-bold text-lg text-left text-foreground truncate transition-colors duration-300 group-hover:text-accent line-clamp-1">
               {repo.name}
             </p>
-            <p className="text-sm text-left text-default-500 truncate">{repo.ownerName}</p>
+            <p className="text-sm text-left text-default-500 truncate">
+              @{repo.ownerName}
+            </p>
           </div>
         </CardHeader>
 
