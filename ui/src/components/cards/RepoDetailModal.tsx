@@ -20,6 +20,8 @@ import type { FormattedRepo } from "../../types/github";
 import { formatDate, formatFileSize, formatNumberWithCommas } from "../../utils/formatters";
 import { cn } from "../../utils/cn";
 import { Card, CardHeader, CardBody } from "@heroui/react";
+import { getStarsHistory } from "../../hooks/useStarsHistory";
+import { StarsHistoryChart } from "../charts/StarsHistoryChart";
 
 interface RepoDetailModalProps {
   repo: FormattedRepo;
@@ -33,6 +35,18 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
   onClose,
 }) => {
   const [isDark, setIsDark] = useState(true);
+  const [starsHistory, setStarsHistory] = useState<{ date: string; stars: number }[]>([]);
+
+  useEffect(() => {
+    const loadStarsHistory = async () => {
+      if (repo.fullName) {
+        const data = await getStarsHistory(repo.fullName);
+        setStarsHistory(data);
+      }
+    };
+
+    loadStarsHistory();
+  }, [repo.fullName]);
 
   useEffect(() => {
     const checkTheme = () => {
@@ -231,6 +245,8 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
                 </div>
               </div>
             </div>
+
+            <StarsHistoryChart data={starsHistory} />
 
             <div className="grid grid-cols-3 gap-4">
               <div className="flex flex-col gap-1">
