@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Star, GitFork, FileMagnifyingGlass } from "@phosphor-icons/react";
+import { Star, GitFork, FileMagnifyingGlass, CopySimple, Check } from "@phosphor-icons/react";
 import type { FormattedRepo } from "../../types/github";
 import { formatNumber } from "../../utils/formatters";
 import { cn } from "../../utils/cn";
@@ -13,6 +13,13 @@ interface RepoCardProps {
   className?: string;
 }
 
+function pluginMarketplace(fullName: string) : string {
+  if (fullName === "obra/superpowers") {
+    return `/plugin add add ${fullName}-marketplace`;
+  }
+  return `/plugin marketplace add ${fullName}`;
+}
+
 export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
   const { isAnyModalOpen, openModal, closeModal } = useModal();
   const [, setMousePosition] = useState({ x: 0, y: 0 });
@@ -23,6 +30,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const [isDark, setIsDark] = useState(true);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   const setRef = useCallback((element: HTMLElement | null) => {
     if (observerRef.current) {
@@ -85,6 +93,16 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
     if (isDetailModalOpen) return;
     setRotation({ rotateX: 0, rotateY: 0 });
     setMousePosition({ x: 0, y: 0 });
+  };
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText("/plugin add");
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
   };
 
   useEffect(() => {
@@ -176,13 +194,36 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
           </div>
         </CardHeader>
 
-        <CardBody className="relative z-10 p-4 py-2">
+        <CardBody className="relative z-10 p-4 py-2 flex flex-col h-[108px]">
           <p
             className="text-sm text-left text-default-600 dark:text-default-600 line-clamp-3"
             title={repo.description}
           >
             {repo.description}
           </p>
+          <div
+            className={cn(
+              "mt-auto flex items-center justify-between",
+              "rounded-md px-1",
+              "bg-page-light/50 dark:bg-page-dark/50 backdrop-blur-xs",
+              "border border-1.5 border-black/10 dark:border-white/10"
+            )}
+          >
+            <span className="text-xs font-mono text-default-600 dark:text-default-600 truncate">
+              {pluginMarketplace(repo.fullName)}
+            </span>
+            <button
+              onClick={handleCopy}
+              className="p-1 rounded-md text-default-500 hover:text-accent transition-colors duration-200"
+              aria-label="Copy command"
+            >
+              {isCopied ? (
+                <Check size={12} weight="bold" className="text-success" />
+              ) : (
+                <CopySimple size={12} weight={isDark ? "regular" : "bold"} />
+              )}
+            </button>
+          </div>
         </CardBody>
 
         <CardFooter className="absolute bottom-2 h-8 p-4 z-20 flex items-center justify-between">
