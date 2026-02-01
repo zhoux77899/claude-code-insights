@@ -11,6 +11,16 @@ export function formatNumber(num: number): string {
   return num.toString();
 }
 
+export function formatFileSize(bytes: number): string {
+  if (bytes < 1024) {
+    return bytes + " KB";
+  }
+  if (bytes < 1024 * 1024) {
+    return (bytes / 1024).toFixed(1) + " KB";
+  }
+  return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+}
+
 export function formatDate(dateString: string): string {
   const date = new Date(dateString);
   const now = new Date();
@@ -91,9 +101,14 @@ export function formatRepository(repo: GitHubRepository): FormattedRepo {
     description: repo.description || "No description available",
     stars: repo.stargazers_count,
     forks: repo.forks_count,
+    watchers: repo.watchers_count,
+    issues: repo.open_issues_count,
+    size: repo.size,
     language: repo.language,
     languageColor: getLanguageColor(repo.language),
     url: repo.html_url,
+    homepage: repo.homepage,
+    createdAt: repo.created_at,
     updatedAt: repo.updated_at,
     license: repo.license?.spdx_id || null,
     topics: [],

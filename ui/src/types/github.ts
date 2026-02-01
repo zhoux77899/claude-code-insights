@@ -76,9 +76,14 @@ export interface FormattedRepo {
   description: string;
   stars: number;
   forks: number;
+  watchers: number;
+  issues: number;
+  size: number;
   language: string | null;
   languageColor: string | null;
   url: string;
+  homepage: string | null;
+  createdAt: string;
   updatedAt: string;
   license: string | null;
   topics: string[];

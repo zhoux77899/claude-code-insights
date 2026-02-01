@@ -16,7 +16,7 @@ import {
 import { IssueOpenedIcon } from '@primer/octicons-react'
 import { Claude } from '@lobehub/icons';
 import type { FormattedRepo } from "../../types/github";
-import { formatNumber, formatDate } from "../../utils/formatters";
+import { formatNumber, formatDate, formatFileSize } from "../../utils/formatters";
 import { cn } from "../../utils/cn";
 import { Card, CardHeader, CardBody } from "@heroui/react";
 
@@ -91,7 +91,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
         aria-hidden="true"
       />
 
-      <div className="relative w-[960px] max-h-[80vh] rounded-2xl shadow-sm overflow-y-auto animate-scale-in pointer-events-auto">
+      <div className="relative w-[960px] max-h-[80vh] rounded-2xl shadow-md overflow-y-auto animate-scale-in pointer-events-auto">
         <Card
           classNames={{
             base: cn(
@@ -122,32 +122,36 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
               <p className="text-sm text-left text-default-500 truncate">
                 @{repo.ownerName}
               </p>
-              <a
-                href={repo.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(
-                  "flex items-center gap-1",
-                  "text-sm text-accent hover:text-accent/80",
-                  "transition-colors duration-200",
+              <div className="flex items-center gap-4 mt-1">
+                <a
+                  href={repo.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    "flex items-center gap-1",
+                    "text-sm text-accent hover:text-accent/80",
+                    "transition-colors duration-200",
+                  )}
+                >
+                  <GithubLogo size={16} weight={isDark ? "regular" : "fill"} />
+                  <span>View on GitHub</span>
+                </a>
+                {repo.homepage && (
+                  <a
+                    href={repo.homepage}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      "flex items-center gap-1",
+                      "text-sm text-accent hover:text-accent/80",
+                      "transition-colors duration-200",
+                    )}
+                  >
+                    <Globe size={16} weight={isDark ? "regular" : "fill"} />
+                    <span>Homepage</span>
+                  </a>
                 )}
-              >
-                <GithubLogo size={16} weight={isDark ? "regular" : "fill"} />
-                <span>View on GitHub</span>
-              </a>
-              <a
-                href={repo.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(
-                  "flex items-center gap-1",
-                  "text-sm text-accent hover:text-accent/80",
-                  "transition-colors duration-200",
-                )}
-              >
-                <Globe size={16} weight={isDark ? "regular" : "fill"} />
-                <span>Homepage</span>
-              </a>
+              </div>
             </div>
             <button
               onClick={onClose}
@@ -213,7 +217,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
                 <div>
                   <p className="text-sm text-default-500">Watchers</p>
                   <p className="font-semibold text-foreground">
-                    watchers
+                    {repo.watchers}
                   </p>
                 </div>
               </div>
@@ -222,9 +226,9 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
                   <IssueOpenedIcon size={20} className="text-accent" />
                 </div>
                 <div>
-                  <p className="text-sm text-default-500">Opening Issues</p>
+                  <p className="text-sm text-default-500">Open Issues</p>
                   <p className="font-semibold text-foreground">
-                    issues
+                    {repo.issues}
                   </p>
                 </div>
               </div>
@@ -241,8 +245,8 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 p-4">
-              <div className="flex items-center gap-1.5 px-3 py-1.5">
+            <div className="grid grid-cols-3 gap-4">
+              <div className="flex items-center gap-2">
                 <CodeSimple size={16} weight={isDark ? "regular" : "bold"} className="text-default-500" />
                 <p className="text-sm text-default-500">Language</p>
                 <span
@@ -253,35 +257,35 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
                   {repo.language ? repo.language : "Unknown"}
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5">
+              <div className="flex items-center gap-2">
                 <Scales size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
                 <p className="text-sm text-default-500">License</p>
                 <span className="text-sm text-foreground">
                   {repo.license ? repo.license : "Unknown"}
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5">
+              <div className="flex items-center gap-2">
                 <HardDrives size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
                 <p className="text-sm text-default-500">Size</p>
                 <span className="text-sm text-foreground">
-                  {repo.license ? repo.license : "Unknown"}
+                  {formatFileSize(repo.size)}
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5">
+              <div className="flex items-center gap-2">
                 <GitCommit size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
                 <p className="text-sm text-default-500">Created At</p>
                 <span className="text-sm text-foreground">
-                  {formatDate(repo.updatedAt)}
+                  {formatDate(repo.createdAt)}
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5">
+              <div className="flex items-center gap-2">
                 <GitMerge size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
                 <p className="text-sm text-default-500">Last Updated</p>
                 <span className="text-sm text-foreground">
                   {formatDate(repo.updatedAt)}
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5">
+              <div className="flex items-center gap-2">
                 <GitPullRequest size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
                 <p className="text-sm text-default-500">Last Pushed</p>
                 <span className="text-sm text-foreground">
