@@ -11,6 +11,10 @@ export function formatNumber(num: number): string {
   return num.toString();
 }
 
+export function formatNumberWithCommas(num: number): string {
+  return num.toLocaleString('en-US');
+}
+
 export function formatFileSize(bytes: number): string {
   if (bytes < 1024) {
     return bytes + " KB";
@@ -59,7 +63,7 @@ export function formatDate(dateString: string): string {
 }
 
 export function getLanguageColor(language: string | null): string | null {
-  if (!language) return null;
+  if (!language) return "#8b8b8b";
   return LANGUAGE_COLORS[language] || "#8b8b8b";
 }
 

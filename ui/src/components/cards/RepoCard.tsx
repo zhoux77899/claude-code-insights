@@ -117,10 +117,10 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
       }}
       className={cn(
         "w-[360px] h-[220px] rounded-2xl",
-        "bg-card-light dark:bg-card-dark shadow-sm",
+        "bg-card-light dark:bg-card-dark shadow-md",
         "border border-black/10 dark:border-white/10",
         "transition-all duration-100 ease-out",
-        "hover:shadow-xl hover:shadow-accent/10",
+        "hover:shadow-xl",
         "group relative cursor-pointer",
         "transform-style-3d preserve-3d",
         className

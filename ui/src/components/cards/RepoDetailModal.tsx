@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
 import {
+  X,
   Star,
   GitFork,
   Eye,
@@ -16,7 +17,7 @@ import {
 import { IssueOpenedIcon } from '@primer/octicons-react'
 import { Claude } from '@lobehub/icons';
 import type { FormattedRepo } from "../../types/github";
-import { formatNumber, formatDate, formatFileSize } from "../../utils/formatters";
+import { formatDate, formatFileSize, formatNumberWithCommas } from "../../utils/formatters";
 import { cn } from "../../utils/cn";
 import { Card, CardHeader, CardBody } from "@heroui/react";
 
@@ -160,25 +161,11 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
                 "w-8 h-8 rounded-full",
                 "flex items-center justify-center",
                 "text-default-500 hover:text-foreground",
-                "hover:bg-default-100 dark:hover:bg-white/10",
                 "transition-all duration-200",
-                "focus:outline-none focus:ring-2 focus:ring-accent"
               )}
               aria-label="Close modal"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              <X size={20} weight={isDark ? "regular" : "bold"} />
             </button>
           </CardHeader>
 
@@ -195,7 +182,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
                 <div>
                   <p className="text-sm text-default-500">Stars</p>
                   <p className="font-semibold text-foreground">
-                    {repo.stars}
+                    {formatNumberWithCommas(repo.stars)}
                   </p>
                 </div>
               </div>
@@ -206,7 +193,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
                 <div>
                   <p className="text-sm text-default-500">Forks</p>
                   <p className="font-semibold text-foreground">
-                    {repo.forks}
+                    {formatNumberWithCommas(repo.forks)}
                   </p>
                 </div>
               </div>
@@ -217,7 +204,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
                 <div>
                   <p className="text-sm text-default-500">Watchers</p>
                   <p className="font-semibold text-foreground">
-                    {repo.watchers}
+                    {formatNumberWithCommas(repo.watchers)}
                   </p>
                 </div>
               </div>
@@ -228,7 +215,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
                 <div>
                   <p className="text-sm text-default-500">Open Issues</p>
                   <p className="font-semibold text-foreground">
-                    {repo.issues}
+                    {formatNumberWithCommas(repo.issues)}
                   </p>
                 </div>
               </div>
@@ -246,51 +233,81 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              <div className="flex items-center gap-2">
-                <CodeSimple size={16} weight={isDark ? "regular" : "bold"} className="text-default-500" />
-                <p className="text-sm text-default-500">Language</p>
-                <span
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: repo.languageColor || "transparent" }}
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <CodeSimple size={16} weight={isDark ? "regular" : "bold"} className="text-default-500" />
+                  <p className="text-sm text-default-500">Language</p>
+                </div>
+                <div className="flex items-center gap-2 pl-6">
+                  <span
+                  className={cn(
+                    "w-3 h-3 rounded-full flex-shrink-0",
+                    isDark ? "border-1.5" : undefined
+                  )}
+                  style={{
+                    backgroundColor: isDark ? 'transparent' : repo.languageColor || 'transparent',
+                    borderColor: isDark ? repo.languageColor || 'transparent' : undefined
+                  }}
                 />
-                <span className="text-sm text-foreground">
-                  {repo.language ? repo.language : "Unknown"}
-                </span>
+                  <span className="text-sm text-foreground">
+                    {repo.language ? repo.language : "Unknown"}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Scales size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
-                <p className="text-sm text-default-500">License</p>
-                <span className="text-sm text-foreground">
-                  {repo.license ? repo.license : "Unknown"}
-                </span>
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <Scales size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
+                  <p className="text-sm text-default-500">License</p>
+                </div>
+                <div className="flex items-center gap-2 pl-6">
+                  <span className="text-sm text-foreground">
+                    {repo.license ? repo.license : "Unknown"}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <HardDrives size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
-                <p className="text-sm text-default-500">Size</p>
-                <span className="text-sm text-foreground">
-                  {formatFileSize(repo.size)}
-                </span>
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <HardDrives size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
+                  <p className="text-sm text-default-500">Size</p>
+                </div>
+                <div className="flex items-center gap-2 pl-6">
+                  <span className="text-sm text-foreground">
+                    {formatFileSize(repo.size)}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <GitCommit size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
-                <p className="text-sm text-default-500">Created At</p>
-                <span className="text-sm text-foreground">
-                  {formatDate(repo.createdAt)}
-                </span>
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <GitCommit size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
+                  <p className="text-sm text-default-500">Created At</p>
+                </div>
+                <div className="flex items-center gap-2 pl-6">
+                  <span className="text-sm text-foreground">
+                    {formatDate(repo.createdAt)}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <GitMerge size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
-                <p className="text-sm text-default-500">Last Updated</p>
-                <span className="text-sm text-foreground">
-                  {formatDate(repo.updatedAt)}
-                </span>
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <GitMerge size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
+                  <p className="text-sm text-default-500">Last Updated</p>
+                </div>
+                <div className="flex items-center gap-2 pl-6">
+                  <span className="text-sm text-foreground">
+                    {formatDate(repo.updatedAt)}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <GitPullRequest size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
-                <p className="text-sm text-default-500">Last Pushed</p>
-                <span className="text-sm text-foreground">
-                  {formatDate(repo.updatedAt)}
-                </span>
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <GitPullRequest size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
+                  <p className="text-sm text-default-500">Last Pushed</p>
+                </div>
+                <div className="flex items-center gap-2 pl-6">
+                  <span className="text-sm text-foreground">
+                    {formatDate(repo.updatedAt)}
+                  </span>
+                </div>
               </div>
             </div>
           </CardBody>
