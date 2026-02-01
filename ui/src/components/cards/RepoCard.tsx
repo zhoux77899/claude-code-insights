@@ -209,7 +209,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
               "border border-1.5 border-black/10 dark:border-white/10"
             )}
           >
-            <span className="text-xs font-mono text-default-600 dark:text-default-600 truncate">
+            <span className="text-xs font-maple-mono text-default-600 dark:text-default-600 truncate">
               {pluginMarketplace(repo.fullName)}
             </span>
             <button
@@ -256,7 +256,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
             }}
             disabled={isAnyModalOpen && !isDetailModalOpen}
             className={cn(
-              "flex h-6 items-center justify-center",
+              "flex w-[72px] h-6 items-center justify-center",
               "translate-x-0.5",
               "rounded-full",
               "text-xs font-medium text-accent",
