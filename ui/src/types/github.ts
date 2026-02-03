@@ -59,6 +59,7 @@ export interface GitHubRepository {
   archived: boolean;
   disabled: boolean;
   mirror_url: string | null;
+  topics: string[];
 }
 
 export interface RepositoriesResponse {

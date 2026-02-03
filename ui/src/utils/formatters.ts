@@ -115,7 +115,7 @@ export function formatRepository(repo: GitHubRepository): FormattedRepo {
     createdAt: repo.created_at,
     updatedAt: repo.updated_at,
     license: repo.license?.spdx_id || null,
-    topics: [],
+    topics: repo.topics || [],
   };
 }
 

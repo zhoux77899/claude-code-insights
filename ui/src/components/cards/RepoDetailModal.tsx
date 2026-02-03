@@ -19,7 +19,7 @@ import { Claude } from '@lobehub/icons';
 import type { FormattedRepo } from "../../types/github";
 import { formatDate, formatFileSize, formatNumberWithCommas } from "../../utils/formatters";
 import { cn } from "../../utils/cn";
-import { Card, CardHeader, CardBody } from "@heroui/react";
+import { Card, CardHeader, CardBody, Divider, Chip } from "@heroui/react";
 import { getStarsHistory } from "../../hooks/useStarsHistory";
 import { StarsHistoryChart } from "../charts/StarsHistoryChart";
 
@@ -184,6 +184,25 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
           </CardHeader>
 
           <CardBody className="px-6">
+            {repo.topics && repo.topics.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-4">
+                {repo.topics.map((topic) => (
+                  <Chip
+                    classNames={{
+                      base: "flex items-center justify-center border border-1.5 border-accent",
+                      content: "text-accent",
+                    }}
+                    key={topic}
+                    variant="bordered"
+                    size="sm"
+                    radius="full"
+                  >
+                    {topic}
+                  </Chip>
+                ))}
+              </div>
+            )}
+
             <p className="text-sm text-left text-default-600 dark:text-default-600 mb-4 whitespace-pre-wrap break-words">
               {repo.description}
             </p>
@@ -247,6 +266,8 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
             </div>
 
             <StarsHistoryChart data={starsHistory} />
+
+            <Divider className="my-4 border border-1 border-default-200" />
 
             <div className="grid grid-cols-3 gap-4">
               <div className="flex flex-col gap-1">

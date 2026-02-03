@@ -39,7 +39,7 @@ export const StarsHistoryChart: React.FC<StarsHistoryChartProps> = ({ data }) =>
   }
 
   return (
-    <div className="w-full h-[200px]">
+    <div className="flex items-center justify-left w-full h-[200px]">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 10, left: 0, right: 0, bottom: 10 }}>
           <Area
@@ -67,6 +67,7 @@ export const StarsHistoryChart: React.FC<StarsHistoryChartProps> = ({ data }) =>
             tick={{ fontSize: 12, fill: "#888" }}
             axisLine={{ stroke: "#e0e0e0" }}
             tickLine={false}
+            tickCount={3}
             tickFormatter={(value) => value.toLocaleString()}
           />
           <Tooltip content={<CustomTooltip />} />
