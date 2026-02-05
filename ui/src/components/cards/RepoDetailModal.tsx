@@ -22,6 +22,7 @@ import { cn } from "../../utils/cn";
 import { Card, CardHeader, CardBody, Divider, Chip } from "@heroui/react";
 import { getStarsHistory } from "../../hooks/useStarsHistory";
 import { StarsHistoryChart } from "../charts/StarsHistoryChart";
+import { usePluginData } from "../../hooks/usePluginData";
 
 interface RepoDetailModalProps {
   repo: FormattedRepo;
@@ -36,6 +37,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
 }) => {
   const [isDark, setIsDark] = useState(true);
   const [starsHistory, setStarsHistory] = useState<{ date: string; stars: number }[]>([]);
+  const { pluginData } = usePluginData(repo.fullName, repo.defaultBranch);
 
   useEffect(() => {
     const loadStarsHistory = async () => {
@@ -259,7 +261,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
                 <div>
                   <p className="text-sm text-default-500">Plugins</p>
                   <p className="font-semibold text-foreground">
-                    plugins
+                    {pluginData?.plugins ?? 0}
                   </p>
                 </div>
               </div>

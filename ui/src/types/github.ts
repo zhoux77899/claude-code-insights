@@ -60,6 +60,7 @@ export interface GitHubRepository {
   disabled: boolean;
   mirror_url: string | null;
   topics: string[];
+  default_branch: string;
 }
 
 export interface RepositoriesResponse {
@@ -88,4 +89,26 @@ export interface FormattedRepo {
   updatedAt: string;
   license: string | null;
   topics: string[];
+  defaultBranch: string;
+  plugins?: number;
+  pluginDescription?: string;
+  pluginVersion?: string;
+}
+
+export interface MarketplacePlugin {
+  name: string;
+  description?: string;
+  version?: string;
+}
+
+export interface MarketplaceMetadata {
+  description?: string;
+  version?: string;
+}
+
+export interface MarketplaceData {
+  plugins?: MarketplacePlugin[];
+  metadata?: MarketplaceMetadata;
+  description?: string;
+  version?: string;
 }
