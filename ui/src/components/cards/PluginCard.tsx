@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, CardHeader, CardBody, Button } from "@heroui/react";
+import { Card, CardHeader, CardBody } from "@heroui/react";
 import { CopySimple, Check } from "@phosphor-icons/react";
 import { cn } from "../../utils/cn";
 

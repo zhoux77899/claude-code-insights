@@ -41,7 +41,7 @@ export const StarsHistoryChart: React.FC<StarsHistoryChartProps> = ({ data }) =>
   return (
     <div className="flex items-center justify-left w-full h-[200px]">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data} margin={{ top: 10, left: 0, right: 0, bottom: 10 }}>
+        <AreaChart data={data} margin={{ top: 10, left: 0, right: 10, bottom: 10 }}>
           <Area
             type="monotone"
             dataKey="stars"

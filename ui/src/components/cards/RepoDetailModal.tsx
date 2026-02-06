@@ -76,10 +76,12 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
     return () => observer.disconnect();
   }, []);
 
-  if (repo.fullName !== prevRepoFullName) {
-    setPrevRepoFullName(repo.fullName);
-    setCurrentPage(1);
-  }
+  useEffect(() => {
+    if (repo.fullName !== prevRepoFullName) {
+      setPrevRepoFullName(repo.fullName);
+      setCurrentPage(1);
+    }
+  }, [repo.fullName, prevRepoFullName]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -323,15 +325,14 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
             {totalPluginPages > 1 && (
               <div className="flex justify-center mt-4">
                 <Pagination
-                  initialPage={1}
                   total={totalPluginPages}
                   page={currentPage}
                   onChange={setCurrentPage}
                   size="sm"
                   variant="flat"
                   classNames={{
-                    cursor: "bg-accent text-white",
                     item: "w-6 h-6 rounded-lg bg-accent/10 hover:bg-accent text-sm hover:text-white",
+                    cursor: "w-6 h-6 rounded-lg bg-accent text-white opacity-100",
                   }}
                 />
               </div>
