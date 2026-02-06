@@ -61,6 +61,7 @@ export const StarsHistoryChart: React.FC<StarsHistoryChartProps> = ({ data }) =>
             tick={{ fontSize: 12, fill: "#888" }}
             axisLine={{ stroke: "#e0e0e0" }}
             tickLine={false}
+            tickMargin={15}
           />
           <YAxis
             domain={["auto", "auto"]}

@@ -3,8 +3,9 @@ import type { MarketplaceData } from "../types/github";
 
 export interface PluginData {
   plugins: number;
-  pluginDescription?: string;
-  pluginVersion?: string;
+  pluginDescriptions: string[];
+  pluginVersions: string[];
+  pluginNames: string[];
 }
 
 export async function getMarketplaceData(
@@ -23,32 +24,23 @@ export async function getMarketplaceData(
 
     const plugins = data.plugins?.length || 0;
 
-    let pluginDescription: string | undefined;
-    let pluginVersion: string | undefined;
+    const pluginDescriptions: string[] = [];
+    const pluginVersions: string[] = [];
+    const pluginNames: string[] = [];
 
     if (data.plugins && data.plugins.length > 0) {
-      pluginDescription = data.plugins[0].description;
-      pluginVersion = data.plugins[0].version;
-    }
-
-    if (!pluginDescription && data.metadata?.description) {
-      pluginDescription = data.metadata.description;
-    }
-    if (!pluginDescription && data.description) {
-      pluginDescription = data.description;
-    }
-
-    if (!pluginVersion && data.metadata?.version) {
-      pluginVersion = data.metadata.version;
-    }
-    if (!pluginVersion && data.version) {
-      pluginVersion = data.version;
+      for (const plugin of data.plugins) {
+        pluginNames.push(plugin.name);
+        pluginDescriptions.push(plugin.description || data.metadata?.description || data.description || "");
+        pluginVersions.push(plugin.version || data.metadata?.version || data.version || "");
+      }
     }
 
     return {
       plugins,
-      pluginDescription,
-      pluginVersion,
+      pluginDescriptions,
+      pluginVersions,
+      pluginNames,
     };
   } catch (error) {
     console.error(`Failed to load marketplace data for ${fullName}:`, error);

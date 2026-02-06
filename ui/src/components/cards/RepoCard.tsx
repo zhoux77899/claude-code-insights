@@ -194,7 +194,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
           </div>
         </CardHeader>
 
-        <CardBody className="relative z-10 p-4 py-2 flex flex-col h-[108px]">
+        <CardBody className="relative z-10 p-3.5 py-2 flex flex-col h-[108px]">
           <p
             className="text-sm text-left text-default-600 dark:text-default-600 line-clamp-3"
             title={repo.description}
@@ -203,7 +203,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
           </p>
           <div
             className={cn(
-              "mt-auto flex items-center justify-between",
+              "flex w-full mt-auto items-center justify-between",
               "rounded-md px-1",
               "bg-page-light/50 dark:bg-page-dark/50 backdrop-blur-xs",
               "border border-1.5 border-black/10 dark:border-white/10"
@@ -256,7 +256,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
             }}
             disabled={isAnyModalOpen && !isDetailModalOpen}
             className={cn(
-              "flex w-[72px] h-6 items-center justify-center",
+              "flex w-[80px] h-6 items-center justify-center gap-1",
               "translate-x-0.5",
               "rounded-full",
               "text-xs font-medium text-accent",
