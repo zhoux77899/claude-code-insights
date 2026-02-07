@@ -325,14 +325,15 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
             {totalPluginPages > 1 && (
               <div className="flex justify-center mt-4">
                 <Pagination
+                  initialPage={1}
                   total={totalPluginPages}
                   page={currentPage}
                   onChange={setCurrentPage}
                   size="sm"
                   variant="flat"
                   classNames={{
-                    item: "w-6 h-6 rounded-lg bg-accent/10 hover:bg-accent text-sm hover:text-white",
-                    cursor: "w-6 h-6 rounded-lg bg-accent text-white opacity-100",
+                    item: "w-6 h-6 rounded-lg bg-accent/10 hover:bg-accent text-xs hover:text-white",
+                    cursor: "w-6 h-6 rounded-lg bg-accent text-xs text-white opacity-100",
                   }}
                 />
               </div>

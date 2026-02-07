@@ -44,13 +44,13 @@ export const PluginCard: React.FC<PluginCardProps> = ({
         body: "pt-0",
       }}
     >
-      <CardHeader className="flex flex-col items-start">
+      <CardHeader className="flex flex-col items-start p-4">
         <span className="text-accent font-medium">
           {pluginName}@{pluginVersion}
         </span>
       </CardHeader>
 
-      <CardBody className="flex flex-col relative gap-2 h-[84px]">
+      <CardBody className="flex flex-col relative gap-2 p-4 h-[84px]">
         <p
           className={cn(
             "text-sm text-default-600 dark:text-default-400",
