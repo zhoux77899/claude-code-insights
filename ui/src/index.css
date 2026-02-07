@@ -1,6 +1,18 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin '../hero.ts';
+@source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-accent: #CB7C5B;
+  --color-accent-light: #CB7C5B;
+  --color-accent-dark: #CB7C5B;
+  --color-page-dark: #09090B;
+  --color-page-light: #FDFDF7;
+  --color-card-dark: #1D1917;
+  --color-card-light: #FFFFFF;
+  --backdrop-blur-xs: 2px;
+}
 
 @font-face {
   font-family: 'maple-mono';
@@ -46,23 +58,23 @@ body {
   .acrylic {
     @apply bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/20 dark:border-white/10;
   }
-  
+
   .acrylic-card {
     @apply bg-white/60 dark:bg-white/5 backdrop-blur-md border border-white/30 dark:border-white/10 shadow-xl;
   }
-  
+
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-accent to-accent/80;
   }
-  
+
   .glow-accent {
     box-shadow: 0 0 20px rgba(203, 124, 91, 0.3);
   }
-  
+
   .glow-accent-hover:hover {
     box-shadow: 0 0 30px rgba(203, 124, 91, 0.4);
   }
-  
+
   .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -79,7 +91,7 @@ body {
   .dark {
     color-scheme: dark;
   }
-  
+
   .light {
     color-scheme: light;
   }
