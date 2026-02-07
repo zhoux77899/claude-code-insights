@@ -5,10 +5,21 @@ interface StarsHistoryData {
 
 export async function getStarsHistory(repoFullName: string): Promise<StarsHistoryData[]> {
   try {
-    const response = await fetch("/data/plugins-history.json");
+    let response: Response;
+    const remoteUrl = "https://raw.githubusercontent.com/zhoux77899/claude-code-insights/refs/heads/main/plugins/history.json";
+    const localUrl = "/data/plugins-history.json";
 
-    if (!response.ok) {
-      return [];
+    try {
+      response = await fetch(remoteUrl);
+      if (!response.ok) {
+        throw new Error(`Remote fetch failed: ${response.status}`);
+      }
+    } catch (remoteError) {
+      console.log("[getStarsHistory] Remote fetch failed, falling back to local data");
+      response = await fetch(localUrl);
+      if (!response.ok) {
+        return [];
+      }
     }
 
     const data = await response.json();

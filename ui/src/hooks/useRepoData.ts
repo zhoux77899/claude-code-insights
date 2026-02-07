@@ -37,10 +37,21 @@ export function useRepoData({
       setError(null);
       setSkippedCount(0);
 
-      const response = await fetch("/data/plugins-repos.json");
+      let response: Response;
+      const remoteUrl = "https://raw.githubusercontent.com/zhoux77899/claude-code-insights/refs/heads/main/plugins/repos.json";
+      const localUrl = "/data/plugins-repos.json";
 
-      if (!response.ok) {
-        throw new Error(`Failed to load data: ${response.status}`);
+      try {
+        response = await fetch(remoteUrl);
+        if (!response.ok) {
+          throw new Error(`Remote fetch failed: ${response.status}`);
+        }
+      } catch (remoteError) {
+        console.log("[useRepoData] Remote fetch failed, falling back to local data");
+        response = await fetch(localUrl);
+        if (!response.ok) {
+          throw new Error(`Failed to load data: ${response.status}`);
+        }
       }
 
       const data: RepositoriesResponse = await response.json();
