@@ -374,7 +374,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
                   </span>
                 </div>
               </div>
-              <div className="flex items-center gap-1">
+              <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-2">
                   <HardDrives size={16} weight={isDark ? "regular" : "fill"} className="text-default-500" />
                   <p className="text-sm text-default-500">Size</p>
