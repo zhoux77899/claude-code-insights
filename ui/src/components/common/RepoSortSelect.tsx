@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Select, SelectItem, type Selection } from "@heroui/react";
 import { Star, GitFork, TrendUp, CaretDown } from "@phosphor-icons/react";
 import type { SortOption } from "../../types/github";
@@ -10,29 +10,52 @@ interface RepoSortSelectProps {
   isLoading?: boolean;
 }
 
-const sortOptions: { key: SortOption; label: string; icon: React.ReactNode }[] = [
-  {
-    key: "stars",
-    label: "Stars",
-    icon: <Star size={16} weight="fill" />,
-  },
-  {
-    key: "forks",
-    label: "Forks",
-    icon: <GitFork size={16} weight="fill" />,
-  },
-  {
-    key: "trending",
-    label: "Trending (24H)",
-    icon: <TrendUp size={16} weight="fill" />,
-  },
-];
-
 export const RepoSortSelect: React.FC<RepoSortSelectProps> = ({
   value,
   onChange,
   isLoading = false,
 }) => {
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    const checkTheme = () => {
+      const isDarkMode = document.documentElement.classList.contains("dark");
+      setIsDark(isDarkMode);
+    };
+
+    checkTheme();
+
+    const observer = new MutationObserver(() => {
+      checkTheme();
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const iconWeight = isDark ? "regular" : "fill";
+
+  const sortOptions: { key: SortOption; label: string; icon: React.ReactNode }[] = [
+    {
+      key: "stars",
+      label: "Stars",
+      icon: <Star size={16} weight={iconWeight} />,
+    },
+    {
+      key: "forks",
+      label: "Forks",
+      icon: <GitFork size={16} weight={iconWeight} />,
+    },
+    {
+      key: "trending",
+      label: "Trending (24H)",
+      icon: <TrendUp size={16} weight={iconWeight} />,
+    },
+  ];
   const handleSelectionChange = (keys: Selection) => {
     const selectedKey = Array.from(keys)[0] as SortOption;
     if (selectedKey && selectedKey !== value) {
