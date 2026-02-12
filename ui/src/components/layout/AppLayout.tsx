@@ -1,17 +1,25 @@
 import type { ReactNode } from "react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react";
 import { ThemeSwitch } from "../common/ThemeSwitch";
+import { RepoSortSelect } from "../common/RepoSortSelect";
+import type { SortOption } from "../../types/github";
 
 interface AppLayoutProps {
   children: ReactNode;
   title?: string;
   subtitle?: string;
+  sortOption?: SortOption;
+  onSortChange?: (option: SortOption) => void;
+  isSortLoading?: boolean;
 }
 
 export const AppLayout: React.FC<AppLayoutProps> = ({
   children,
   title = "GitHub Repositories",
   subtitle = "Discover amazing open source projects",
+  sortOption,
+  onSortChange,
+  isSortLoading = false,
 }) => {
   return (
     <div className="min-h-screen bg-page-light dark:bg-page-dark transition-colors duration-300">
@@ -38,6 +46,15 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         </NavbarBrand>
 
         <NavbarContent justify="end" className="gap-3 pr-4">
+          {sortOption && onSortChange && (
+            <NavbarItem className="hidden sm:flex">
+              <RepoSortSelect
+                value={sortOption}
+                onChange={onSortChange}
+                isLoading={isSortLoading}
+              />
+            </NavbarItem>
+          )}
           <NavbarItem>
             <ThemeSwitch />
           </NavbarItem>

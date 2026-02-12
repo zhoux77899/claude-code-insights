@@ -1,11 +1,10 @@
 import React, { useEffect, useCallback, useRef } from "react";
-import { HeroUIProvider } from "@heroui/system";
 import { Button } from "@heroui/react";
 import { ArrowDown, GithubLogo } from "@phosphor-icons/react";
 import { AppLayout } from "./components/layout";
 import { RepoCard, ModalProvider } from "./components/cards";
-import { LoadingSpinner, ErrorBoundary } from "./components/common";
-import { useRepoData } from "./hooks/useRepoData";
+import { LoadingSpinner, ErrorBoundary, RepoSortSelect } from "./components/common";
+import { useRepoData, useRepoSort } from "./hooks";
 import { cn } from "./utils/cn";
 
 const App: React.FC = () => {
@@ -13,6 +12,8 @@ const App: React.FC = () => {
     initialBatchSize: 40,
     batchSize: 20,
   });
+
+  const { sortOption, setSortOption, sortedRepos, isSorting } = useRepoSort(repos);
 
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
@@ -41,7 +42,11 @@ const App: React.FC = () => {
 
   if (error) {
     return (
-      <AppLayout>
+      <AppLayout
+        sortOption={sortOption}
+        onSortChange={setSortOption}
+        isSortLoading={isSorting}
+      >
         <div className="flex flex-col items-center justify-center py-20">
           <div className="text-center">
             <GithubLogo className="text-accent mb-4" size={64} />
@@ -64,65 +69,75 @@ const App: React.FC = () => {
   }
 
   return (
-    <HeroUIProvider>
-      <ModalProvider>
-        <AppLayout
-          title="GitHub Repositories"
-          subtitle={`${totalCount.toLocaleString()} amazing open source projects`}
+    <ModalProvider>
+      <AppLayout
+        title="GitHub Repositories"
+        subtitle={`${totalCount.toLocaleString()} amazing open source projects`}
+        sortOption={sortOption}
+        onSortChange={setSortOption}
+        isSortLoading={isSorting}
+      >
+        <ErrorBoundary
+          fallback={
+            <div className="flex flex-col items-center justify-center py-20">
+              <p className="text-default-500">Something went wrong displaying repositories.</p>
+            </div>
+          }
         >
-          <ErrorBoundary
-            fallback={
-              <div className="flex flex-col items-center justify-center py-20">
-                <p className="text-default-500">Something went wrong displaying repositories.</p>
+          {/* Mobile Sort Select */}
+          <div className="flex sm:hidden justify-end mb-4 px-4">
+            <RepoSortSelect
+              value={sortOption}
+              onChange={setSortOption}
+              isLoading={isSorting}
+            />
+          </div>
+
+          {loading ? (
+            <LoadingSpinner fullScreen />
+          ) : (
+            <>
+              <div
+                className={cn(
+                  "flex flex-wrap justify-center gap-x-4 gap-y-4",
+                  "w-full mx-auto max-w-[1920px]"
+                )}
+              >
+                {sortedRepos.map((repo) => (
+                  <RepoCard key={repo.id} repo={repo} />
+                ))}
               </div>
-            }
-          >
-            {loading ? (
-              <LoadingSpinner fullScreen />
-            ) : (
-              <>
+
+              {hasMore && (
                 <div
-                  className={cn(
-                    "flex flex-wrap justify-center gap-x-4 gap-y-4",
-                    "w-full mx-auto max-w-[1920px]"
-                  )}
+                  ref={loadMoreRef}
+                  className="flex justify-center py-12"
                 >
-                  {repos.map((repo) => (
-                    <RepoCard key={repo.id} repo={repo} />
-                  ))}
-                </div>
-
-                {hasMore && (
-                  <div
-                    ref={loadMoreRef}
-                    className="flex justify-center py-12"
+                  <Button
+                    variant="flat"
+                    color="primary"
+                    onPress={loadMore}
+                    isLoading={loading}
+                    endContent={<ArrowDown className={cn("transition-transform", loading ? "animate-bounce" : "")} />}
+                    className="bg-accent/10 text-accent hover:bg-accent/20 min-w-[160px]"
                   >
-                    <Button
-                      variant="flat"
-                      color="primary"
-                      onPress={loadMore}
-                      isLoading={loading}
-                      endContent={<ArrowDown className={cn("transition-transform", loading ? "animate-bounce" : "")} />}
-                      className="bg-accent/10 text-accent hover:bg-accent/20 min-w-[160px]"
-                    >
-                      Load More
-                    </Button>
-                  </div>
-                )}
+                    Load More
+                  </Button>
+                </div>
+              )}
 
-                {!hasMore && repos.length > 0 && (
-                  <div className="flex justify-center py-8">
-                    <p className="text-default-500 text-sm">
-                      You've reached the end • {totalCount.toLocaleString()} repositories
-                    </p>
-                  </div>
-                )}
-              </>
-            )}
-          </ErrorBoundary>
-        </AppLayout>
-      </ModalProvider>
-    </HeroUIProvider>
+              {!hasMore && repos.length > 0 && (
+                <div className="flex justify-center py-8">
+                  <p className="text-default-500 text-sm">
+                    You've reached the end • {totalCount.toLocaleString()} repositories
+                  </p>
+                </div>
+              )}
+            </>
+          )}
+        </ErrorBoundary>
+      </AppLayout>
+    </ModalProvider>
   ); 
 };
 

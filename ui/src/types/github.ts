@@ -112,3 +112,15 @@ export interface MarketplaceData {
   description?: string;
   version?: string;
 }
+
+export type SortOption = "stars" | "forks" | "trending";
+
+export interface SortConfig {
+  option: SortOption;
+  direction: "desc";
+}
+
+export interface StarsHistoryData {
+  date: string;
+  stars: number;
+}

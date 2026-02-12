@@ -41,7 +41,7 @@ export const StarsHistoryChart: React.FC<StarsHistoryChartProps> = ({ data }) =>
   return (
     <div className="flex items-center justify-left w-full h-[200px]">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data} margin={{ top: 10, left: 0, right: 10, bottom: 10 }}>
+        <AreaChart data={data} margin={{ top: 10, left: -10, right: 10, bottom: 10 }}>
           <Area
             type="monotone"
             dataKey="stars"
@@ -59,14 +59,14 @@ export const StarsHistoryChart: React.FC<StarsHistoryChartProps> = ({ data }) =>
           <XAxis
             dataKey="date"
             tick={{ fontSize: 12, fill: "#888" }}
-            axisLine={{ stroke: "#e0e0e0" }}
+            axisLine={false}
             tickLine={false}
             tickMargin={15}
           />
           <YAxis
             domain={["auto", "auto"]}
             tick={{ fontSize: 12, fill: "#888" }}
-            axisLine={{ stroke: "#e0e0e0" }}
+            axisLine={false}
             tickLine={false}
             tickCount={3}
             tickFormatter={(value) => value.toLocaleString()}
