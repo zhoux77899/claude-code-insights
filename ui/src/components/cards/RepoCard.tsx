@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Star, GitFork, FileMagnifyingGlass, CopySimple, Check } from "@phosphor-icons/react";
-import type { FormattedRepo } from "../../types/github";
+import type { FormattedRepo, SortOption } from "../../types/github";
 import { formatNumber } from "../../utils/formatters";
 import { cn } from "../../utils/cn";
 import { CanvasRevealEffect } from "@/components/ui/canvasRevealEffect";
@@ -11,6 +11,8 @@ import { useModal } from "../../contexts/ModalContext";
 interface RepoCardProps {
   repo: FormattedRepo;
   className?: string;
+  sortOption?: SortOption;
+  trendingScores?: Map<string, number>;
 }
 
 function pluginMarketplace(fullName: string) : string {
@@ -20,7 +22,7 @@ function pluginMarketplace(fullName: string) : string {
   return `/plugin marketplace add ${fullName}`;
 }
 
-export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
+export const RepoCard: React.FC<RepoCardProps> = ({ repo, className, sortOption, trendingScores }) => {
   const { isAnyModalOpen, openModal, closeModal } = useModal();
   const [, setMousePosition] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState({ rotateX: 0, rotateY: 0 });
@@ -234,7 +236,11 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className }) => {
                 size={16}
                 weight={isDark ? "regular" : (repo.stars > 0 ? "fill" : "regular")}
               />
-              <span className="text-sm font-medium">{formatNumber(repo.stars)}</span>
+              <span className="text-sm font-medium">
+                {sortOption === "trending" && trendingScores?.has(repo.fullName)
+                  ? `+${formatNumber(trendingScores.get(repo.fullName) || 0)}`
+                  : formatNumber(repo.stars)}
+              </span>
             </div>
             <div className="flex items-center gap-1.5 text-default-600 dark:text-default-600">
               <GitFork

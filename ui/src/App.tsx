@@ -13,7 +13,7 @@ const App: React.FC = () => {
     batchSize: 20,
   });
 
-  const { sortOption, setSortOption, sortedRepos, isSorting } = useRepoSort(repos);
+  const { sortOption, setSortOption, sortedRepos, isSorting, trendingScores } = useRepoSort(repos);
 
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
@@ -104,7 +104,12 @@ const App: React.FC = () => {
                 )}
               >
                 {sortedRepos.map((repo) => (
-                  <RepoCard key={repo.id} repo={repo} />
+                  <RepoCard
+                    key={repo.id}
+                    repo={repo}
+                    sortOption={sortOption}
+                    trendingScores={trendingScores}
+                  />
                 ))}
               </div>
 
