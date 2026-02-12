@@ -3,31 +3,19 @@ import type { FormattedRepo, RepositoriesResponse } from "../types/github";
 import { safeFormatRepository } from "../utils/formatters";
 
 interface UseRepoDataReturn {
-  repos: FormattedRepo[];
+  allRepos: FormattedRepo[];
   loading: boolean;
   error: Error | null;
   totalCount: number;
   validCount: number;
   skippedCount: number;
-  loadMore: () => void;
-  hasMore: boolean;
   refresh: () => void;
 }
 
-interface UseRepoDataProps {
-  initialBatchSize?: number;
-  batchSize?: number;
-}
-
-export function useRepoData({
-  initialBatchSize = 40,
-  batchSize = 20,
-}: UseRepoDataProps = {}): UseRepoDataReturn {
-  const [repos, setRepos] = useState<FormattedRepo[]>([]);
-  const [allValidRepos, setAllValidRepos] = useState<FormattedRepo[]>([]);
+export function useRepoData(): UseRepoDataReturn {
+  const [allRepos, setAllRepos] = useState<FormattedRepo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-  const [displayCount, setDisplayCount] = useState(initialBatchSize);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [skippedCount, setSkippedCount] = useState(0);
 
@@ -46,7 +34,7 @@ export function useRepoData({
         if (!response.ok) {
           throw new Error(`Remote fetch failed: ${response.status}`);
         }
-      } catch (remoteError) {
+      } catch {
         console.log("[useRepoData] Remote fetch failed, falling back to local data");
         response = await fetch(localUrl);
         if (!response.ok) {
@@ -78,9 +66,7 @@ export function useRepoData({
       const validRepos = Array.from(reposMap.values());
 
       setSkippedCount(skipped);
-      setAllValidRepos(validRepos);
-      setRepos(validRepos.slice(0, initialBatchSize));
-      setDisplayCount(initialBatchSize);
+      setAllRepos(validRepos);
       setHasLoaded(true);
 
       if (skipped > 0) {
@@ -91,39 +77,26 @@ export function useRepoData({
     } finally {
       setLoading(false);
     }
-  }, [initialBatchSize]);
+  }, []);
 
   useEffect(() => {
     loadData();
   }, [loadData]);
 
-  const loadMore = useCallback(() => {
-    if (displayCount >= allValidRepos.length) return;
-
-    const nextCount = Math.min(displayCount + batchSize, allValidRepos.length);
-    setRepos(allValidRepos.slice(0, nextCount));
-    setDisplayCount(nextCount);
-  }, [displayCount, allValidRepos.length, batchSize]);
-
-  const hasMore = displayCount < allValidRepos.length;
-
   const refresh = useCallback(() => {
     setHasLoaded(false);
-    setRepos([]);
-    setAllValidRepos([]);
+    setAllRepos([]);
     setSkippedCount(0);
     loadData();
   }, [loadData]);
 
   return {
-    repos,
+    allRepos,
     loading: loading && !hasLoaded,
     error,
-    totalCount: allValidRepos.length,
-    validCount: allValidRepos.length,
+    totalCount: allRepos.length,
+    validCount: allRepos.length,
     skippedCount,
-    loadMore,
-    hasMore,
     refresh,
   };
 }

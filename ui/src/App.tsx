@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef } from "react";
+import React, { useEffect, useCallback, useRef, useState, useMemo } from "react";
 import { Button } from "@heroui/react";
 import { ArrowDown, GithubLogo } from "@phosphor-icons/react";
 import { AppLayout } from "./components/layout";
@@ -7,15 +7,28 @@ import { LoadingSpinner, ErrorBoundary, RepoSortSelect } from "./components/comm
 import { useRepoData, useRepoSort } from "./hooks";
 import { cn } from "./utils/cn";
 
-const App: React.FC = () => {
-  const { repos, loading, error, totalCount, loadMore, hasMore } = useRepoData({
-    initialBatchSize: 40,
-    batchSize: 20,
-  });
+const INITIAL_BATCH_SIZE = 40;
+const BATCH_SIZE = 20;
 
-  const { sortOption, setSortOption, sortedRepos, isSorting, trendingScores } = useRepoSort(repos);
+const App: React.FC = () => {
+  const { allRepos, loading, error, totalCount } = useRepoData();
+  const { sortOption, setSortOption, sortedRepos, isSorting, trendingScores } = useRepoSort(allRepos);
+
+  const [displayCount, setDisplayCount] = useState(INITIAL_BATCH_SIZE);
+
+  const displayRepos = useMemo(() => {
+    return sortedRepos.slice(0, displayCount);
+  }, [sortedRepos, displayCount]);
+
+  const hasMore = displayCount < sortedRepos.length;
 
   const loadMoreRef = useRef<HTMLDivElement>(null);
+
+  const loadMore = useCallback(() => {
+    if (displayCount >= sortedRepos.length) return;
+    const nextCount = Math.min(displayCount + BATCH_SIZE, sortedRepos.length);
+    setDisplayCount(nextCount);
+  }, [displayCount, sortedRepos.length]);
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -103,7 +116,7 @@ const App: React.FC = () => {
                   "w-full mx-auto max-w-[1920px]"
                 )}
               >
-                {sortedRepos.map((repo) => (
+                {displayRepos.map((repo) => (
                   <RepoCard
                     key={repo.id}
                     repo={repo}
@@ -131,7 +144,7 @@ const App: React.FC = () => {
                 </div>
               )}
 
-              {!hasMore && repos.length > 0 && (
+              {!hasMore && displayRepos.length > 0 && (
                 <div className="flex justify-center py-8">
                   <p className="text-default-500 text-sm">
                     You've reached the end • {totalCount.toLocaleString()} repositories

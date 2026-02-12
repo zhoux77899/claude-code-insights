@@ -86,7 +86,7 @@ function sortRepos(
   }
 }
 
-export function useRepoSort(repos: FormattedRepo[]): UseRepoSortReturn {
+export function useRepoSort(allRepos: FormattedRepo[]): UseRepoSortReturn {
   const [sortOption, setSortOptionState] = useState<SortOption>(() => {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -104,8 +104,6 @@ export function useRepoSort(repos: FormattedRepo[]): UseRepoSortReturn {
     let isMounted = true;
 
     async function loadHistory() {
-      if (sortOption !== "trending") return;
-
       setIsLoadingHistory(true);
       try {
         const data = await fetchStarsHistoryData();
@@ -124,7 +122,7 @@ export function useRepoSort(repos: FormattedRepo[]): UseRepoSortReturn {
     return () => {
       isMounted = false;
     };
-  }, [sortOption]);
+  }, []);
 
   const setSortOption = useCallback((option: SortOption) => {
     setSortOptionState(option);
@@ -135,18 +133,18 @@ export function useRepoSort(repos: FormattedRepo[]): UseRepoSortReturn {
 
   const trendingScores = useMemo(() => {
     const scores = new Map<string, number>();
-    if (sortOption === "trending" && Object.keys(historyData).length > 0) {
-      repos.forEach((repo) => {
+    if (Object.keys(historyData).length > 0) {
+      allRepos.forEach((repo) => {
         const score = calculateTrendingScore(repo.fullName, historyData);
         scores.set(repo.fullName, score);
       });
     }
     return scores;
-  }, [repos, historyData, sortOption]);
+  }, [allRepos, historyData]);
 
   const sortedRepos = useMemo(() => {
-    return sortRepos(repos, sortOption, trendingScores);
-  }, [repos, sortOption, trendingScores]);
+    return sortRepos(allRepos, sortOption, trendingScores);
+  }, [allRepos, sortOption, trendingScores]);
 
   const isSorting = sortOption === "trending" && isLoadingHistory;
 
