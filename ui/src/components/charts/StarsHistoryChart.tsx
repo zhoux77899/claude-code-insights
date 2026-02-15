@@ -42,11 +42,17 @@ export const StarsHistoryChart: React.FC<StarsHistoryChartProps> = ({ data }) =>
     <div className="flex items-center justify-left w-full h-[200px]">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 10, left: -10, right: 10, bottom: 10 }}>
+          <defs>
+            <linearGradient id="colorStars" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#CB7C5B" stopOpacity={0.5} />
+              <stop offset="100%" stopColor="#CB7C5B" stopOpacity={0.05} />
+            </linearGradient>
+          </defs>
           <Area
             type="monotone"
             dataKey="stars"
-            fill="#CB7C5B"
-            opacity={0.3}
+            fill="url(#colorStars)"
+            strokeWidth={0}
           />
           <Line
             type="monotone"
