@@ -1,10 +1,10 @@
 import React, { useEffect, useCallback, useRef, useState, useMemo } from "react";
 import { Button } from "@heroui/react";
-import { ArrowDown, GithubLogo } from "@phosphor-icons/react";
+import { ArrowDown, GithubLogo, MagnifyingGlass } from "@phosphor-icons/react";
 import { AppLayout } from "./components/layout";
 import { RepoCard, ModalProvider } from "./components/cards";
-import { LoadingSpinner, ErrorBoundary, RepoSortSelect } from "./components/common";
-import { useRepoData, useRepoSort } from "./hooks";
+import { LoadingSpinner, ErrorBoundary, RepoSortSelect, RepoSearchInput } from "./components/common";
+import { useRepoData, useRepoSort, useRepoSearch } from "./hooks";
 import { cn } from "./utils/cn";
 
 const INITIAL_BATCH_SIZE = 40;
@@ -12,7 +12,16 @@ const BATCH_SIZE = 20;
 
 const App: React.FC = () => {
   const { allRepos, loading, error, totalCount } = useRepoData();
-  const { sortOption, setSortOption, sortedRepos, isSorting, trendingScores } = useRepoSort(allRepos);
+  const {
+    searchQuery,
+    setSearchQuery,
+    debouncedQuery,
+    filteredRepos,
+    isSearching,
+    hasResults,
+    resultCount,
+  } = useRepoSearch(allRepos);
+  const { sortOption, setSortOption, sortedRepos, isSorting, trendingScores } = useRepoSort(filteredRepos);
 
   const [displayCount, setDisplayCount] = useState(INITIAL_BATCH_SIZE);
 
@@ -29,6 +38,11 @@ const App: React.FC = () => {
     const nextCount = Math.min(displayCount + BATCH_SIZE, sortedRepos.length);
     setDisplayCount(nextCount);
   }, [displayCount, sortedRepos.length]);
+
+  const handleSearchChange = useCallback((query: string) => {
+    setSearchQuery(query);
+    setDisplayCount(INITIAL_BATCH_SIZE);
+  }, [setSearchQuery]);
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -59,6 +73,9 @@ const App: React.FC = () => {
         sortOption={sortOption}
         onSortChange={setSortOption}
         isSortLoading={isSorting}
+        searchQuery={searchQuery}
+        onSearchChange={handleSearchChange}
+        isSearching={isSearching}
       >
         <div className="flex flex-col items-center justify-center py-20">
           <div className="text-center">
@@ -89,6 +106,9 @@ const App: React.FC = () => {
         sortOption={sortOption}
         onSortChange={setSortOption}
         isSortLoading={isSorting}
+        searchQuery={searchQuery}
+        onSearchChange={handleSearchChange}
+        isSearching={isSearching}
       >
         <ErrorBoundary
           fallback={
@@ -97,36 +117,59 @@ const App: React.FC = () => {
             </div>
           }
         >
-          {/* Mobile Sort Select */}
-          <div className="flex sm:hidden justify-end mb-4 px-4">
-            <RepoSortSelect
-              value={sortOption}
-              onChange={setSortOption}
-              isLoading={isSorting}
+          {/* Mobile Search and Sort */}
+          <div className="flex md:hidden flex-col gap-3 mb-4 px-4">
+            <RepoSearchInput
+              value={searchQuery}
+              onChange={handleSearchChange}
+              isSearching={isSearching}
             />
+            <div className="flex justify-end">
+              <RepoSortSelect
+                value={sortOption}
+                onChange={setSortOption}
+                isLoading={isSorting}
+              />
+            </div>
           </div>
 
           {loading ? (
             <LoadingSpinner fullScreen />
           ) : (
             <>
-              <div
-                className={cn(
-                  "flex flex-wrap justify-center gap-x-4 gap-y-4",
-                  "w-full mx-auto max-w-[1920px]"
-                )}
-              >
-                {displayRepos.map((repo) => (
-                  <RepoCard
-                    key={repo.id}
-                    repo={repo}
-                    sortOption={sortOption}
-                    trendingScores={trendingScores}
-                  />
-                ))}
-              </div>
+              {!hasResults && debouncedQuery && (
+                <div className="flex flex-col items-center justify-center py-20 px-4">
+                  <MagnifyingGlass className="text-default-300 mb-4" size={64} />
+                  <h2 className="text-2xl font-bold text-foreground mb-2 text-center">
+                    No Results Found
+                  </h2>
+                  <p className="text-default-500 text-center max-w-md">
+                    No repositories match &quot;<span className="text-accent">{debouncedQuery}</span>&quot;.
+                    <br />
+                    Try adjusting your search terms or check for typos.
+                  </p>
+                </div>
+              )}
 
-              {hasMore && (
+              {hasResults && (
+                <div
+                  className={cn(
+                    "flex flex-wrap justify-center gap-x-4 gap-y-4",
+                    "w-full mx-auto max-w-[1920px]"
+                  )}
+                >
+                  {displayRepos.map((repo) => (
+                    <RepoCard
+                      key={repo.id}
+                      repo={repo}
+                      sortOption={sortOption}
+                      trendingScores={trendingScores}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {hasResults && hasMore && (
                 <div
                   ref={loadMoreRef}
                   className="flex justify-center py-12"
@@ -144,10 +187,12 @@ const App: React.FC = () => {
                 </div>
               )}
 
-              {!hasMore && displayRepos.length > 0 && (
+              {hasResults && !hasMore && displayRepos.length > 0 && (
                 <div className="flex justify-center py-8">
                   <p className="text-default-500 text-sm">
-                    You've reached the end • {totalCount.toLocaleString()} repositories
+                    {debouncedQuery
+                      ? `Showing ${resultCount.toLocaleString()} of ${resultCount.toLocaleString()} results`
+                      : `You've reached the end • ${totalCount.toLocaleString()} repositories`}
                   </p>
                 </div>
               )}

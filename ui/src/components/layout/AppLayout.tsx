@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react";
 import { ThemeSwitch } from "../common/ThemeSwitch";
 import { RepoSortSelect } from "../common/RepoSortSelect";
+import { RepoSearchInput } from "../common/RepoSearchInput";
 import type { SortOption } from "../../types/github";
 
 interface AppLayoutProps {
@@ -11,6 +12,9 @@ interface AppLayoutProps {
   sortOption?: SortOption;
   onSortChange?: (option: SortOption) => void;
   isSortLoading?: boolean;
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
+  isSearching?: boolean;
 }
 
 export const AppLayout: React.FC<AppLayoutProps> = ({
@@ -20,6 +24,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   sortOption,
   onSortChange,
   isSortLoading = false,
+  searchQuery,
+  onSearchChange,
+  isSearching = false,
 }) => {
   return (
     <div className="min-h-screen bg-page-light dark:bg-page-dark transition-colors duration-300">
@@ -46,6 +53,15 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         </NavbarBrand>
 
         <NavbarContent justify="end" className="gap-3 pr-4">
+          {searchQuery !== undefined && onSearchChange && (
+            <NavbarItem className="hidden md:flex">
+              <RepoSearchInput
+                value={searchQuery}
+                onChange={onSearchChange}
+                isSearching={isSearching}
+              />
+            </NavbarItem>
+          )}
           {sortOption && onSortChange && (
             <NavbarItem className="hidden sm:flex">
               <RepoSortSelect
