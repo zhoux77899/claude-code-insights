@@ -20,7 +20,7 @@ interface AppLayoutProps {
 
 export const AppLayout: React.FC<AppLayoutProps> = ({
   children,
-  title = "Claude Code Daily Insights",
+  title = "Claude Code Insights",
   subtitle = "Discover amazing Claude Code plugins repositories",
   sortOption,
   onSortChange,

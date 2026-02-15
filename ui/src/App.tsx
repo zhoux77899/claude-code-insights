@@ -101,7 +101,7 @@ const App: React.FC = () => {
   return (
     <ModalProvider>
       <AppLayout
-        title="Claude Code Daily Insights"
+        title="Claude Code Insights"
         subtitle={`${totalCount.toLocaleString()} amazing Claude Code plugins repositories`}
         sortOption={sortOption}
         onSortChange={setSortOption}
