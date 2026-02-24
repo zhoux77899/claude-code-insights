@@ -208,6 +208,16 @@ const ShaderMaterial = ({
     timeLocation.value = timestamp;
   });
 
+  // Update resolution when size changes
+  React.useEffect(() => {
+    if (ref.current) {
+      const material: any = ref.current.material;
+      if (material.uniforms.u_resolution) {
+        material.uniforms.u_resolution.value.set(size.width * 2, size.height * 2);
+      }
+    }
+  }, [size.width, size.height]);
+
   const getUniforms = () => {
     const preparedUniforms: any = {};
 
@@ -291,7 +301,11 @@ const ShaderMaterial = ({
 
 const Shader: React.FC<ShaderProps> = ({ source, uniforms, maxFps = 60 }) => {
   return (
-    <Canvas className="absolute inset-0  h-full w-full">
+    <Canvas
+      className="absolute inset-0 h-full w-full"
+      frameloop="always"
+      gl={{ antialias: false, alpha: true }}
+    >
       <ShaderMaterial source={source} uniforms={uniforms} maxFps={maxFps} />
     </Canvas>
   );

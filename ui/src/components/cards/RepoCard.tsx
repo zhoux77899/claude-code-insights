@@ -40,6 +40,14 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className, sortOption,
     }
 
     if (element) {
+      // Immediately check if element is in viewport
+      const rect = element.getBoundingClientRect();
+      const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (isInView) {
+        setIsInViewport(true);
+        setIsVisible(true);
+      }
+
       observerRef.current = new IntersectionObserver(
         ([entry]) => {
           setIsInViewport(entry.isIntersecting);
@@ -47,7 +55,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className, sortOption,
             setIsVisible(true);
           }
         },
-        { threshold: 0.1, rootMargin: "100px" }
+        { threshold: 0, rootMargin: "50px" }
       );
       observerRef.current.observe(element);
     }
