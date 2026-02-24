@@ -10,22 +10,25 @@ import {
 } from "recharts";
 
 interface StarsHistoryChartProps {
-  data: { date: string; stars: number }[];
+  data: { date: string; stars: number | null }[];
 }
 
 interface CustomTooltipProps {
   active?: boolean;
-  payload?: Array<{ value: number | string }>;
+  payload?: Array<{ value: number | null }>;
   label?: string;
 }
 
 const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
+    const value = payload[0]?.value;
     return (
       <div className="bg-content1 border border-default-200 rounded-lg p-2 shadow-lg">
         <p className="text-sm text-default-600">{label}</p>
         <p className="text-sm font-semibold text-accent">
-          {payload[0]?.value?.toLocaleString()} stars
+          {value !== null && value !== undefined
+            ? `${value.toLocaleString()} stars`
+            : "No data"}
         </p>
       </div>
     );
@@ -53,6 +56,7 @@ export const StarsHistoryChart: React.FC<StarsHistoryChartProps> = ({ data }) =>
             dataKey="stars"
             fill="url(#colorStars)"
             strokeWidth={0}
+            connectNulls={true}
           />
           <Line
             type="monotone"
@@ -61,6 +65,7 @@ export const StarsHistoryChart: React.FC<StarsHistoryChartProps> = ({ data }) =>
             strokeWidth={2}
             dot={false}
             activeDot={{ r: 6, fill: "#CB7C5B" }}
+            connectNulls={true}
           />
           <XAxis
             dataKey="date"
@@ -75,7 +80,7 @@ export const StarsHistoryChart: React.FC<StarsHistoryChartProps> = ({ data }) =>
             axisLine={false}
             tickLine={false}
             tickCount={3}
-            tickFormatter={(value) => value.toLocaleString()}
+            tickFormatter={(value) => typeof value === "number" ? value.toLocaleString() : ""}
           />
           <Tooltip content={<CustomTooltip />} />
         </AreaChart>

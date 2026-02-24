@@ -33,6 +33,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className, sortOption,
   const [isDark, setIsDark] = useState(true);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [hasBeenHovered, setHasBeenHovered] = useState(false);
 
   const setRef = useCallback((element: HTMLElement | null) => {
     if (observerRef.current) {
@@ -40,7 +41,6 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className, sortOption,
     }
 
     if (element) {
-      // Immediately check if element is in viewport
       const rect = element.getBoundingClientRect();
       const isInView = rect.top < window.innerHeight && rect.bottom > 0;
       if (isInView) {
@@ -60,6 +60,17 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className, sortOption,
       observerRef.current.observe(element);
     }
   }, []);
+
+  const combinedRef = useCallback((el: HTMLDivElement | null) => {
+    (cardRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
+    setRef(el);
+  }, [setRef]);
+
+  const handleMouseEnter = useCallback(() => {
+    if (!hasBeenHovered) {
+      setHasBeenHovered(true);
+    }
+  }, [hasBeenHovered]);
 
   useEffect(() => {
     const checkTheme = () => {
@@ -139,10 +150,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className, sortOption,
 
   return (
     <div
-      ref={(el) => {
-        (cardRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
-        setRef(el);
-      }}
+      ref={combinedRef}
       className={cn(
         "w-[360px] h-[220px] rounded-2xl",
         "bg-card-light dark:bg-card-dark shadow-md",
@@ -157,6 +165,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className, sortOption,
         transform: `perspective(1000px) rotateX(${rotation.rotateX}deg) rotateY(${rotation.rotateY}deg)`,
       }}
       onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none z-0">
@@ -165,7 +174,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className, sortOption,
           "group-hover:opacity-50 backdrop-blur-sm",
           "opacity-0"
         )}>
-          {isInViewport && (
+          {isInViewport && hasBeenHovered && (
             <CanvasRevealEffect
               key={`canvas-${repo.id}`}
               animationSpeed={2}
