@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo "  "
 CHECK_RESP=$(curl -s -o /tmp/null -w "%{http_code}" \
   -H "Authorization: Bearer $GITHUB_TOKEN" \
   "https://api.github.com/search/code?q=filename:marketplace.json+path:.claude-plugin&per_page=1&page=1")
@@ -15,9 +14,8 @@ fi
 
 echo "  Fetching page 1..."
 curl -s \
-  -H "Authorization: Bearer $GITHUB_TOKEN" \
+  -H "Authorization: token $GITHUB_TOKEN" \
   -H "Accept: application/vnd.github.v3+json" \
-  -H "User-Agent: Claude-Code-Insights-Search" \
   "https://api.github.com/search/code?q=filename:marketplace.json+path:.claude-plugin&sort=stars&order=desc&per_page=100&page=1" \
   > /tmp/response.jsonl
 
@@ -31,9 +29,8 @@ for ((page=2; page<=$PAGES; page++)); do
   fi
   echo "  Fetching page $page/$PAGES..."
   curl -s \
-    -H "Authorization: Bearer $GITHUB_TOKEN" \
+    -H "Authorization: token $GITHUB_TOKEN" \
     -H "Accept: application/vnd.github.v3+json" \
-    -H "User-Agent: Claude-Code-Insights-Search" \
     "https://api.github.com/search/code?q=filename:marketplace.json+path:.claude-plugin&sort=stars&order=desc&per_page=100&page=$page" \
     >> /tmp/response.jsonl
 done
