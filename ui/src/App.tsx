@@ -179,8 +179,7 @@ const App: React.FC = () => {
                     color="primary"
                     onPress={loadMore}
                     isLoading={loading}
-                    endContent={<ArrowDown className={cn("transition-transform", loading ? "animate-bounce" : "")} />}
-                    className="bg-accent/10 text-accent hover:bg-accent/20 min-w-[160px]"
+                    className="rounded-lg min-w-[200px] bg-accent/10 text-accent hover:bg-accent/20"
                   >
                     Load More
                   </Button>
