@@ -37,7 +37,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
   onClose,
 }) => {
   const [isDark, setIsDark] = useState(true);
-  const [starsHistory, setStarsHistory] = useState<{ date: string; stars: number }[]>([]);
+  const [starsHistory, setStarsHistory] = useState<{ date: string; stars: number | null }[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [prevRepoFullName, setPrevRepoFullName] = useState(repo.fullName);
   const { pluginData } = usePluginData(repo.fullName, repo.defaultBranch);
