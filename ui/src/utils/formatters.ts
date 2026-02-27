@@ -114,6 +114,7 @@ export function formatRepository(repo: GitHubRepository): FormattedRepo {
     homepage: repo.homepage,
     createdAt: repo.created_at,
     updatedAt: repo.updated_at,
+    pushedAt: repo.pushed_at,
     license: repo.license?.spdx_id || null,
     topics: repo.topics || [],
     defaultBranch: repo.default_branch || "main",

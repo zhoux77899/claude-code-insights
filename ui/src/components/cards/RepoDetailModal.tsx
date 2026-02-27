@@ -414,7 +414,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
                 </div>
                 <div className="flex items-center gap-2 pl-6">
                   <span className="text-sm text-foreground">
-                    {formatDate(repo.updatedAt)}
+                    {formatDate(repo.pushedAt)}
                   </span>
                 </div>
               </div>

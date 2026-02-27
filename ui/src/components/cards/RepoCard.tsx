@@ -17,7 +17,7 @@ interface RepoCardProps {
 
 function pluginMarketplace(fullName: string) : string {
   if (fullName === "obra/superpowers") {
-    return `/plugin add add ${fullName}-marketplace`;
+    return `/plugin marketplace add ${fullName}-marketplace`;
   }
   return `/plugin marketplace add ${fullName}`;
 }
@@ -118,7 +118,7 @@ export const RepoCard: React.FC<RepoCardProps> = ({ repo, className, sortOption,
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText("/plugin add");
+      await navigator.clipboard.writeText(pluginMarketplace(repo.fullName));
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
     } catch (err) {

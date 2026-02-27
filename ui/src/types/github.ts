@@ -87,6 +87,7 @@ export interface FormattedRepo {
   homepage: string | null;
   createdAt: string;
   updatedAt: string;
+  pushedAt: string;
   license: string | null;
   topics: string[];
   defaultBranch: string;
