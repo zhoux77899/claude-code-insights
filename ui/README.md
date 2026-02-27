@@ -1,73 +1,97 @@
-# React + TypeScript + Vite
+# Claude Code Insights UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend application for browsing and exploring Claude Code plugin repositories.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Repository list with search and multiple sort modes.
+- Repository detail modal with plugin metadata from `.claude-plugin/marketplace.json`.
+- Star trend visualization based on historical snapshots.
+- Progressive loading/infinite loading behavior for large datasets.
+- Dark/light theme support.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React `19`
+- TypeScript `5`
+- Vite `7`
+- HeroUI + Tailwind CSS
+- Recharts (trend charts)
+- Vitest + Testing Library
 
-## Expanding the ESLint configuration
+## Data Source and Fallback Strategy
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+The UI fetches pre-generated data from two sources:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Remote raw files on GitHub (primary):
+   - `plugins/repos.json`
+   - `plugins/history.json`
+2. Local bundled files under `/data` (fallback):
+   - `/data/plugins-repos.json`
+   - `/data/plugins-history.json`
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+At build/deploy time, `.github/workflows/github-pages-deploy.yml` copies data from repository `plugins/` into `ui/data/`.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
+
+### Prerequisites
+
+- Node.js `20`+
+- npm
+
+### Install Dependencies
+
+```bash
+npm ci
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Run Development Server
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+### Lint and Test
+
+```bash
+npm run lint
+npm run test:run
+```
+
+## Project Structure
+
+```text
+ui/
+├── src/
+│   ├── components/    # Cards, charts, layout, shared UI
+│   ├── hooks/         # Data loading, search, sorting, theme, trends
+│   ├── contexts/      # Modal context
+│   ├── types/         # GitHub/data typings
+│   └── utils/         # Formatters, constants, helpers
+├── public/            # Static assets (icons/fonts)
+├── data/              # Copied plugin datasets during CI deploy
+└── package.json
+```
+
+## Deployment Notes
+
+- Vite base path is configured as `/claude-code-insights/` for GitHub Pages.
+- Build output is generated in `ui/dist`.
+- GitHub Pages workflow uploads `ui/dist` as deployment artifact.
+
+## Related Documentation
+
+- Root project overview: [../README.md](../README.md)
+- Plugins data schema and files: [../plugins/README.md](../plugins/README.md)
