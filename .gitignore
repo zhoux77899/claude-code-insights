@@ -1,11 +1,14 @@
 # Generated files
 node_modules/
 out/
+dist/
+data/
 *.vsix
 
 # IDE
 .vscode/
 .idea/
+.trae/
 
 # OS
 .DS_Store
