@@ -67,7 +67,7 @@ def dedupe_repos(input_file: str, output_file: str) -> None:
                     seen_full_names.add(full_name)
                     unique_records.append(record)
 
-        except json.JSONDecodeError as e:
+        except (AttributeError, json.JSONDecodeError) as e:
             print(f"Warning: Failed to parse at index {idx}: {e}")
             idx += 1  # Skip the problematic character
 
