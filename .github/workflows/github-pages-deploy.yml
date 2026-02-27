@@ -30,6 +30,7 @@ jobs:
 
       - name: Copy plugins data
         run: |
+          mkdir -p ui/data
           cp plugins/repos.json ui/data/plugins-repos.json
           cp plugins/history.json ui/data/plugins-history.json
 
