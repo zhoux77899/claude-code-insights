@@ -81,9 +81,8 @@ export GITHUB_TOKEN=your_github_token_here
 
 bash scripts/fetch_repos.sh
 python scripts/dedupe_repos.py --input /tmp/response.jsonl --output /tmp/repos.json
-python scripts/sort_repos.py --input /tmp/repos.json --output /tmp/sorted_repos.json --cached-repos-list plugins/cached-repos.txt
-cp /tmp/sorted_repos.json plugins/repos.json
-python scripts/chronicle_repos.py --input /tmp/sorted_repos.json --output plugins/history.json
+python scripts/sort_repos.py --input /tmp/repos.json --output plugins/repos.json --cached-repos-list plugins/cached-repos.txt
+python scripts/chronicle_repos.py --input plugins/repos.json --output plugins/history.json
 ```
 
 ### 2) Run UI Locally
