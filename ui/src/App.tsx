@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useRef, useState, useMemo } from "react";
 import { Button } from "@heroui/react";
-import { ArrowDown, GithubLogo, MagnifyingGlass } from "@phosphor-icons/react";
+import { GithubLogo, MagnifyingGlass } from "@phosphor-icons/react";
 import { AppLayout } from "./components/layout";
 import { RepoCard, ModalProvider } from "./components/cards";
 import { LoadingSpinner, ErrorBoundary, RepoSortSelect, RepoSearchInput } from "./components/common";
