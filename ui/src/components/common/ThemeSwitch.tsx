@@ -18,7 +18,7 @@ export const ThemeSwitch: React.FC = () => {
       {theme === "dark" ? (
         <Sun className="text-accent" size={20} weight="regular" />
       ) : (
-        <Moon className="text-accent" size={20} weight="regular" />
+        <Moon className="text-accent" size={20} weight="fill" />
       )}
     </Button>
   );
