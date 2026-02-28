@@ -37,27 +37,74 @@ def parse_args():
     return parser.parse_args()
 
 
+def wait_for_rate_limit_reset(resp: requests.Response) -> None:
+    """Parse rate-limit headers from a 403/429 response and sleep until the reset window."""
+    reset_time = resp.headers.get("x-ratelimit-reset")
+    limit = resp.headers.get("x-ratelimit-limit")
+    remaining = resp.headers.get("x-ratelimit-remaining")
+
+    if remaining is not None and int(remaining) == 0 and reset_time is not None:
+        wait_seconds = max(int(reset_time) - int(time.time()), 0) + 1
+        print(
+            f"  Rate limit reached (limit={limit}, remaining=0). "
+            f"Waiting {wait_seconds}s until reset..."
+        )
+        time.sleep(wait_seconds)
+    if remaining is None or int(remaining) > 0:
+        print(
+            f"  Got {resp.status_code} but rate limit not exhausted "
+            f"(remaining={remaining}). Waiting 60s..."
+        )
+        time.sleep(60)
+
+
 def fetch_repo_info(
     repo_full_name: str,
     session: requests.Session,
     token: str | None = None,
-    verify: bool = True
+    verify: bool = True,
+    max_retries: int = 3,
 ) -> dict:
-    """Fetch star count for a single repository from GitHub API"""
+    """Fetch repo info from GitHub API with rate-limit awareness and retries."""
     url = f"https://api.github.com/repos/{repo_full_name}"
     headers = {"Accept": "application/vnd.github.v3+json"}
     if token:
         headers["Authorization"] = f"token {token}"
 
-    try:
-        resp = session.get(url, headers=headers, timeout=10, verify=verify)
-        if resp.status_code == 200:
-            return resp.json()
-        print(f"  Warning: {resp.status_code} for {repo_full_name}")
-        return dict()
-    except Exception as e:
-        print(f"  Error fetching {repo_full_name}: {e}")
-        return dict()
+    for attempt in range(max_retries):
+        try:
+            resp = session.get(url, headers=headers, timeout=10, verify=verify)
+
+            if resp.status_code == 200:
+                return resp.json()
+
+            if resp.status_code in (403, 429):
+                print(
+                    f"  Rate limited ({resp.status_code}) for {repo_full_name} "
+                    f"(attempt {attempt + 1}/{max_retries})"
+                )
+                wait_for_rate_limit_reset(resp)
+                continue
+
+            if resp.status_code >= 500:
+                print(
+                    f"  Server error {resp.status_code} for {repo_full_name}, "
+                    f"retrying (attempt {attempt + 1}/{max_retries})"
+                )
+                time.sleep(2 ** attempt)
+                continue
+
+            print(f"  Warning: {resp.status_code} for {repo_full_name}")
+            return dict()
+
+        except requests.exceptions.RequestException as e:
+            print(f"  Error fetching {repo_full_name}: {e}")
+            if attempt < max_retries - 1:
+                time.sleep(2 ** attempt)
+                continue
+            return dict()
+
+    return dict()
 
 
 def sort_repos_by_stars(input_file: str, output_file: str, cached_repos_list_file: str | None = None) -> None:
@@ -98,12 +145,8 @@ def sort_repos_by_stars(input_file: str, output_file: str, cached_repos_list_fil
                 if repo_info["id"] not in unique_ids:
                     unique_records.append(repo_info)
                     unique_ids.add(repo_info.get("id", -1))
-            # Progress update
             if (i + 1) % 50 == 0:
                 print(f"  Processed {i + 1}/{total}...")
-            # Rate limit handling for unauthenticated requests
-            if not token and (i + 1) % 10 == 0:
-                time.sleep(1)  # Stay under 60 requests/minute
 
     # Sort by star count (descending)
     sorted_repos = sorted(
