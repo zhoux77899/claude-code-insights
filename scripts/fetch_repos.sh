@@ -20,12 +20,13 @@ curl -s \
   > /tmp/response.jsonl
 
 TOTAL=$(jq '.total_count' /tmp/response.jsonl)
-PAGES=$(( ($TOTAL + 99) / 100 ))
 
 if [ $? -ne 0 ] || [ -z "$TOTAL" ] || [ "$TOTAL" = "null" ]; then
   echo "  Error: failed to parse total_count from response"
   exit 1
 fi
+
+PAGES=$(( ($TOTAL + 99) / 100 ))
 
 for ((page=2; page<=$PAGES; page++)); do
   if [ $(( ($page - 1) % 5 )) -eq 0 ]; then

@@ -50,7 +50,7 @@ def wait_for_rate_limit_reset(resp: requests.Response) -> None:
             f"Waiting {wait_seconds}s until reset..."
         )
         time.sleep(wait_seconds)
-    if remaining is None or int(remaining) > 0:
+    elif remaining is None or int(remaining) > 0:
         print(
             f"  Got {resp.status_code} but rate limit not exhausted "
             f"(remaining={remaining}). Waiting 60s..."
