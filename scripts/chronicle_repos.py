@@ -50,7 +50,7 @@ def chronicle_repos(input_file: str, output_file: str, keeping_days: int = 30) -
         item.get("full_name"): {
             datetime.strptime(last_updated_time, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d"): {
                 "stargazers_count": item.get("stargazers_count", 0),
-                "watchers_count": item.get("watchers_count", 0),
+                "subscribers_count": item.get("subscribers_count", 0),
                 "forks_count": item.get("forks_count", 0),
             }
         }

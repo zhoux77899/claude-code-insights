@@ -15,14 +15,14 @@ export function formatNumberWithCommas(num: number): string {
   return num.toLocaleString('en-US');
 }
 
-export function formatFileSize(bytes: number): string {
-  if (bytes < 1024) {
-    return bytes + " KB";
+export function formatFileSize(kb: number): string {
+  if (kb < 1024) {
+    return kb + " KB";
   }
-  if (bytes < 1024 * 1024) {
-    return (bytes / 1024).toFixed(1) + " KB";
+  if (kb < 1024 * 1024) {
+    return (kb / 1024).toFixed(1) + " MB";
   }
-  return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+  return (kb / (1024 * 1024)).toFixed(1) + " GB";
 }
 
 export function formatDate(dateString: string): string {
@@ -105,7 +105,7 @@ export function formatRepository(repo: GitHubRepository): FormattedRepo {
     description: repo.description || "No description available",
     stars: repo.stargazers_count,
     forks: repo.forks_count,
-    watchers: repo.watchers_count,
+    watchers: repo.subscribers_count,
     issues: repo.open_issues_count,
     size: repo.size,
     language: repo.language,

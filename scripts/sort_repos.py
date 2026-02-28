@@ -171,7 +171,7 @@ def sort_repos_by_stars(input_file: str, output_file: str, cached_repos_list_fil
         with open(cached_repos_list_file, "w", encoding="utf-8") as f:
             for repo in sorted_repos:
                 if repo:
-                    f.write(f"{repo.get("full_name", "")}\n")
+                    f.write(f"{repo.get('full_name', '')}\n")
 
         print(f"Generated {cached_repos_list_file} with {len(sorted_repos)} repositories")
 

@@ -48,6 +48,7 @@ export interface GitHubRepository {
   watchers_count: number;
   language: string | null;
   forks_count: number;
+  subscribers_count: number;
   open_issues_count: number;
   license: GitHubLicense | null;
   has_issues: boolean;

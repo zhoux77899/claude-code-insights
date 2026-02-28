@@ -50,7 +50,7 @@ export const PluginCard: React.FC<PluginCardProps> = ({
         </span>
       </CardHeader>
 
-      <CardBody className="flex flex-col gap-2 px-4 py-2 h-[84px]">
+      <CardBody className="flex flex-col px-4 h-[84px]">
         <p
           className={cn(
             "text-sm text-default-600 dark:text-default-400",
