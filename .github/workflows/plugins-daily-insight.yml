@@ -103,6 +103,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add plugins/
           git diff --quiet && git diff --staged --quiet || git commit -m "Daily Insight $(date +%Y-%m-%d)"
+          git pull --rebase
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
