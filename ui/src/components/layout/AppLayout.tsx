@@ -4,6 +4,7 @@ import { Claude } from '@lobehub/icons';
 import { ThemeSwitch } from "../common/ThemeSwitch";
 import { RepoSortSelect } from "../common/RepoSortSelect";
 import { RepoSearchInput } from "../common/RepoSearchInput";
+import { GithubLinkButton } from "../common/GithubLinkButton";
 import type { SortOption } from "../../types/github";
 
 interface AppLayoutProps {
@@ -35,7 +36,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         <Navbar
           maxWidth="xl"
           position="static"
-          className="bg-card-light/40 dark:bg-card-dark/40 backdrop-blur-md border-b border-black/10 dark:border-white/10 h-16"
+          className="bg-card-light/50 dark:bg-card-dark/50 backdrop-blur-md border-b border-black/10 dark:border-white/10 h-16"
         >
           <NavbarBrand className="gap-2 pl-4 items-bottom">
             <div className="flex items-center justify-center flex-shrink-0 gap-2">
@@ -66,6 +67,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
                 />
               </NavbarItem>
             )}
+            <NavbarItem>
+              <GithubLinkButton />
+            </NavbarItem>
             <NavbarItem>
               <ThemeSwitch />
             </NavbarItem>

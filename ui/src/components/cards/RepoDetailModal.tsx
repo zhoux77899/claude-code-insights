@@ -143,7 +143,7 @@ export const RepoDetailModal: React.FC<RepoDetailModalProps> = ({
       aria-labelledby="modal-title"
     >
       <div
-        className="absolute inset-0 bg-transparent backdrop-blur-md animate-fade-in pointer-events-auto"
+        className="absolute inset-0 bg-page-light/0 dark:bg-page-dark/50 backdrop-blur-md animate-fade-in pointer-events-auto"
         onClick={onClose}
         aria-hidden="true"
       />
