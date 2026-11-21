@@ -8,6 +8,9 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 
+METRIC_FIELDS = ("stargazers_count", "subscribers_count", "forks_count")
+
+
 def parse_args():
     parser = argparse.ArgumentParser(
         description="Maintain GitHub repos history."
@@ -33,52 +36,34 @@ def parse_args():
     return parser.parse_args()
 
 
-def chronicle_repos(input_file: str, output_file: str, keeping_days: int = 30) -> None:
-    # Check if input file exists
-    if not Path(input_file).exists():
-        raise ValueError(f"Error: Input file not found: {input_file}")
-
-    # Get current time in UTC
-    current_time = datetime.now(timezone.utc)
-    cutoff_time = current_time - timedelta(days=keeping_days)
-
-    # Read input
-    with open(input_file, "r", encoding="utf-8") as f:
-        data = json.load(f)
-    last_updated_time = data.get("last_updated_time", current_time.strftime("%Y-%m-%d %H:%M:%S"))
-    repos = {
-        item.get("full_name"): {
-            datetime.strptime(last_updated_time, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d"): {
-                "stargazers_count": item.get("stargazers_count", 0),
-                "subscribers_count": item.get("subscribers_count", 0),
-                "forks_count": item.get("forks_count", 0),
-            }
-        }
-        for item in data.get("items", [])
+def update_history(
+    history: dict,
+    refreshed_repositories: list[dict],
+    sampled_at: datetime,
+    keeping_days: int = 30,
+) -> dict:
+    cutoff = (sampled_at.date() - timedelta(days=keeping_days - 1)).isoformat()
+    snapshots = {
+        name: {day: metrics for day, metrics in days.items() if day >= cutoff}
+        for name, days in history.items()
     }
+    day = sampled_at.date().isoformat()
+    for repo in refreshed_repositories:
+        snapshots.setdefault(repo["full_name"], {})[day] = {
+            field: repo.get(field, 0) for field in METRIC_FIELDS
+        }
+    return {name: days for name, days in snapshots.items() if days}
 
-    # Read history if exists
-    if Path(output_file).exists():
-        with open(output_file, "r", encoding="utf-8") as f:
-            history_data = json.load(f)
-        for full_name, history in history_data.items():
-            if full_name in repos:
-                repos[full_name].update(history)
-            else:
-                repos[full_name] = history
 
-    # Remove old histories beyond 30 days
-    for full_name, history in repos.items():
-        for date_str in list(history.keys()):
-            date_obj = datetime.strptime(date_str, "%Y-%m-%d").replace(tzinfo=timezone.utc)
-            if date_obj < cutoff_time:
-                repos[full_name].pop(date_str)
-
-    # Write output
-    with open(output_file, "w", encoding="utf-8") as f:
-        json.dump(repos, f, indent=2)
-
-    print(f"Generated {output_file} with {len(repos)} repositories")
+def chronicle_repos(input_file: str, output_file: str, keeping_days: int = 30) -> None:
+    data = json.loads(Path(input_file).read_text(encoding="utf-8"))
+    output = Path(output_file)
+    history = json.loads(output.read_text(encoding="utf-8")) if output.exists() else {}
+    timestamp = data.get("last_updated_time")
+    sampled_at = datetime.fromisoformat(timestamp) if timestamp else datetime.now(timezone.utc)
+    history = update_history(history, data.get("items", []), sampled_at, keeping_days)
+    output.write_text(json.dumps(history, indent=2), encoding="utf-8")
+    print(f"Generated {output_file} with {len(history)} repositories")
 
 
 if __name__ == "__main__":

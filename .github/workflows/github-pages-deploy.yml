@@ -4,22 +4,27 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  workflow_call:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+permissions: {}
 
 concurrency:
-  group: 'pages'
-  cancel-in-progress: true
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          ref: refs/heads/main
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -30,15 +35,20 @@ jobs:
 
       - name: Copy plugins data
         run: |
-          mkdir -p ui/data
-          cp plugins/repos.json ui/data/plugins-repos.json
-          cp plugins/history.json ui/data/plugins-history.json
+          mkdir -p ui/public/data
+          cp plugins/repos.json ui/public/data/plugins-repos.json
+          cp plugins/history.json ui/public/data/plugins-history.json
 
       - name: Install dependencies
         run: cd ui && npm ci
 
       - name: Build
         run: cd ui && npm run build
+
+      - name: Verify bundled data
+        run: |
+          cmp plugins/repos.json ui/dist/data/plugins-repos.json
+          cmp plugins/history.json ui/dist/data/plugins-history.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -51,6 +61,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

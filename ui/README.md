@@ -80,8 +80,7 @@ ui/
 │   ├── contexts/      # Modal context
 │   ├── types/         # GitHub/data typings
 │   └── utils/         # Formatters, constants, helpers
-├── public/            # Static assets (icons/fonts)
-├── data/              # Copied plugin datasets during CI deploy
+├── public/            # Static assets and plugin datasets copied during CI deploy
 └── package.json
 ```
 
