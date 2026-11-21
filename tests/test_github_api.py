@@ -32,7 +32,7 @@ def public_node(reported_id="R_new"):
         "defaultBranchRef": {"name": "main"},
         "pushedAt": "2026-11-12T00:00:00Z",
         "stargazerCount": 34,
-        "forkCount": 8,
+        "forks": {"totalCount": 8},
         "watchers": {"totalCount": 5},
     }
 
@@ -155,6 +155,7 @@ class GitHubClientTests(unittest.TestCase):
 
         records = self.client.refresh(["legacy-id", "missing", "private"])
 
+        self.assertIn("forks(first: 1) { totalCount }", self.session.request.call_args.kwargs["json"]["query"])
         self.assertNotIn("missing", records)
         self.assertEqual(records["private"], {"private": True})
         self.assertEqual(records["legacy-id"], {

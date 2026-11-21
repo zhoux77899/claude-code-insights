@@ -37,7 +37,7 @@ query RefreshRepositories($ids: [ID!]!) {
       defaultBranchRef { name }
       pushedAt
       stargazerCount
-      forkCount
+      forks(first: 1) { totalCount }
       watchers(first: 1) { totalCount }
     }
   }
@@ -285,7 +285,8 @@ class GitHubClient:
 
         name = node.get("nameWithOwner")
         stars = node.get("stargazerCount")
-        forks = node.get("forkCount")
+        fork_connection = node.get("forks")
+        forks = fork_connection.get("totalCount") if isinstance(fork_connection, dict) else None
         watchers = node.get("watchers")
         subscribers = watchers.get("totalCount") if isinstance(watchers, dict) else None
         pushed_at = node.get("pushedAt")
