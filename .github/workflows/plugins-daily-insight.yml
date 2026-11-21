@@ -5,105 +5,130 @@ on:
     # Run daily at 00:00 UTC (08:00 Beijing Time)
     - cron: '0 0 * * *'
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Generate and validate a snapshot without publishing
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-insight-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   generate-insight:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      artifact_id: ${{ steps.snapshot.outputs.artifact-id }}
+      baseline_sha: ${{ steps.checkout.outputs.commit }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - name: Require main for publication
+        if: github.event_name == 'workflow_dispatch' && inputs.dry_run == false && github.ref != 'refs/heads/main'
+        run: |
+          echo '::error::Only main can publish a snapshot. Use dry_run on other branches.'
+          exit 1
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v6
         with:
-          node-version: '24'
+          ref: ${{ github.ref == 'refs/heads/main' && 'refs/heads/main' || github.sha }}
+          persist-credentials: false
 
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
-          python-version: "3.13"
+          python-version: '3.13'
 
-      - name: Install System Dependencies
-        run: |
-          python -m pip install --upgrade pip && \
-          pip install -r requirements.txt
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
 
-      - name: Generate Plugins Daily Insight
+      - name: Generate and validate snapshot
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mkdir -p insights
-          rm -f /tmp/response.jsonl
-          rm -f /tmp/repos.json
-          rm -f /tmp/sorted_repos.json
+        run: python -m scripts.generate_daily_insight --baseline plugins --output "$RUNNER_TEMP/daily-insight"
 
-          echo "============================================================"
-          echo "Fetching Claude Code repositories..."
-          bash scripts/fetch_repos.sh
-          echo -e "\n"
-          head -n 10 /tmp/response.jsonl
-          echo "============================================================"
+      - name: Upload validated snapshot
+        id: snapshot
+        uses: actions/upload-artifact@v7
+        with:
+          name: daily-insight-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/daily-insight
+          if-no-files-found: error
+          retention-days: 7
 
-          echo "============================================================"
-          echo "Deduplicating Claude Code repositories..."
-          python scripts/dedupe_repos.py --input /tmp/response.jsonl --output /tmp/repos.json
-          echo -e "\n"
-          head -n 10 /tmp/repos.json
-          echo "============================================================"
+  publish:
+    needs: generate-insight
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || inputs.dry_run == false)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    outputs:
+      published: ${{ steps.publish.outputs.published }}
 
-          echo "============================================================"
-          echo "Sorting Claude Code repositories..."
-          python scripts/sort_repos.py --input /tmp/repos.json --output /tmp/sorted_repos.json --cached-repos-list plugins/cached-repos.txt
-          cp /tmp/sorted_repos.json plugins/repos.json
-          echo -e "\n"
-          head -n 10 /tmp/sorted_repos.json
-          echo "============================================================"
+    steps:
+      - name: Checkout generation baseline
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.generate-insight.outputs.baseline_sha }}
 
-          echo "============================================================"
-          echo "Chronicling Claude Code repositories..."
-          python scripts/chronicle_repos.py --input /tmp/sorted_repos.json --output plugins/history.json
-          echo -e "\n"
-          head -n 10 plugins/history.json
-          echo "============================================================"
+      - name: Download validated snapshot
+        uses: actions/download-artifact@v8
+        with:
+          artifact-ids: ${{ needs.generate-insight.outputs.artifact_id }}
+          path: ${{ runner.temp }}/daily-insight
 
-          TOTAL=$(jq '.total_count' /tmp/sorted_repos.json)
-          DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-
-          # Create markdown header
-          echo "# Claude Code Plugins Daily Insight" > plugins/plugins-daily-insight.md
-          echo "" >> plugins/plugins-daily-insight.md
-          echo "> Generated at: $DATE" >> plugins/plugins-daily-insight.md
-          echo "> Indexed repositories: $TOTAL" >> plugins/plugins-daily-insight.md
-          echo "" >> plugins/plugins-daily-insight.md
-          echo "---" >> plugins/plugins-daily-insight.md
-          echo "" >> plugins/plugins-daily-insight.md
-          echo "## Top 30 High-Scoring Repositories" >> plugins/plugins-daily-insight.md
-          echo "" >> plugins/plugins-daily-insight.md
-          echo "| # | Repository | Stars | Forks | Last Updated | Description |" >> plugins/plugins-daily-insight.md
-          echo "|---|------------|-------|-------|--------------|-------------|" >> plugins/plugins-daily-insight.md
-
-          # Generate table rows
-          jq -r '.items[:30] | to_entries | .[] | "| \(.key + 1) | [\(.value.name)](\(.value.html_url)) | ⭐\(.value.stargazers_count) | 🍴\(.value.forks_count) | \(.value.pushed_at[:10]) | \(.value.description // "No description" | .[0:60]) |"' /tmp/sorted_repos.json >> plugins/plugins-daily-insight.md
-
-          # Add active repositories section
-          echo "" >> plugins/plugins-daily-insight.md
-          echo "## Active Repositories (Last 7 Days)" >> plugins/plugins-daily-insight.md
-          echo "" >> plugins/plugins-daily-insight.md
-
-          WEEK_AGO=$(date -d '7 days ago' +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -v-7d +%Y-%m-%dT%H:%M:%SZ)
-          jq -r --arg date "$WEEK_AGO" '.items | map(select(.pushed_at > $date)) | .[:15] | .[] | "- [\(.name)](\(.html_url)) - ⭐\(.stargazers_count) - \(.description // "No description" | .[0:80])"' /tmp/sorted_repos.json >> plugins/plugins-daily-insight.md
-
-          echo "Generated plugins/plugins-daily-insight.md"
-          echo "Total repositories indexed: $TOTAL"
-
-      - name: Commit and Push
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add plugins/
-          git diff --quiet && git diff --staged --quiet || git commit -m "Daily Insight $(date +%Y-%m-%d)"
-          git pull --rebase
-          git push
+      - name: Commit and push snapshot
+        id: publish
+        shell: bash
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASELINE_SHA: ${{ needs.generate-insight.outputs.baseline_sha }}
+        run: |
+          snapshot_paths=(
+            plugins/cached-repos.txt
+            plugins/history.json
+            plugins/plugins-daily-insight.md
+            plugins/repos.json
+          )
+
+          git fetch --no-tags origin refs/heads/main
+          main_sha=$(git rev-parse FETCH_HEAD)
+          if ! git diff --quiet "$BASELINE_SHA" "$main_sha" -- \
+            .github/workflows/plugins-daily-insight.yml requirements.txt scripts/ "${snapshot_paths[@]}"; then
+            echo '::error::Snapshot inputs changed after generation started. Start a fresh run from main.'
+            exit 1
+          fi
+
+          git switch --detach "$main_sha"
+          for path in "${snapshot_paths[@]}"; do
+            cp -- "$RUNNER_TEMP/daily-insight/${path##*/}" "$path"
+          done
+          git add -- "${snapshot_paths[@]}"
+
+          if git diff --cached --quiet; then
+            echo 'published=false' >> "$GITHUB_OUTPUT"
+            echo 'The validated snapshot matches main.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          git config --local user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --local user.name 'github-actions[bot]'
+          git commit -m "Daily Insight $(date -u +%Y-%m-%d)"
+          git push origin HEAD:refs/heads/main
+          echo 'published=true' >> "$GITHUB_OUTPUT"
+          printf 'Published snapshot commit `%s`.\n' "$(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+
+  deploy-pages:
+    needs: publish
+    if: needs.publish.outputs.published == 'true'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/github-pages-deploy.yml

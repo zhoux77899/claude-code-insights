@@ -106,7 +106,7 @@ export async function getStarsHistory(repoFullName: string): Promise<StarsHistor
   try {
     let response: Response;
     const remoteUrl = "https://raw.githubusercontent.com/zhoux77899/claude-code-insights/refs/heads/main/plugins/history.json";
-    const localUrl = "/data/plugins-history.json";
+    const localUrl = `${import.meta.env.BASE_URL}data/plugins-history.json`;
 
     try {
       response = await fetch(remoteUrl);

@@ -22,7 +22,7 @@ interface HistoryData {
 async function fetchStarsHistoryData(): Promise<HistoryData> {
   try {
     const remoteUrl = "https://raw.githubusercontent.com/zhoux77899/claude-code-insights/refs/heads/main/plugins/history.json";
-    const localUrl = "/data/plugins-history.json";
+    const localUrl = `${import.meta.env.BASE_URL}data/plugins-history.json`;
 
     let response: Response;
     try {

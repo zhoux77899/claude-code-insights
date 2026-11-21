@@ -27,7 +27,7 @@ export function useRepoData(): UseRepoDataReturn {
 
       let response: Response;
       const remoteUrl = "https://raw.githubusercontent.com/zhoux77899/claude-code-insights/refs/heads/main/plugins/repos.json";
-      const localUrl = "/data/plugins-repos.json";
+      const localUrl = `${import.meta.env.BASE_URL}data/plugins-repos.json`;
 
       try {
         response = await fetch(remoteUrl);

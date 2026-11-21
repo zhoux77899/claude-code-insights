@@ -23,9 +23,8 @@ claude-code-insights/
 │   ├── cached-repos.txt            # Cached repository list
 │   └── plugins-daily-insight.md    # Generated Markdown report
 ├── scripts/
-│   ├── fetch_repos.sh              # Search GitHub code API for plugin repos
-│   ├── dedupe_repos.py             # Deduplicate search results
-│   ├── sort_repos.py               # Fetch repo metadata and sort by stars
+│   ├── generate_daily_insight.py   # Build and validate a candidate snapshot
+│   ├── github_api.py               # Bounded GitHub Search, GraphQL, and REST requests
 │   └── chronicle_repos.py          # Maintain rolling history snapshots
 ├── ui/                             # Vite + React + TypeScript frontend
 ├── requirements.txt                # Python dependencies
@@ -37,15 +36,13 @@ claude-code-insights/
 The workflow `.github/workflows/plugins-daily-insight.yml` runs on:
 
 - schedule: daily at `00:00 UTC`
-- manual trigger: `workflow_dispatch`
+- manual trigger: `workflow_dispatch`, with `dry_run` enabled by default. A dry run uploads the validated snapshot as an artifact. Publication is available from `main`.
 
 Pipeline steps:
 
-1. `scripts/fetch_repos.sh` queries GitHub Search API (`filename:marketplace.json path:.claude-plugin`).
-2. `scripts/dedupe_repos.py` merges paged search responses and removes duplicates.
-3. `scripts/sort_repos.py` fetches repository metadata and sorts by `stargazers_count`.
-4. `scripts/chronicle_repos.py` updates rolling historical metrics in `plugins/history.json`.
-5. Workflow generates/updates:
+1. Code search discovers public repositories with `filename:marketplace.json path:.claude-plugin`, up to the GitHub limit of 1,000 results. When discovery is unavailable, the run refreshes the existing inventory and reports degraded discovery.
+2. GraphQL refreshes existing repository metrics in batches. REST supplies full objects for new repositories within the remaining quota. The run carries deferred candidates forward and records history only for successfully refreshed repositories.
+3. After validation, the workflow commits the four generated files together and calls the Pages workflow:
    - `plugins/repos.json`
    - `plugins/history.json`
    - `plugins/cached-repos.txt`
@@ -57,9 +54,7 @@ Detailed plugin data schema and usage examples are documented in [plugins/README
 
 - Frontend source lives in `ui/`.
 - GitHub Pages deployment is managed by `.github/workflows/github-pages-deploy.yml`.
-- During deployment, data files are copied into `ui/data/`:
-  - `plugins/repos.json` -> `ui/data/plugins-repos.json`
-  - `plugins/history.json` -> `ui/data/plugins-history.json`
+- During deployment, Vite bundles the two fallback data files from `ui/public/data/`.
 - Vite `base` is set to `/claude-code-insights/` for Pages routing.
 
 UI-specific setup and architecture are documented in [ui/README.md](ui/README.md).
@@ -69,9 +64,8 @@ UI-specific setup and architecture are documented in [ui/README.md](ui/README.md
 ### Prerequisites
 
 - Python `3.13` (matches workflow runtime)
-- Node.js `20` and npm (matches workflow runtime)
-- `jq` (required by `fetch_repos.sh`)
-- GitHub token in `GITHUB_TOKEN` (recommended to avoid strict rate limits)
+- Node.js `24` and npm (matches workflow runtime)
+- GitHub API token in `GITHUB_TOKEN`
 
 ### 1) Generate Data Locally
 
@@ -79,10 +73,7 @@ UI-specific setup and architecture are documented in [ui/README.md](ui/README.md
 pip install -r requirements.txt
 export GITHUB_TOKEN=your_github_token_here
 
-bash scripts/fetch_repos.sh
-python scripts/dedupe_repos.py --input /tmp/response.jsonl --output /tmp/repos.json
-python scripts/sort_repos.py --input /tmp/repos.json --output plugins/repos.json --cached-repos-list plugins/cached-repos.txt
-python scripts/chronicle_repos.py --input plugins/repos.json --output plugins/history.json
+python -m scripts.generate_daily_insight --baseline plugins --output "$(mktemp -d)/daily-insight"
 ```
 
 ### 2) Run UI Locally
@@ -95,8 +86,7 @@ npm run dev
 
 ## Configuration
 
-- `GITHUB_TOKEN`: GitHub API token used by shell/Python scripts and workflows.
-- `GITHUB_SSL_VERIFY` (optional): set to `false` to disable TLS verification in `sort_repos.py` requests.
+- `GITHUB_TOKEN` supplies GitHub API authentication for the daily generator. Hosted runs use the repository's Actions token.
 - `--keeping-days` (optional): `chronicle_repos.py` flag to change history retention days (default `30`).
 
 ## Data and Reporting Outputs
