@@ -10,7 +10,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from .chronicle_repos import METRIC_FIELDS, update_history
-from .github_api import GitHubAPIError, GitHubClient, GitHubRateLimitError
+from .github_api import GRAPHQL_BATCH_SIZE, GitHubAPIError, GitHubClient, GitHubRateLimitError
 
 
 LOGGER = logging.getLogger(__name__)
@@ -49,7 +49,11 @@ def refresh_repositories(
     client: GitHubClient, previous: dict[int, dict], candidates: set[str], discovered: set[str]
 ) -> tuple[dict[int, dict], set[int], set[str], set[str]]:
     by_node = {repo["node_id"]: repo for repo in previous.values() if repo.get("node_id")}
-    refreshed = client.refresh(list(by_node)) if by_node else {}
+    # The baseline is ranked by stars. Distribute its popular repositories across requests.
+    node_ids = list(by_node)
+    batch_count = (len(node_ids) + GRAPHQL_BATCH_SIZE - 1) // GRAPHQL_BATCH_SIZE
+    refresh_order = [node_id for start in range(batch_count) for node_id in node_ids[start::batch_count]]
+    refreshed = client.refresh(refresh_order) if refresh_order else {}
     repositories = previous.copy()
     sampled_ids = set()
     retired_names = set()

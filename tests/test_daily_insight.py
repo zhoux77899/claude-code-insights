@@ -5,7 +5,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import Mock
 
-from scripts.generate_daily_insight import generate_snapshot
+from scripts.generate_daily_insight import generate_snapshot, refresh_repositories
 from scripts.github_api import GitHubAPIError, GitHubClient
 
 
@@ -104,6 +104,16 @@ class DailyInsightTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "invalid or nonpublic metadata"):
             self.generate()
         self.assertFalse(self.output.exists())
+
+    def test_star_ranked_baseline_is_spread_across_batches(self):
+        baseline = {rank: repository(rank, f"repo-{rank}", 120 - rank) for rank in range(120)}
+        self.client.refresh.return_value = {}
+
+        refresh_repositories(self.client, baseline, set(), set())
+
+        ids, = self.client.refresh.call_args.args
+        self.assertEqual(set(ids), {f"node-{rank}" for rank in baseline})
+        self.assertEqual(ids[:6], [f"node-{rank}" for rank in (0, 3, 6, 9, 12, 15)])
 
 
 if __name__ == "__main__":

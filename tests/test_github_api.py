@@ -181,6 +181,48 @@ class GitHubClientTests(unittest.TestCase):
         with self.assertRaisesRegex(GitHubAPIError, "Unsupported selection"):
             self.client.refresh(["existing"])
 
+    def test_graphql_splits_slow_batches_without_losing_repositories(self):
+        ids = [f"id-{index}" for index in range(12)]
+        self.session.request.side_effect = [
+            response(502, {"message": "Bad Gateway"}),
+            requests.Timeout(),
+            response(200, {"data": {"nodes": [public_node(node_id) for node_id in ids[:3]]}}),
+            response(200, {"data": {"nodes": [public_node(node_id) for node_id in ids[3:6]]}}),
+            response(200, {"data": {"nodes": [public_node(node_id) for node_id in ids[6:]]}}),
+        ]
+
+        self.assertEqual(list(self.client.refresh(ids)), ids)
+
+        batches = [call.kwargs["json"]["variables"]["ids"] for call in self.session.request.call_args_list]
+        self.assertEqual(batches, [ids, ids[:6], ids[:3], ids[3:6], ids[6:]])
+
+    @patch("scripts.github_api.time.sleep")
+    def test_graphql_unrecoverable_small_batch_fails_after_three_attempts(self, sleep):
+        ids = [f"id-{index}" for index in range(8)]
+        self.session.request.return_value = response(502, {"message": "Bad Gateway"})
+
+        with self.assertRaisesRegex(GitHubAPIError, "HTTP 502"):
+            self.client.refresh(ids)
+
+        batches = [call.kwargs["json"]["variables"]["ids"] for call in self.session.request.call_args_list]
+        self.assertEqual(batches, [ids, ids[:4], ids[:4], ids[:4]])
+        self.assertEqual([call.args[0] for call in sleep.call_args_list], [1, 2])
+
+    def test_graphql_does_not_split_permission_validation_or_rate_limits(self):
+        cases = [
+            response(403, {"message": "Forbidden"}),
+            response(422, {"message": "Invalid selection"}),
+            response(429, {"message": "Rate limited"}, **{"retry-after": "120"}),
+            response(503, {"message": "Service unavailable"}, **{"retry-after": "120"}),
+        ]
+        for failure in cases:
+            with self.subTest(status=failure.status_code):
+                self.session.request.reset_mock()
+                self.session.request.return_value = failure
+                with self.assertRaisesRegex(GitHubAPIError, f"HTTP {failure.status_code}"):
+                    self.client.refresh([f"id-{index}" for index in range(50)])
+                self.session.request.assert_called_once()
+
     def test_rest_distinguishes_missing_from_failed_requests(self):
         full_repo = {"full_name": "owner/plugin", "private": False, "contents_url": "value"}
         self.session.request.side_effect = [

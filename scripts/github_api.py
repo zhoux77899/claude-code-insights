@@ -15,6 +15,7 @@ SEARCH_QUERY = "filename:marketplace.json path:.claude-plugin"
 SEARCH_PAGE_SIZE = 100
 SEARCH_PAGE_LIMIT = 10
 GRAPHQL_BATCH_SIZE = 50
+MIN_GRAPHQL_BATCH_SIZE = 4
 MAX_ATTEMPTS = 3
 MAX_RETRY_SECONDS = 90
 REPOSITORY_NAME = re.compile(r"[A-Za-z0-9_-]+/(?!\.{1,2}\Z)[A-Za-z0-9_.-]+")
@@ -52,6 +53,10 @@ class GitHubAPIError(RuntimeError):
 
 class GitHubRateLimitError(GitHubAPIError):
     """A GitHub API rate limit cannot be retried within the request budget."""
+
+
+class _TransientGitHubError(GitHubAPIError):
+    """A transport or server failure that may improve with smaller queries."""
 
 
 @dataclass(frozen=True)
@@ -124,7 +129,7 @@ class GitHubClient:
         time.sleep(delay)
 
     def _request(
-        self, method: str, path: str, resource: str, *, allow_missing=False, **kwargs
+        self, method: str, path: str, resource: str, *, allow_missing=False, split_on_timeout=False, **kwargs
     ) -> dict | None:
         deadline = time.monotonic() + MAX_RETRY_SECONDS
         previous_budget = self.budgets.get(resource)
@@ -139,8 +144,10 @@ class GitHubClient:
             try:
                 response = self.session.request(method, f"{API_URL}{path}", timeout=timeout, **kwargs)
             except (requests.ConnectionError, requests.Timeout) as error:
-                problem = GitHubAPIError(f"{resource}: {type(error).__name__}")
+                problem = _TransientGitHubError(f"{resource}: {type(error).__name__}")
                 LOGGER.warning("%s", problem)
+                if split_on_timeout:
+                    raise problem from None
                 delay = 2 ** attempt
             else:
                 payload = None
@@ -193,7 +200,12 @@ class GitHubClient:
                 elif allow_missing and status in (404, 410):
                     return None
                 elif 500 <= status < 600:
-                    problem = GitHubAPIError(f"{resource}: {details}")
+                    if retry_after is None:
+                        problem = _TransientGitHubError(f"{resource}: {details}")
+                        if split_on_timeout and status in (502, 504):
+                            raise problem
+                    else:
+                        problem = GitHubAPIError(f"{resource}: {details}")
                     delay = max(2 ** attempt, retry_after or 0)
                 else:
                     raise GitHubAPIError(f"{resource}: {details}")
@@ -235,15 +247,32 @@ class GitHubClient:
         capped = first_page_total > SEARCH_PAGE_LIMIT * SEARCH_PAGE_SIZE
         return names, capped
 
-    def refresh(self, node_ids: list[str]) -> dict[str, dict]:
-        repositories = {}
-        for offset in range(0, len(node_ids), GRAPHQL_BATCH_SIZE):
-            batch = node_ids[offset:offset + GRAPHQL_BATCH_SIZE]
+    def _refresh_batches(self, batch: list[str]):
+        can_split = len(batch) > MIN_GRAPHQL_BATCH_SIZE
+        try:
             payload = self._request(
-                "POST", "/graphql", "graphql",
+                "POST", "/graphql", "graphql", split_on_timeout=can_split,
                 headers={"X-Github-Next-Global-ID": "1"},
                 json={"query": REFRESH_QUERY, "variables": {"ids": batch}},
             )
+        except _TransientGitHubError:
+            if not can_split:
+                raise
+            middle = len(batch) // 2
+            LOGGER.warning("Splitting GraphQL batch of %d repositories after a transient request failure", len(batch))
+            yield from self._refresh_batches(batch[:middle])
+            yield from self._refresh_batches(batch[middle:])
+        else:
+            yield batch, payload
+
+    def refresh(self, node_ids: list[str]) -> dict[str, dict]:
+        repositories = {}
+        batches = (
+            resolved
+            for offset in range(0, len(node_ids), GRAPHQL_BATCH_SIZE)
+            for resolved in self._refresh_batches(node_ids[offset:offset + GRAPHQL_BATCH_SIZE])
+        )
+        for batch, payload in batches:
             errors = payload.get("errors", [])
             if not isinstance(errors, list):
                 raise GitHubAPIError("graphql: invalid error response")
